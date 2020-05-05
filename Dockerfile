@@ -111,7 +111,10 @@ RUN git clone https://github.com/sqlmapproject/sqlmap.git /opt/sqlmap
 RUN git clone https://github.com/xmendez/wfuzz.git /opt/wfuzz
 
 # volatility
-RUN git clone https://github.com/volatilityfoundation/volatility3.git /opt/volatility
+RUN git clone https://github.com/volatilityfoundation/volatility3.git /opt/volatility && \
+  wget -nv -O /opt/volatility/volatility/symbols/windows.zip https://downloads.volatilityfoundation.org/volatility3/symbols/windows.zip && \
+  wget -nv -O /opt/volatility/volatility/symbols/mac.zip https://downloads.volatilityfoundation.org/volatility3/symbols/mac.zip && \
+  wget -nv -O /opt/volatility/volatility/symbols/linux.zip https://downloads.volatilityfoundation.org/volatility3/symbols/linux.zip
 
 # reset debian_frontend in the end
 ENV DEBIAN_FRONTEND teletype
