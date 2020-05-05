@@ -16,6 +16,8 @@ ENV USER=root
 
 RUN echo "shopt -s histappend" >> /root/.bashrc
 
+ENV DEBIAN_FRONTEND noninteractive
+
 RUN apt-get update && \
   apt-get full-upgrade -y && \
   apt-get install -y \
@@ -30,6 +32,8 @@ RUN apt-get update && \
   ruby ruby-dev rubygems zlib1g-dev liblzma-dev \
   # wfuzz dependencies
   python3-chardet python3-pycurl python3-future \
+  # volatility dependencies
+  pcregrep libpcre++-dev python3-dev python3-pefile python3-yara python3-capstone \
   && \
   # java (needs wget and software-properties-common from above)
   wget -nv -O- https://apt.corretto.aws/corretto.key | apt-key add - && \
@@ -105,5 +109,11 @@ RUN git clone https://github.com/sqlmapproject/sqlmap.git /opt/sqlmap
 
 # wfuzz
 RUN git clone https://github.com/xmendez/wfuzz.git /opt/wfuzz
+
+# volatility
+RUN git clone https://github.com/volatilityfoundation/volatility3.git /opt/volatility
+
+# reset debian_frontend in the end
+ENV DEBIAN_FRONTEND teletype
 
 ENTRYPOINT [ "/bin/bash" ]
