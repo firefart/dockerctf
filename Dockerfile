@@ -23,7 +23,7 @@ RUN apt-get update && \
   apt-get install -y \
   # tools
   git curl wget netcat socat build-essential tmux vim htop linux-headers-virtual dnsutils software-properties-common \
-  jq strace ltrace net-tools gdb gdb-multiarch binwalk \
+  jq strace ltrace net-tools gdb gdb-multiarch binwalk steghide \
   # scanning
   nmap masscan \
   # python stuff
