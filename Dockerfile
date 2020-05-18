@@ -116,6 +116,9 @@ RUN git clone https://github.com/volatilityfoundation/volatility3.git /opt/volat
   wget -nv -O /opt/volatility/volatility/symbols/mac.zip https://downloads.volatilityfoundation.org/volatility3/symbols/mac.zip && \
   wget -nv -O /opt/volatility/volatility/symbols/linux.zip https://downloads.volatilityfoundation.org/volatility3/symbols/linux.zip
 
+# libc-database
+RUN git clone https://github.com/niklasb/libc-database.git /opt/libc-database
+
 # reset debian_frontend in the end
 ENV DEBIAN_FRONTEND teletype
 
