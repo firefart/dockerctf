@@ -81,7 +81,7 @@ RUN url="https://golang.org/dl/go${GOLANG_VERSION}.linux-amd64.tar.gz"; \
 ENV PATH="${PATH}:/usr/local/go/bin:/root/go/bin"
 
 # gobuster
-RUN git clone --branch v3.1-working https://github.com/OJ/gobuster.git /opt/gobuster && \
+RUN git clone --branch v3.1-cleaned https://github.com/OJ/gobuster.git /opt/gobuster && \
   cd /opt/gobuster && \
   go get . && \
   go build && \
