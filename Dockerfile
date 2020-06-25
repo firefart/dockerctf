@@ -1,8 +1,8 @@
 FROM ubuntu:latest
 LABEL maintainer="firefart <firefart@gmail.com>"
 
-ARG GOLANG_VERSION="1.14.3"
-ARG GOLANG_SHASUM="1c39eac4ae95781b066c144c58e45d6859652247f7515f0d2cba7be7d57d2226"
+ARG GOLANG_VERSION="1.14.4"
+ARG GOLANG_SHASUM="aed845e4185a0b2a3c3d5e1d0a35491702c55889192bb9c30e67a3de6849c067"
 ARG APKTOOL_VERSION="2.4.1"
 ARG JAVA_VERSION="11"
 ARG JADX_VERSION="1.1.0"
@@ -27,8 +27,7 @@ RUN apt-get update && \
   # scanning
   nmap masscan \
   # python stuff
-  python2 python-pip python-requests python-pycryptodome \
-  python3 python3-wheel python3-requests python3-virtualenv python3-bs4 python3-pip python3-pycryptodome \
+  python2 python3 python3-wheel python3-requests python3-virtualenv python3-bs4 python3-pip python3-pycryptodome \
   # wpscan dependencies
   ruby ruby-dev rubygems zlib1g-dev liblzma-dev \
   # wfuzz dependencies
@@ -43,17 +42,14 @@ RUN apt-get update && \
   # remove unneeded packages
   apt-get -y autoremove
 
-# needed for old python2 stuff
-# RUN add-apt-repository universe
-
 # Install PIP2 and packages (are not available on the repo)
 RUN curl https://bootstrap.pypa.io/get-pip.py -o /tmp/get-pip.py && \
   python2 /tmp/get-pip.py
-
+RUN pip2 install requests pycryptodome
 
 # make sure we can use python to launch python3
-RUN update-alternatives --install /usr/bin/python python /usr/bin/python3 1
-RUN update-alternatives --install /usr/bin/pip pip /usr/bin/pip3 1
+RUN update-alternatives --install /usr/local/bin/python python /usr/bin/python3 1
+RUN update-alternatives --install /usr/local/bin/pip pip /usr/bin/pip3 1
 
 # wordlists
 RUN mkdir /wordlists && \
