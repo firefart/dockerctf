@@ -1,3 +1,7 @@
 *.mem
 *.zip
 *.exe
+*.py
+*.apk
+output/
+jadx/

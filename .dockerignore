@@ -1,5 +1,9 @@
-*.mem
 *.sh
-*.zip
 *.md
+*.mem
+*.zip
 *.exe
+*.py
+*.apk
+output/
+jadx/

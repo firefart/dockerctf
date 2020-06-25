@@ -27,7 +27,8 @@ RUN apt-get update && \
   # scanning
   nmap masscan \
   # python stuff
-  python3 python3-requests python3-virtualenv python3-bs4 python3-pip \
+  python2 python-pip python-requests python-pycryptodome \
+  python3 python3-wheel python3-requests python3-virtualenv python3-bs4 python3-pip python3-pycryptodome \
   # wpscan dependencies
   ruby ruby-dev rubygems zlib1g-dev liblzma-dev \
   # wfuzz dependencies
@@ -41,6 +42,14 @@ RUN apt-get update && \
   apt-get update && apt-get install -y java-${JAVA_VERSION}-amazon-corretto-jdk && \
   # remove unneeded packages
   apt-get -y autoremove
+
+# needed for old python2 stuff
+# RUN add-apt-repository universe
+
+# Install PIP2 and packages (are not available on the repo)
+RUN curl https://bootstrap.pypa.io/get-pip.py -o /tmp/get-pip.py && \
+  python2 /tmp/get-pip.py
+
 
 # make sure we can use python to launch python3
 RUN update-alternatives --install /usr/bin/python python /usr/bin/python3 1
@@ -58,6 +67,8 @@ RUN mkdir /wordlists && \
 
 # SecLists
 RUN git clone https://github.com/danielmiessler/SecLists.git /opt/SecLists
+
+RUN git clone https://github.com/FlameOfIgnis/Pwdb-Public.git /opt/Pwdb-Public
 
 # oh my tmux
 ENV TERM=xterm-256color
