@@ -33,7 +33,7 @@ RUN apt-get update && \
   # wfuzz dependencies
   python3-chardet python3-pycurl python3-future \
   # volatility dependencies
-  pcregrep libpcre++-dev python3-dev python3-pefile python3-yara python3-capstone \
+  pcregrep libpcre++-dev python2-dev python3-dev python3-pefile python3-yara python3-capstone \
   && \
   # java (needs wget and software-properties-common from above)
   wget -nv -O- https://apt.corretto.aws/corretto.key | apt-key add - && \
@@ -122,6 +122,10 @@ RUN git clone https://github.com/volatilityfoundation/volatility3.git /opt/volat
   wget -nv -O /opt/volatility/volatility/symbols/windows.zip https://downloads.volatilityfoundation.org/volatility3/symbols/windows.zip && \
   wget -nv -O /opt/volatility/volatility/symbols/mac.zip https://downloads.volatilityfoundation.org/volatility3/symbols/mac.zip && \
   wget -nv -O /opt/volatility/volatility/symbols/linux.zip https://downloads.volatilityfoundation.org/volatility3/symbols/linux.zip
+
+# volatility2
+RUN git clone https://github.com/volatilityfoundation/volatility.git /opt/volatility2 && \
+  pip2 install distorm3==3.4.4 pycrypto openpyxl Pillow
 
 # libc-database
 RUN git clone https://github.com/niklasb/libc-database.git /opt/libc-database
