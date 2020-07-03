@@ -10,5 +10,10 @@
 *.png
 *.bin
 *.dmp
+*.data
+*.strings
+*.txt
+*.dat
+*.vacb
 output/
 jadx/
