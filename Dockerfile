@@ -22,8 +22,8 @@ RUN apt-get update && \
   apt-get full-upgrade -y && \
   apt-get install -y \
   # tools
-  git curl wget netcat socat build-essential tmux vim htop linux-headers-virtual dnsutils software-properties-common \
-  jq strace ltrace net-tools gdb gdb-multiarch binwalk steghide testdisk \
+  git curl wget netcat socat build-essential tmux vim htop linux-headers-virtual dnsutils software-properties-common apt-utils \
+  jq strace ltrace net-tools gdb gdb-multiarch binwalk steghide testdisk foremost \
   # scanning
   nmap masscan \
   # python stuff

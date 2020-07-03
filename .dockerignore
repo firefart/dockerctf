@@ -5,5 +5,10 @@
 *.exe
 *.py
 *.apk
+*.zip
+*.img
+*.png
+*.bin
+*.dmp
 output/
 jadx/
