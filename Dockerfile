@@ -23,7 +23,7 @@ RUN apt-get update && \
   apt-get install -y \
   # tools
   git curl wget netcat socat build-essential tmux vim htop linux-headers-virtual dnsutils software-properties-common apt-utils \
-  jq strace ltrace net-tools gdb gdb-multiarch binwalk steghide testdisk foremost sqlite3 pev yara \
+  jq strace ltrace net-tools gdb gdb-multiarch binwalk steghide testdisk foremost sqlite3 pev yara netmask \
   # scanning
   nmap masscan \
   # python stuff
@@ -125,7 +125,7 @@ RUN git clone https://github.com/volatilityfoundation/volatility3.git /opt/volat
 
 # volatility2
 RUN git clone https://github.com/volatilityfoundation/volatility.git /opt/volatility2 && \
-  pip2 install distorm3==3.4.4 pycrypto openpyxl Pillow
+  pip2 install distorm3==3.4.4 pycrypto openpyxl Pillow yara
 
 # libc-database
 RUN git clone https://github.com/niklasb/libc-database.git /opt/libc-database
