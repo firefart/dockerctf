@@ -130,6 +130,13 @@ RUN git clone https://github.com/volatilityfoundation/volatility.git /opt/volati
 # libc-database
 RUN git clone https://github.com/niklasb/libc-database.git /opt/libc-database
 
+# gdb GEF
+RUN wget -nv -O ~/.gdbinit-gef.py https://tinyurl.com/gef-master && \
+  echo source ~/.gdbinit-gef.py >> ~/.gdbinit
+
+# forensic stuff
+RUN pip3 install oletools
+
 # reset debian_frontend in the end
 ENV DEBIAN_FRONTEND teletype
 
