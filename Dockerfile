@@ -51,6 +51,10 @@ RUN pip2 install requests pycryptodome
 RUN update-alternatives --install /usr/local/bin/python python /usr/bin/python3 1
 RUN update-alternatives --install /usr/local/bin/pip pip /usr/bin/pip3 1
 
+# nodejs
+RUN curl -sL https://deb.nodesource.com/setup_current.x | bash - && \
+  apt-get install -y nodejs
+
 # wordlists
 RUN mkdir /wordlists && \
   wget -nv -O /wordlists/rockyou.txt https://www.scrapmaker.com/data/wordlists/dictionaries/rockyou.txt && \
@@ -139,5 +143,7 @@ RUN pip3 install oletools
 
 # reset debian_frontend in the end
 ENV DEBIAN_FRONTEND teletype
+
+EXPOSE 80 443 8080 8443 9999 9090 1337
 
 ENTRYPOINT [ "/bin/bash" ]
