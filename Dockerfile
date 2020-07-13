@@ -24,6 +24,8 @@ RUN apt-get update && \
   # tools
   git curl wget netcat socat build-essential tmux vim htop linux-headers-virtual dnsutils software-properties-common apt-utils \
   jq strace ltrace net-tools gdb gdb-multiarch binwalk steghide testdisk foremost sqlite3 pev yara netmask \
+  # JohnTheRipper
+  libssl-dev zlib1g-dev yasm pkg-config libgmp-dev libpcap-dev libbz2-dev nvidia-opencl-dev ocl-icd-opencl-dev opencl-headers pocl-opencl-icd \
   # scanning
   nmap masscan \
   # python stuff
@@ -140,6 +142,14 @@ RUN wget -nv -O ~/.gdbinit-gef.py https://tinyurl.com/gef-master && \
 
 # forensic stuff
 RUN pip3 install oletools
+
+# pw cracking
+RUN git clone https://github.com/magnumripper/JohnTheRipper.git /opt/JohnTheRipper && \
+  cd /opt/JohnTheRipper/src && \
+  ./configure && \
+  make -s clean && \
+  make -sj4 && \
+  make shell-completion
 
 # reset debian_frontend in the end
 ENV DEBIAN_FRONTEND teletype
