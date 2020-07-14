@@ -68,18 +68,18 @@ RUN mkdir /wordlists && \
   wget -nv -O /wordlists/directory-list-lowercase-2.3-small.txt https://github.com/dustyfresh/dictionaries/raw/master/DirBuster-Lists/directory-list-lowercase-2.3-small.txt
 
 # SecLists
-RUN git clone https://github.com/danielmiessler/SecLists.git /opt/SecLists
+RUN git clone --depth 1 https://github.com/danielmiessler/SecLists.git /opt/SecLists
 
-RUN git clone https://github.com/FlameOfIgnis/Pwdb-Public.git /opt/Pwdb-Public
+RUN git clone --depth 1 https://github.com/FlameOfIgnis/Pwdb-Public.git /opt/Pwdb-Public
 
 # oh my tmux
 ENV TERM=xterm-256color
-RUN git clone https://github.com/gpakosz/.tmux.git /root/.tmux && \
+RUN git clone --depth 1 https://github.com/gpakosz/.tmux.git /root/.tmux && \
   ln -s -f /root/.tmux/.tmux.conf /root/.tmux.conf && \
   cp /root/.tmux/.tmux.conf.local /root/
 
 # dotfiles
-RUN git clone https://github.com/FireFart/dotfiles /opt/dotfiles && \
+RUN git clone --depth 1 https://github.com/FireFart/dotfiles /opt/dotfiles && \
   cd /opt/dotfiles && \
   ./setup.sh
 
@@ -94,7 +94,7 @@ RUN url="https://golang.org/dl/go${GOLANG_VERSION}.linux-amd64.tar.gz"; \
 ENV PATH="${PATH}:/usr/local/go/bin:/root/go/bin"
 
 # gobuster
-RUN git clone --branch v3.1-cleaned https://github.com/OJ/gobuster.git /opt/gobuster && \
+RUN git clone --depth 1 --branch v3.1-cleaned https://github.com/OJ/gobuster.git /opt/gobuster && \
   cd /opt/gobuster && \
   go get . && \
   go build && \
@@ -118,23 +118,23 @@ RUN wget -nv -O /tmp/jadx.zip https://github.com/skylot/jadx/releases/download/v
 ENV PATH="${PATH}:/opt/jadx/bin"
 
 # sqlmap
-RUN git clone https://github.com/sqlmapproject/sqlmap.git /opt/sqlmap
+RUN git clone --depth 1 https://github.com/sqlmapproject/sqlmap.git /opt/sqlmap
 
 # wfuzz
-RUN git clone https://github.com/xmendez/wfuzz.git /opt/wfuzz
+RUN git clone --depth 1 https://github.com/xmendez/wfuzz.git /opt/wfuzz
 
 # volatility
-RUN git clone https://github.com/volatilityfoundation/volatility3.git /opt/volatility && \
+RUN git clone --depth 1 https://github.com/volatilityfoundation/volatility3.git /opt/volatility && \
   wget -nv -O /opt/volatility/volatility/symbols/windows.zip https://downloads.volatilityfoundation.org/volatility3/symbols/windows.zip && \
   wget -nv -O /opt/volatility/volatility/symbols/mac.zip https://downloads.volatilityfoundation.org/volatility3/symbols/mac.zip && \
   wget -nv -O /opt/volatility/volatility/symbols/linux.zip https://downloads.volatilityfoundation.org/volatility3/symbols/linux.zip
 
 # volatility2
-RUN git clone https://github.com/volatilityfoundation/volatility.git /opt/volatility2 && \
+RUN git clone --depth 1 https://github.com/volatilityfoundation/volatility.git /opt/volatility2 && \
   pip2 install distorm3==3.4.4 pycrypto openpyxl Pillow yara
 
 # libc-database
-RUN git clone https://github.com/niklasb/libc-database.git /opt/libc-database
+RUN git clone --depth 1 https://github.com/niklasb/libc-database.git /opt/libc-database
 
 # gdb GEF
 RUN wget -nv -O ~/.gdbinit-gef.py https://tinyurl.com/gef-master && \
@@ -144,7 +144,7 @@ RUN wget -nv -O ~/.gdbinit-gef.py https://tinyurl.com/gef-master && \
 RUN pip3 install oletools
 
 # pw cracking
-RUN git clone https://github.com/magnumripper/JohnTheRipper.git /opt/JohnTheRipper && \
+RUN git clone --depth 1 https://github.com/magnumripper/JohnTheRipper.git /opt/JohnTheRipper && \
   cd /opt/JohnTheRipper/src && \
   ./configure && \
   make -s clean && \
