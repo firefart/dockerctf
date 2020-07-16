@@ -17,3 +17,5 @@
 *.vacb
 output/
 jadx/
+temp/
+
