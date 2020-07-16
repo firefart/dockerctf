@@ -23,7 +23,7 @@ RUN apt-get update && \
   apt-get install -y \
   # tools
   git curl wget netcat socat build-essential tmux vim htop linux-headers-virtual dnsutils software-properties-common apt-utils \
-  jq strace ltrace net-tools gdb gdb-multiarch binwalk steghide testdisk foremost sqlite3 pev yara netmask \
+  jq strace ltrace net-tools gdb gdb-multiarch binwalk steghide testdisk foremost sqlite3 pev yara netmask exiftool \
   # JohnTheRipper
   libssl-dev zlib1g-dev yasm pkg-config libgmp-dev libpcap-dev libbz2-dev nvidia-opencl-dev ocl-icd-opencl-dev opencl-headers pocl-opencl-icd \
   # scanning
@@ -36,6 +36,8 @@ RUN apt-get update && \
   python3-chardet python3-pycurl python3-future \
   # volatility dependencies
   pcregrep libpcre++-dev python2-dev python3-dev python3-pefile python3-yara python3-capstone \
+  # angr deps
+  python3-dev libffi-dev build-essential \
   && \
   # java (needs wget and software-properties-common from above)
   wget -nv -O- https://apt.corretto.aws/corretto.key | apt-key add - && \
@@ -141,8 +143,8 @@ RUN git clone --depth 1 https://github.com/niklasb/libc-database.git /opt/libc-d
 RUN wget -nv -O ~/.gdbinit-gef.py https://tinyurl.com/gef-master && \
   echo source ~/.gdbinit-gef.py >> ~/.gdbinit
 
-# forensic stuff
-RUN pip3 install oletools
+# Python Stuff
+RUN pip3 install oletools angr
 
 # pw cracking
 RUN git clone --depth 1 https://github.com/magnumripper/JohnTheRipper.git /opt/JohnTheRipper && \
