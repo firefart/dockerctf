@@ -131,7 +131,8 @@ RUN git clone --depth 1 https://github.com/volatilityfoundation/volatility3.git 
 
 # volatility2
 RUN git clone --depth 1 https://github.com/volatilityfoundation/volatility.git /opt/volatility2 && \
-  pip2 install distorm3==3.4.4 pycrypto openpyxl Pillow yara
+  pip2 install distorm3==3.4.4 pycrypto openpyxl Pillow yara && \
+  ln -fs /usr/local/lib/python2.7/dist-packages/usr/lib/libyara.so /usr/lib/libyara.so
 
 # libc-database
 RUN git clone --depth 1 https://github.com/niklasb/libc-database.git /opt/libc-database
