@@ -23,7 +23,8 @@ RUN apt-get update && \
   apt-get install -y \
   # tools
   git curl wget netcat socat build-essential tmux vim htop linux-headers-virtual dnsutils software-properties-common apt-utils \
-  jq strace ltrace net-tools gdb gdb-multiarch binwalk steghide testdisk foremost sqlite3 pev yara netmask exiftool \
+  jq strace ltrace net-tools gdb gdb-multiarch binwalk steghide testdisk foremost sqlite3 pev yara netmask exiftool bsdmainutils \
+  chromium-browser \
   # JohnTheRipper
   libssl-dev zlib1g-dev yasm pkg-config libgmp-dev libpcap-dev libbz2-dev nvidia-opencl-dev ocl-icd-opencl-dev opencl-headers pocl-opencl-icd \
   # scanning
@@ -53,7 +54,7 @@ RUN pip2 install requests pycryptodome
 
 # make sure we can use python to launch python3
 RUN update-alternatives --install /usr/local/bin/python python /usr/bin/python3 1
-RUN update-alternatives --install /usr/local/bin/pip pip /usr/bin/pip3 1
+RUN rm -f /usr/local/bin/pip && update-alternatives --install /usr/local/bin/pip pip /usr/bin/pip3 1
 
 # nodejs
 RUN curl -sL https://deb.nodesource.com/setup_current.x | bash - && \
@@ -67,12 +68,15 @@ RUN mkdir /wordlists && \
   wget -nv -O /wordlists/directory-list-2.3-small.txt https://github.com/dustyfresh/dictionaries/raw/master/DirBuster-Lists/directory-list-2.3-small.txt && \
   wget -nv -O /wordlists/directory-list-lowercase-2.3-big.txt https://github.com/dustyfresh/dictionaries/raw/master/DirBuster-Lists/directory-list-lowercase-2.3-big.txt && \
   wget -nv -O /wordlists/directory-list-lowercase-2.3-medium.txt https://github.com/dustyfresh/dictionaries/raw/master/DirBuster-Lists/directory-list-lowercase-2.3-medium.txt && \
-  wget -nv -O /wordlists/directory-list-lowercase-2.3-small.txt https://github.com/dustyfresh/dictionaries/raw/master/DirBuster-Lists/directory-list-lowercase-2.3-small.txt
+  wget -nv -O /wordlists/directory-list-lowercase-2.3-small.txt https://github.com/dustyfresh/dictionaries/raw/master/DirBuster-Lists/directory-list-lowercase-2.3-small.txt && \
+  wget -nv -O /wordlists/jhaddix-all.txt https://gist.github.com/jhaddix/86a06c5dc309d08580a018c66354a056/raw/96f4e51d96b2203f19f6381c8c545b278eaa0837/all.txt
 
 # SecLists
-RUN git clone --depth 1 https://github.com/danielmiessler/SecLists.git /opt/SecLists
+RUN git clone --depth 1 https://github.com/danielmiessler/SecLists.git /wordlists/SecLists
 
-RUN git clone --depth 1 https://github.com/FlameOfIgnis/Pwdb-Public.git /opt/Pwdb-Public
+RUN git clone --depth 1 https://github.com/FlameOfIgnis/Pwdb-Public.git /wordlists/Pwdb-Public
+
+RUN git clone --depth 1 https://github.com/assetnote/commonspeak2-wordlists /wordlists/commonspeak2
 
 # oh my tmux
 ENV TERM=xterm-256color
@@ -93,7 +97,8 @@ RUN url="https://golang.org/dl/go${GOLANG_VERSION}.linux-amd64.tar.gz"; \
 	rm go.tgz;
 
 # update PATH
-ENV PATH="${PATH}:/usr/local/go/bin:/root/go/bin"
+ENV GOPATH="/root/go"
+ENV PATH="${PATH}:/usr/local/go/bin:${GOPATH}/bin"
 
 # gobuster
 RUN git clone --depth 1 --branch v3.1-cleaned https://github.com/OJ/gobuster.git /opt/gobuster && \
@@ -140,7 +145,7 @@ RUN git clone --depth 1 https://github.com/volatilityfoundation/volatility.git /
 RUN git clone --depth 1 https://github.com/niklasb/libc-database.git /opt/libc-database
 
 # gdb GEF
-RUN wget -nv -O ~/.gdbinit-gef.py https://tinyurl.com/gef-master && \
+RUN wget -nv -O ~/.gdbinit-gef.py https://raw.githubusercontent.com/hugsy/gef/master/scripts/gef.sh && \
   echo source ~/.gdbinit-gef.py >> ~/.gdbinit
 
 # Python Stuff
@@ -153,6 +158,50 @@ RUN git clone --depth 1 https://github.com/magnumripper/JohnTheRipper.git /opt/J
   make -s clean && \
   make -sj4 && \
   make shell-completion
+
+# OSINT Section
+
+# ASNLookup
+RUN git clone --depth 1 https://github.com/yassineaboukir/Asnlookup /opt/asnlookup && \
+  pip3 install -r /opt/asnlookup/requirements.txt
+
+# ASNRecon
+RUN git clone --depth 1 https://github.com/orlyjamie/asnrecon /opt/asnrecon && \
+  pip3 install -r /opt/asnrecon/requirements.txt
+
+# Amass
+RUN git clone --depth 1 https://github.com/OWASP/Amass.git /opt/amass && \
+  cd /opt/amass && go get ./... && go install ./...
+
+# DomLink
+RUN git clone --depth 1 https://github.com/vysecurity/DomLink.git /opt/domlink && \
+  pip3 install -r /opt/domlink/requirements.txt
+
+# GoSpider
+RUN go get -u github.com/jaeles-project/gospider
+
+# Hakkawler
+RUN go get -u github.com/hakluke/hakrawler
+
+# Subdomainzier
+RUN git clone --depth 1 https://github.com/nsonaniya2010/SubDomainizer.git /opt/subdomainizer && \
+  pip3 install -r /opt/subdomainizer/requirements.txt
+
+# Subfinder
+RUN go get -u github.com/projectdiscovery/subfinder/cmd/subfinder
+
+# httprobe
+RUN go get -u github.com/tomnomnom/httprobe
+
+# nuclei
+RUN go get -u -v github.com/projectdiscovery/nuclei/v2/cmd/nuclei
+
+# aquatone
+RUN go get -u github.com/michenriksen/aquatone
+
+# brutespray
+RUN git clone --depth 1 https://github.com/x90skysn3k/brutespray.git /opt/brutespray && \
+  pip3 install -r /opt/brutespray/requirements.txt
 
 # reset debian_frontend in the end
 ENV DEBIAN_FRONTEND teletype
