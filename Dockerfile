@@ -6,6 +6,7 @@ ARG GOLANG_SHASUM="5c566ddc2e0bcfc25c26a5dc44a440fcc0177f7350c1f01952b34d5989a0d
 ARG APKTOOL_VERSION="2.4.1"
 ARG JAVA_VERSION="11"
 ARG JADX_VERSION="1.1.0"
+ARG CFR_VERSION="0.150"
 
 ARG DEBIAN_FRONTEND="noninteractive"
 
@@ -120,6 +121,9 @@ RUN wget -nv -O /usr/local/bin/apktool https://raw.githubusercontent.com/iBotPea
 RUN wget -nv -O /tmp/jadx.zip https://github.com/skylot/jadx/releases/download/v${JADX_VERSION}/jadx-${JADX_VERSION}.zip && \
   unzip -qq /tmp/jadx.zip -d /opt/jadx/ && \
   rm -f /tmp/jadx.zip
+
+# CFR java decompiler
+RUN wget -nv -O /opt/cfr.jar https://github.com/leibnitz27/cfr/releases/download/${CFR_VERSION}/cfr-${CFR_VERSION}.jar
 
 # update PATH
 ENV PATH="${PATH}:/opt/jadx/bin"
