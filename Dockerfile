@@ -25,7 +25,7 @@ RUN apt-get update && \
   # tools
   git curl wget netcat socat build-essential tmux vim htop linux-headers-virtual dnsutils software-properties-common apt-utils \
   jq strace ltrace net-tools gdb gdb-multiarch binwalk steghide testdisk foremost sqlite3 pev yara netmask exiftool bsdmainutils \
-  chromium-browser \
+  chromium-browser zsh \
   # JohnTheRipper
   libssl-dev zlib1g-dev yasm pkg-config libgmp-dev libpcap-dev libbz2-dev nvidia-opencl-dev ocl-icd-opencl-dev opencl-headers pocl-opencl-icd \
   # scanning
@@ -198,7 +198,7 @@ RUN go get -u github.com/projectdiscovery/subfinder/cmd/subfinder
 RUN go get -u github.com/tomnomnom/httprobe
 
 # nuclei
-RUN go get -u -v github.com/projectdiscovery/nuclei/v2/cmd/nuclei
+RUN go get -u github.com/projectdiscovery/nuclei/cmd/nuclei
 
 # aquatone
 RUN go get -u github.com/michenriksen/aquatone
