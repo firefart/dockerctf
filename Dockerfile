@@ -209,6 +209,11 @@ RUN go get -u github.com/michenriksen/aquatone
 RUN git clone --depth 1 https://github.com/x90skysn3k/brutespray.git /opt/brutespray && \
   pip3 install -r /opt/brutespray/requirements.txt
 
+# uncompyle
+RUN git clone --depth 1 https://github.com/rocky/python-uncompyle6.git /opt/uncompyle6 && \
+  cd /opt/uncompyle6 && \
+  python3 setup.py install
+
 # reset debian_frontend in the end
 ENV DEBIAN_FRONTEND teletype
 
