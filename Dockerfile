@@ -37,7 +37,7 @@ RUN apt-get update && \
   # wfuzz dependencies
   python3-chardet python3-pycurl python3-future \
   # volatility dependencies
-  pcregrep libpcre++-dev python2-dev python3-dev python3-pefile python3-yara python3-capstone \
+  pcregrep libpcre++-dev python2-dev python3-dev python3-pefile python3-capstone \
   # angr deps
   python3-dev libffi-dev build-essential \
   && \
@@ -136,13 +136,15 @@ RUN git clone --depth 1 https://github.com/xmendez/wfuzz.git /opt/wfuzz
 
 # volatility
 RUN git clone --depth 1 https://github.com/volatilityfoundation/volatility3.git /opt/volatility && \
+  # the version from apt will not work
+  pip3 install yara-python && \
   wget -nv -O /opt/volatility/volatility/symbols/windows.zip https://downloads.volatilityfoundation.org/volatility3/symbols/windows.zip && \
   wget -nv -O /opt/volatility/volatility/symbols/mac.zip https://downloads.volatilityfoundation.org/volatility3/symbols/mac.zip && \
   wget -nv -O /opt/volatility/volatility/symbols/linux.zip https://downloads.volatilityfoundation.org/volatility3/symbols/linux.zip
 
 # volatility2
 RUN git clone --depth 1 https://github.com/volatilityfoundation/volatility.git /opt/volatility2 && \
-  pip2 install distorm3==3.4.4 pycrypto openpyxl Pillow yara && \
+  pip2 install distorm3==3.4.4 pycrypto openpyxl Pillow yara-python && \
   ln -fs /usr/local/lib/python2.7/dist-packages/usr/lib/libyara.so /usr/lib/libyara.so
 
 # libc-database
