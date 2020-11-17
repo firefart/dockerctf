@@ -1,8 +1,8 @@
 FROM ubuntu:latest
 LABEL maintainer="firefart <firefart@gmail.com>"
 
-ARG GOLANG_VERSION="1.15.1"
-ARG GOLANG_SHASUM="70ac0dbf60a8ee9236f337ed0daa7a4c3b98f6186d4497826f68e97c0c0413f6"
+ARG GOLANG_VERSION="1.15.5"
+ARG GOLANG_SHASUM="9a58494e8da722c3aef248c9227b0e9c528c7318309827780f16220998180a0d"
 ARG APKTOOL_VERSION="2.4.1"
 ARG JAVA_VERSION="11"
 ARG JADX_VERSION="1.1.0"
@@ -102,7 +102,7 @@ ENV GOPATH="/root/go"
 ENV PATH="${PATH}:/usr/local/go/bin:${GOPATH}/bin"
 
 # gobuster
-RUN git clone --depth 1 --branch v3.1-cleaned https://github.com/OJ/gobuster.git /opt/gobuster && \
+RUN git clone --depth 1 https://github.com/OJ/gobuster.git /opt/gobuster && \
   cd /opt/gobuster && \
   go get . && \
   go build && \
@@ -194,13 +194,13 @@ RUN git clone --depth 1 https://github.com/nsonaniya2010/SubDomainizer.git /opt/
   pip3 install -r /opt/subdomainizer/requirements.txt
 
 # Subfinder
-RUN go get -u github.com/projectdiscovery/subfinder/cmd/subfinder
+RUN go get -u github.com/projectdiscovery/subfinder/v2/cmd/subfinder
 
 # httprobe
 RUN go get -u github.com/tomnomnom/httprobe
 
 # nuclei
-RUN go get -u github.com/projectdiscovery/nuclei/cmd/nuclei
+RUN go get -u github.com/projectdiscovery/nuclei/v2/cmd/nuclei
 
 # aquatone
 RUN go get -u github.com/michenriksen/aquatone
