@@ -211,7 +211,11 @@ RUN git clone --depth 1 https://github.com/projectdiscovery/subfinder.git /opt/s
 RUN go get -u github.com/tomnomnom/httprobe
 
 # nuclei
-RUN go get -u github.com/projectdiscovery/nuclei/v2/cmd/nuclei
+RUN git clone --depth 1 https://github.com/projectdiscovery/nuclei.git /opt/nuclei && \
+  cd /opt/nuclei/v2/cmd/nuclei && \
+  go get . && \
+  go build && \
+  go install
 
 # aquatone
 RUN go get -u github.com/michenriksen/aquatone
