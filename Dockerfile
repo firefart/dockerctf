@@ -1,11 +1,11 @@
 FROM ubuntu:latest
 LABEL maintainer="firefart <firefart@gmail.com>"
 
-ARG GOLANG_VERSION="1.15.5"
-ARG GOLANG_SHASUM="9a58494e8da722c3aef248c9227b0e9c528c7318309827780f16220998180a0d"
-ARG APKTOOL_VERSION="2.4.1"
+ARG GOLANG_VERSION="1.15.6"
+ARG GOLANG_SHASUM="3918e6cc85e7eaaa6f859f1bdbaac772e7a825b0eb423c63d3ae68b21f84b844"
+ARG APKTOOL_VERSION="2.5.0"
 ARG JAVA_VERSION="11"
-ARG JADX_VERSION="1.1.0"
+ARG JADX_VERSION="1.2.0"
 ARG CFR_VERSION="0.150"
 
 ARG DEBIAN_FRONTEND="noninteractive"
@@ -108,6 +108,13 @@ RUN git clone --depth 1 https://github.com/OJ/gobuster.git /opt/gobuster && \
   go build && \
   go install
 
+# ffuf
+RUN git clone --depth 1 https://github.com/ffuf/ffuf.git /opt/ffuf && \
+  cd /opt/ffuf && \
+  go get . && \
+  go build && \
+  go install
+
 # wpscan
 RUN echo "gem: --no-ri --no-rdoc" > /etc/gemrc
 RUN gem install wpscan
@@ -194,7 +201,11 @@ RUN git clone --depth 1 https://github.com/nsonaniya2010/SubDomainizer.git /opt/
   pip3 install -r /opt/subdomainizer/requirements.txt
 
 # Subfinder
-RUN go get -u github.com/projectdiscovery/subfinder/v2/cmd/subfinder
+RUN git clone --depth 1 https://github.com/projectdiscovery/subfinder.git /opt/subfinder && \
+  cd /opt/subfinder/v2/cmd/subfinder && \
+  go get . && \
+  go build && \
+  go install
 
 # httprobe
 RUN go get -u github.com/tomnomnom/httprobe
