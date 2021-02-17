@@ -103,18 +103,10 @@ ENV GOPATH="/root/go"
 ENV PATH="${PATH}:/usr/local/go/bin:${GOPATH}/bin"
 
 # gobuster
-RUN git clone --depth 1 https://github.com/OJ/gobuster.git /opt/gobuster && \
-  cd /opt/gobuster && \
-  go get . && \
-  go build && \
-  go install
+RUN go install github.com/OJ/gobuster@latest
 
 # ffuf
-RUN git clone --depth 1 https://github.com/ffuf/ffuf.git /opt/ffuf && \
-  cd /opt/ffuf && \
-  go get . && \
-  go build && \
-  go install
+RUN go install github.com/ffuf/ffuf@latest
 
 # wpscan
 RUN echo "gem: --no-ri --no-rdoc" > /etc/gemrc
@@ -193,34 +185,26 @@ RUN git clone --depth 1 https://github.com/vysecurity/DomLink.git /opt/domlink &
   pip3 install -r /opt/domlink/requirements.txt
 
 # GoSpider
-RUN go get -u github.com/jaeles-project/gospider
+RUN go install github.com/jaeles-project/gospider@latest
 
 # Hakkawler
-RUN go get -u github.com/hakluke/hakrawler
+RUN go install github.com/hakluke/hakrawler@latest
 
 # Subdomainzier
 RUN git clone --depth 1 https://github.com/nsonaniya2010/SubDomainizer.git /opt/subdomainizer && \
   pip3 install -r /opt/subdomainizer/requirements.txt
 
 # Subfinder
-RUN git clone --depth 1 https://github.com/projectdiscovery/subfinder.git /opt/subfinder && \
-  cd /opt/subfinder/v2/cmd/subfinder && \
-  go get . && \
-  go build && \
-  go install
+RUN go install github.com/projectdiscovery/subfinder/v2/cmd/subfinder@latest
 
 # httprobe
-RUN go get -u github.com/tomnomnom/httprobe
+RUN go install github.com/tomnomnom/httprobe@latest
 
 # nuclei
-RUN git clone --depth 1 https://github.com/projectdiscovery/nuclei.git /opt/nuclei && \
-  cd /opt/nuclei/v2/cmd/nuclei && \
-  go get . && \
-  go build && \
-  go install
+RUN go install github.com/projectdiscovery/nuclei/v2/cmd/nuclei@latest
 
 # aquatone
-RUN go get -u github.com/michenriksen/aquatone
+RUN go install github.com/firefart/aquatone@latest
 
 # brutespray
 RUN git clone --depth 1 https://github.com/x90skysn3k/brutespray.git /opt/brutespray && \
