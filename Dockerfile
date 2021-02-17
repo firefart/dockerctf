@@ -1,7 +1,7 @@
 FROM ubuntu:latest
 LABEL maintainer="firefart <firefart@gmail.com>"
 
-ARG GOLANG_VERSION="1.16.0"
+ARG GOLANG_VERSION="1.16"
 ARG GOLANG_SHASUM="013a489ebb3e24ef3d915abe5b94c3286c070dfe0818d5bca8108f1d6e8440d2"
 ARG APKTOOL_VERSION="2.5.0"
 ARG JAVA_VERSION="11"
@@ -92,11 +92,11 @@ RUN git clone --depth 1 https://github.com/FireFart/dotfiles /opt/dotfiles && \
   ./setup.sh
 
 # install go
-RUN url="https://golang.org/dl/go${GOLANG_VERSION}.linux-amd64.tar.gz"; \
-  wget -O go.tgz -nv "$url"; \
-  echo "${GOLANG_SHASUM} *go.tgz" | sha256sum -c -; \
-  tar -C /usr/local -xzf go.tgz; \
-  rm go.tgz;
+RUN url="https://golang.org/dl/go${GOLANG_VERSION}.linux-amd64.tar.gz" && \
+  wget -O go.tgz -nv "$url" && \
+  echo "${GOLANG_SHASUM} *go.tgz" | sha256sum -c - && \
+  tar -C /usr/local/go -xzf go.tgz && \
+  rm go.tgz
 
 # update PATH
 ENV GOPATH="/root/go"
