@@ -95,7 +95,7 @@ RUN git clone --depth 1 https://github.com/FireFart/dotfiles /opt/dotfiles && \
 RUN url="https://golang.org/dl/go${GOLANG_VERSION}.linux-amd64.tar.gz" && \
   wget -O go.tgz -nv "$url" && \
   echo "${GOLANG_SHASUM} *go.tgz" | sha256sum -c - && \
-  tar -C /usr/local/go -xzf go.tgz && \
+  tar -C /usr/local -xzf go.tgz && \
   rm go.tgz
 
 # update PATH
