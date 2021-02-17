@@ -1,8 +1,8 @@
 FROM ubuntu:latest
 LABEL maintainer="firefart <firefart@gmail.com>"
 
-ARG GOLANG_VERSION="1.15.6"
-ARG GOLANG_SHASUM="3918e6cc85e7eaaa6f859f1bdbaac772e7a825b0eb423c63d3ae68b21f84b844"
+ARG GOLANG_VERSION="1.16.0"
+ARG GOLANG_SHASUM="013a489ebb3e24ef3d915abe5b94c3286c070dfe0818d5bca8108f1d6e8440d2"
 ARG APKTOOL_VERSION="2.5.0"
 ARG JAVA_VERSION="11"
 ARG JADX_VERSION="1.2.0"
@@ -49,8 +49,9 @@ RUN apt-get update && \
   apt-get -y autoremove
 
 # Install PIP2 and packages (are not available on the repo)
-RUN curl https://bootstrap.pypa.io/get-pip.py -o /tmp/get-pip.py && \
-  python2 /tmp/get-pip.py
+RUN curl https://bootstrap.pypa.io/2.7/get-pip.py -o /tmp/get-pip.py && \
+  python2 /tmp/get-pip.py && \
+  rm -f /tmp/get-pip.py
 RUN pip2 install requests pycryptodome
 
 # make sure we can use python to launch python3
@@ -92,10 +93,10 @@ RUN git clone --depth 1 https://github.com/FireFart/dotfiles /opt/dotfiles && \
 
 # install go
 RUN url="https://golang.org/dl/go${GOLANG_VERSION}.linux-amd64.tar.gz"; \
-	wget -O go.tgz -nv "$url"; \
-	echo "${GOLANG_SHASUM} *go.tgz" | sha256sum -c -; \
-	tar -C /usr/local -xzf go.tgz; \
-	rm go.tgz;
+  wget -O go.tgz -nv "$url"; \
+  echo "${GOLANG_SHASUM} *go.tgz" | sha256sum -c -; \
+  tar -C /usr/local -xzf go.tgz; \
+  rm go.tgz;
 
 # update PATH
 ENV GOPATH="/root/go"
