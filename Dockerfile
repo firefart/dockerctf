@@ -52,7 +52,7 @@ RUN apt-get update && \
 RUN curl https://bootstrap.pypa.io/2.7/get-pip.py -o /tmp/get-pip.py && \
   python2 /tmp/get-pip.py && \
   rm -f /tmp/get-pip.py
-RUN pip2 install requests pycryptodome
+RUN pip2 install wheel requests pycryptodome
 
 # make sure we can use python to launch python3
 RUN update-alternatives --install /usr/local/bin/python python /usr/bin/python3 1
@@ -146,6 +146,7 @@ RUN git clone --depth 1 https://github.com/xmendez/wfuzz.git /opt/wfuzz
 RUN git clone --depth 1 https://github.com/volatilityfoundation/volatility3.git /opt/volatility && \
   # the version from apt will not work
   pip3 install yara-python && \
+  mkdir -p /opt/volatility/volatility/symbols/ && \
   wget -nv -O /opt/volatility/volatility/symbols/windows.zip https://downloads.volatilityfoundation.org/volatility3/symbols/windows.zip && \
   wget -nv -O /opt/volatility/volatility/symbols/mac.zip https://downloads.volatilityfoundation.org/volatility3/symbols/mac.zip && \
   wget -nv -O /opt/volatility/volatility/symbols/linux.zip https://downloads.volatilityfoundation.org/volatility3/symbols/linux.zip
