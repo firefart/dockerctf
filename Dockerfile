@@ -49,7 +49,7 @@ RUN apt-get update && \
   apt-get -y autoremove
 
 # Install PIP2 and packages (are not available on the repo)
-RUN curl https://bootstrap.pypa.io/2.7/get-pip.py -o /tmp/get-pip.py && \
+RUN curl https://bootstrap.pypa.io/pip/2.7/get-pip.py -o /tmp/get-pip.py && \
   python2 /tmp/get-pip.py && \
   rm -f /tmp/get-pip.py
 RUN pip2 install wheel requests pycryptodome
