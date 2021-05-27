@@ -103,7 +103,7 @@ ENV GOPATH="/root/go"
 ENV PATH="${PATH}:/usr/local/go/bin:${GOPATH}/bin"
 
 # gobuster
-RUN go install github.com/OJ/gobuster@latest
+RUN go install github.com/OJ/gobuster/v3@latest
 
 # ffuf
 RUN go install github.com/ffuf/ffuf@latest
