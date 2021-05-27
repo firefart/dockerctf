@@ -103,10 +103,10 @@ ENV GOPATH="/root/go"
 ENV PATH="${PATH}:/usr/local/go/bin:${GOPATH}/bin"
 
 # gobuster
-RUN go install github.com/OJ/gobuster/v3@latest
+RUN go install github.com/OJ/gobuster/v3@master
 
 # ffuf
-RUN go install github.com/ffuf/ffuf@latest
+RUN go install github.com/ffuf/ffuf@master
 
 # wpscan
 RUN echo "gem: --no-ri --no-rdoc" > /etc/gemrc
@@ -185,26 +185,26 @@ RUN git clone --depth 1 https://github.com/vysecurity/DomLink.git /opt/domlink &
   pip3 install -r /opt/domlink/requirements.txt
 
 # GoSpider
-RUN go install github.com/jaeles-project/gospider@latest
+RUN go install github.com/jaeles-project/gospider@master
 
 # Hakkawler
-RUN go install github.com/hakluke/hakrawler@latest
+RUN go install github.com/hakluke/hakrawler@master
 
 # Subdomainzier
 RUN git clone --depth 1 https://github.com/nsonaniya2010/SubDomainizer.git /opt/subdomainizer && \
   pip3 install -r /opt/subdomainizer/requirements.txt
 
 # Subfinder
-RUN go install github.com/projectdiscovery/subfinder/v2/cmd/subfinder@latest
+RUN go install github.com/projectdiscovery/subfinder/v2/cmd/subfinder@master
 
 # httprobe
-RUN go install github.com/tomnomnom/httprobe@latest
+RUN go install github.com/tomnomnom/httprobe@master
 
 # nuclei
-RUN go install github.com/projectdiscovery/nuclei/v2/cmd/nuclei@latest
+RUN go install github.com/projectdiscovery/nuclei/v2/cmd/nuclei@master
 
 # aquatone
-RUN go install github.com/firefart/aquatone@latest
+RUN go install github.com/firefart/aquatone@master
 
 # brutespray
 RUN git clone --depth 1 https://github.com/x90skysn3k/brutespray.git /opt/brutespray && \
