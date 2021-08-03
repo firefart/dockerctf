@@ -18,4 +18,5 @@
 output/
 jadx/
 temp/
-
+.git/
+.github/
