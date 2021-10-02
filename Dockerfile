@@ -217,6 +217,9 @@ RUN git clone --depth 1 https://github.com/rocky/python-uncompyle6.git /opt/unco
   cd /opt/uncompyle6 && \
   python3 setup.py install
 
+# httpx
+RUN go install github.com/projectdiscovery/httpx/cmd/httpx@master
+
 # reset debian_frontend in the end
 ENV DEBIAN_FRONTEND teletype
 
