@@ -25,7 +25,7 @@ RUN apt-get update && \
   # tools
   git curl wget netcat socat build-essential tmux vim htop linux-headers-virtual dnsutils software-properties-common apt-utils \
   jq strace ltrace net-tools gdb gdb-multiarch binwalk steghide testdisk foremost sqlite3 pev yara netmask exiftool bsdmainutils \
-  chromium-browser zsh \
+  chromium-browser zsh aircrack-ng \
   # binwalk
   lzop lhasa \
   # JohnTheRipper
