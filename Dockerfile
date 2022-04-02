@@ -25,7 +25,7 @@ RUN apt-get update && \
   # tools
   git curl wget netcat socat build-essential tmux vim htop linux-headers-virtual dnsutils software-properties-common apt-utils \
   jq strace ltrace net-tools gdb gdb-multiarch binwalk steghide testdisk foremost sqlite3 pev yara netmask exiftool bsdmainutils \
-  chromium-browser zsh aircrack-ng \
+  chromium-browser zsh aircrack-ng imagemagick \
   # binwalk
   lzop lhasa \
   # JohnTheRipper
@@ -33,7 +33,7 @@ RUN apt-get update && \
   # scanning
   nmap masscan \
   # python stuff
-  python2 python3 python3-wheel python3-requests python3-virtualenv python3-bs4 python3-pip python3-pycryptodome \
+  python2 python3 python3-wheel python3-venv python3-requests python3-virtualenv python3-bs4 python3-pip python3-pycryptodome \
   # wpscan dependencies
   ruby ruby-dev rubygems zlib1g-dev liblzma-dev \
   # wfuzz dependencies
@@ -219,6 +219,11 @@ RUN git clone --depth 1 https://github.com/rocky/python-uncompyle6.git /opt/unco
 
 # httpx
 RUN go install github.com/projectdiscovery/httpx/cmd/httpx@master
+
+# sherlock
+RUN git clone --depth 1 https://github.com/sherlock-project/sherlock /opt/sherlock && \
+  cd /opt/sherlock && \
+  python3 -m pip install -r requirements.txt
 
 # reset debian_frontend in the end
 ENV DEBIAN_FRONTEND teletype
