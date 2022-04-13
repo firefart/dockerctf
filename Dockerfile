@@ -89,7 +89,7 @@ RUN git clone --depth 1 https://github.com/gpakosz/.tmux.git /root/.tmux && \
   cp /root/.tmux/.tmux.conf.local /root/
 
 # dotfiles
-RUN git clone --depth 1 https://github.com/FireFart/dotfiles /opt/dotfiles && \
+RUN git clone --depth 1 https://github.com/firefart/dotfiles /opt/dotfiles && \
   cd /opt/dotfiles && \
   ./setup.sh
 
