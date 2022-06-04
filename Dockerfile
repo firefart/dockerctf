@@ -1,11 +1,11 @@
 FROM ubuntu:latest
 LABEL maintainer="firefart <firefart@gmail.com>"
 
-ARG GOLANG_VERSION="1.18"
-ARG GOLANG_SHASUM="e85278e98f57cdb150fe8409e6e5df5343ecb13cebf03a5d5ff12bd55a80264f"
+ARG GOLANG_VERSION="1.18.3"
+ARG GOLANG_SHASUM="956f8507b302ab0bb747613695cdae10af99bbd39a90cae522b7c0302cc27245"
 ARG APKTOOL_VERSION="2.6.1"
-ARG JAVA_VERSION="17"
-ARG JADX_VERSION="1.3.4"
+ARG JAVA_VERSION="18"
+ARG JADX_VERSION="1.4.1"
 ARG CFR_VERSION="0.152"
 
 ARG DEBIAN_FRONTEND="noninteractive"
@@ -105,7 +105,7 @@ ENV GOPATH="/root/go"
 ENV PATH="${PATH}:/usr/local/go/bin:${GOPATH}/bin"
 
 # gobuster
-RUN go install github.com/OJ/gobuster/v3@master
+RUN go install github.com/OJ/gobuster/v3@dev
 
 # ffuf
 RUN go install github.com/ffuf/ffuf@master
