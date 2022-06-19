@@ -163,7 +163,7 @@ RUN pip3 install oletools angr
 # pw cracking
 RUN git clone --depth 1 https://github.com/magnumripper/JohnTheRipper.git /opt/JohnTheRipper && \
   cd /opt/JohnTheRipper/src && \
-  ./configure && \
+  ./configure --disable-native-tests && \
   make -s clean && \
   make -sj4 && \
   make shell-completion
