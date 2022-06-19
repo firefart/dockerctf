@@ -28,6 +28,8 @@ RUN apt-get update && \
   chromium-browser zsh aircrack-ng imagemagick \
   # binwalk
   lzop lhasa \
+  # sasquatch
+  build-essential liblzma-dev liblzo2-dev zlib1g-dev \
   # JohnTheRipper
   libssl-dev zlib1g-dev yasm pkg-config libgmp-dev libpcap-dev libbz2-dev nvidia-opencl-dev ocl-icd-opencl-dev opencl-headers pocl-opencl-icd \
   # scanning
@@ -224,6 +226,13 @@ RUN go install github.com/projectdiscovery/httpx/cmd/httpx@master
 RUN git clone --depth 1 https://github.com/sherlock-project/sherlock /opt/sherlock && \
   cd /opt/sherlock && \
   python3 -m pip install -r requirements.txt
+
+# sasquatch
+RUN git clone --depth 1 https://github.com/devttys0/sasquatch.git /opt/sasquatch && \
+  cd /opt/sasquatch && \
+  wget https://patch-diff.githubusercontent.com/raw/devttys0/sasquatch/pull/47.patch -O 47.patch && \
+  patch -p1 < 47.patch && \
+  ./build.sh
 
 # reset debian_frontend in the end
 ENV DEBIAN_FRONTEND teletype
