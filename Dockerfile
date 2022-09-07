@@ -1,11 +1,11 @@
 FROM ubuntu:latest
 LABEL maintainer="firefart <firefart@gmail.com>"
 
-ARG GOLANG_VERSION="1.19"
-ARG GOLANG_SHASUM="464b6b66591f6cf055bc5df90a9750bf5fbc9d038722bb84a9d56a2bea974be6"
+ARG GOLANG_VERSION="1.19.1"
+ARG GOLANG_SHASUM="acc512fbab4f716a8f97a8b3fbaa9ddd39606a28be6c2515ef7c6c6311acffde"
 ARG APKTOOL_VERSION="2.6.1"
 ARG JAVA_VERSION="18"
-ARG JADX_VERSION="1.4.3"
+ARG JADX_VERSION="1.4.4"
 ARG CFR_VERSION="0.152"
 
 ARG DEBIAN_FRONTEND="noninteractive"
@@ -51,6 +51,13 @@ RUN apt-get update && \
   apt-get update && apt-get install -y java-${JAVA_VERSION}-amazon-corretto-jdk && \
   # remove unneeded packages
   apt-get -y autoremove
+
+# rust
+RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+ENV PATH="${PATH}:/root/.cargo/bin"
+
+# install arti (tor support)
+RUN cargo install arti
 
 # Install PIP2 and packages (are not available on the repo)
 RUN curl https://bootstrap.pypa.io/pip/2.7/get-pip.py -o /tmp/get-pip.py && \
