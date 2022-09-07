@@ -44,6 +44,8 @@ RUN apt-get update && \
   pcregrep libpcre++-dev python2-dev python3-dev python3-pefile python3-capstone \
   # angr deps
   python3-dev libffi-dev build-essential \
+  # arti deps
+  sqlite3 libsqlite3-dev libssl-dev \
   && \
   # java (needs wget and software-properties-common from above)
   wget -nv -O- https://apt.corretto.aws/corretto.key | apt-key add - && \
