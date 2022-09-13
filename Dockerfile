@@ -249,8 +249,6 @@ RUN git clone --depth 1 https://github.com/devttys0/sasquatch.git /opt/sasquatch
 # RsaCtfTool
 RUN git clone --depth 1 https://github.com/RsaCtfTool/RsaCtfTool.git /opt/RsaCtfTool && \
   cd /opt/RsaCtfTool && \
-  # https://github.com/RsaCtfTool/RsaCtfTool/pull/367
-  sed -i 's/gmpy2==2.1.0b5/gmpy2==2.1.2/' requirements.txt && \ 
   python3 -m pip install -r requirements.txt
 
 # xortool
