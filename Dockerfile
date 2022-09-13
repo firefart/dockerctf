@@ -25,7 +25,7 @@ RUN apt-get update && \
   # tools
   git curl wget netcat socat build-essential tmux vim htop linux-headers-virtual dnsutils software-properties-common apt-utils \
   jq strace ltrace net-tools gdb gdb-multiarch binwalk steghide testdisk foremost sqlite3 pev yara netmask exiftool bsdmainutils \
-  chromium-browser zsh aircrack-ng imagemagick mkisofs tree \
+  unzip chromium-browser zsh aircrack-ng imagemagick mkisofs tree openvpn wireguard \
   # binwalk
   lzop lhasa \
   # sasquatch
@@ -46,6 +46,8 @@ RUN apt-get update && \
   python3-dev libffi-dev build-essential \
   # arti deps
   sqlite3 libsqlite3-dev libssl-dev \
+  # RsaCtfTool deps
+  libmpfr-dev libmpc-dev \
   && \
   # java (needs wget and software-properties-common from above)
   wget -nv -O- https://apt.corretto.aws/corretto.key | apt-key add - && \
@@ -84,7 +86,8 @@ RUN mkdir /wordlists && \
   wget -nv -O /wordlists/directory-list-lowercase-2.3-big.txt https://github.com/dustyfresh/dictionaries/raw/master/DirBuster-Lists/directory-list-lowercase-2.3-big.txt && \
   wget -nv -O /wordlists/directory-list-lowercase-2.3-medium.txt https://github.com/dustyfresh/dictionaries/raw/master/DirBuster-Lists/directory-list-lowercase-2.3-medium.txt && \
   wget -nv -O /wordlists/directory-list-lowercase-2.3-small.txt https://github.com/dustyfresh/dictionaries/raw/master/DirBuster-Lists/directory-list-lowercase-2.3-small.txt && \
-  wget -nv -O /wordlists/jhaddix-all.txt https://gist.github.com/jhaddix/86a06c5dc309d08580a018c66354a056/raw/96f4e51d96b2203f19f6381c8c545b278eaa0837/all.txt
+  wget -nv -O /wordlists/jhaddix-all.txt https://gist.github.com/jhaddix/86a06c5dc309d08580a018c66354a056/raw/96f4e51d96b2203f19f6381c8c545b278eaa0837/all.txt && \
+  wget -nv -O /wordlists/fuzz.txt https://raw.githubusercontent.com/Bo0oM/fuzz.txt/master/fuzz.txt
 
 # SecLists
 RUN git clone --depth 1 https://github.com/danielmiessler/SecLists.git /wordlists/SecLists
@@ -119,7 +122,7 @@ ENV PATH="${PATH}:/usr/local/go/bin:${GOPATH}/bin"
 RUN go install github.com/OJ/gobuster/v3@dev
 
 # ffuf
-RUN go install github.com/ffuf/ffuf@master
+RUN go install github.com/ffuf/ffuf@latest
 
 # wpscan
 RUN echo "gem: --no-ri --no-rdoc" > /etc/gemrc
@@ -198,26 +201,26 @@ RUN git clone --depth 1 https://github.com/vysecurity/DomLink.git /opt/domlink &
   pip3 install -r /opt/domlink/requirements.txt
 
 # GoSpider
-RUN go install github.com/jaeles-project/gospider@master
+RUN go install github.com/jaeles-project/gospider@latest
 
 # Hakkawler
-RUN go install github.com/hakluke/hakrawler@master
+RUN go install github.com/hakluke/hakrawler@latest
 
 # Subdomainzier
 RUN git clone --depth 1 https://github.com/nsonaniya2010/SubDomainizer.git /opt/subdomainizer && \
   pip3 install -r /opt/subdomainizer/requirements.txt
 
 # Subfinder
-RUN go install github.com/projectdiscovery/subfinder/v2/cmd/subfinder@master
+RUN go install github.com/projectdiscovery/subfinder/v2/cmd/subfinder@latest
 
 # httprobe
-RUN go install github.com/tomnomnom/httprobe@master
+RUN go install github.com/tomnomnom/httprobe@latest
 
 # nuclei
-RUN go install github.com/projectdiscovery/nuclei/v2/cmd/nuclei@master
+RUN go install github.com/projectdiscovery/nuclei/v2/cmd/nuclei@latest
 
 # aquatone
-RUN go install github.com/firefart/aquatone@master
+RUN go install github.com/firefart/aquatone@latest
 
 # brutespray
 RUN git clone --depth 1 https://github.com/x90skysn3k/brutespray.git /opt/brutespray && \
@@ -229,7 +232,7 @@ RUN git clone --depth 1 https://github.com/rocky/python-uncompyle6.git /opt/unco
   python3 setup.py install
 
 # httpx
-RUN go install github.com/projectdiscovery/httpx/cmd/httpx@master
+RUN go install github.com/projectdiscovery/httpx/cmd/httpx@latest
 
 # sherlock
 RUN git clone --depth 1 https://github.com/sherlock-project/sherlock /opt/sherlock && \
@@ -242,6 +245,16 @@ RUN git clone --depth 1 https://github.com/devttys0/sasquatch.git /opt/sasquatch
   wget https://patch-diff.githubusercontent.com/raw/devttys0/sasquatch/pull/47.patch -O 47.patch && \
   patch -p1 < 47.patch && \
   ./build.sh
+
+# RsaCtfTool
+RUN git clone --depth 1 https://github.com/RsaCtfTool/RsaCtfTool.git /opt/RsaCtfTool && \
+  cd /opt/RsaCtfTool && \
+  # https://github.com/RsaCtfTool/RsaCtfTool/pull/367
+  sed -i 's/gmpy2==2.1.0b5/gmpy2==2.1.2/' requirements.txt && \ 
+  python3 -m pip install -r requirements.txt
+
+# xortool
+RUN git clone --depth 1 https://github.com/hellman/xortool.git /opt/xortool
 
 # reset debian_frontend in the end
 ENV DEBIAN_FRONTEND teletype
