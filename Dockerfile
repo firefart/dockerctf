@@ -25,7 +25,7 @@ RUN apt-get update && \
   # tools
   git curl wget netcat socat build-essential tmux vim htop linux-headers-virtual dnsutils software-properties-common apt-utils \
   jq strace ltrace net-tools gdb gdb-multiarch binwalk steghide testdisk foremost sqlite3 pev yara netmask exiftool bsdmainutils \
-  unzip chromium-browser zsh aircrack-ng imagemagick mkisofs tree openvpn wireguard \
+  unzip chromium-browser zsh aircrack-ng imagemagick mkisofs tree openvpn wireguard php \
   # binwalk
   lzop lhasa \
   # sasquatch
@@ -55,6 +55,11 @@ RUN apt-get update && \
   apt-get update && apt-get install -y java-${JAVA_VERSION}-amazon-corretto-jdk && \
   # remove unneeded packages
   apt-get -y autoremove
+
+# VPN preparation
+RUN mkdir -p /dev/net && \
+  mknod /dev/net/tun c 10 200 && \
+  chmod 600 /dev/net/tun
 
 # rust
 RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
