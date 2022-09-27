@@ -244,6 +244,11 @@ RUN git clone --depth 1 https://github.com/sherlock-project/sherlock /opt/sherlo
   cd /opt/sherlock && \
   python3 -m pip install -r requirements.txt
 
+# holehe
+RUN git clone --depth 1 https://github.com/megadose/holehe.git /opt/holehe && \
+  cd /opt/holehe && \
+  python3 setup.py install
+
 # sasquatch
 RUN git clone --depth 1 https://github.com/devttys0/sasquatch.git /opt/sasquatch && \
   cd /opt/sasquatch && \
