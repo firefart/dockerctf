@@ -158,7 +158,7 @@ RUN git clone --depth 1 https://github.com/xmendez/wfuzz.git /opt/wfuzz
 # volatility
 RUN git clone --depth 1 https://github.com/volatilityfoundation/volatility3.git /opt/volatility && \
   # the version from apt will not work
-  pip3 install yara-python pycryptodome && \
+  python3 -m pip install yara-python pycryptodome && \
   mkdir -p /opt/volatility/volatility/symbols/ && \
   wget -nv -O /opt/volatility/volatility/symbols/windows.zip https://downloads.volatilityfoundation.org/volatility3/symbols/windows.zip && \
   wget -nv -O /opt/volatility/volatility/symbols/mac.zip https://downloads.volatilityfoundation.org/volatility3/symbols/mac.zip && \
@@ -177,7 +177,7 @@ RUN wget -nv -O ~/.gdbinit-gef.py https://raw.githubusercontent.com/hugsy/gef/ma
   echo source ~/.gdbinit-gef.py >> ~/.gdbinit
 
 # Python Stuff
-RUN pip3 install oletools angr
+RUN python3 -m pip install oletools angr
 
 # pw cracking
 RUN git clone --depth 1 https://github.com/magnumripper/JohnTheRipper.git /opt/JohnTheRipper && \
@@ -191,11 +191,11 @@ RUN git clone --depth 1 https://github.com/magnumripper/JohnTheRipper.git /opt/J
 
 # ASNLookup
 RUN git clone --depth 1 https://github.com/yassineaboukir/Asnlookup /opt/asnlookup && \
-  pip3 install -r /opt/asnlookup/requirements.txt
+  python3 -m pip install -r /opt/asnlookup/requirements.txt
 
 # ASNRecon
 RUN git clone --depth 1 https://github.com/orlyjamie/asnrecon /opt/asnrecon && \
-  pip3 install -r /opt/asnrecon/requirements.txt
+  python3 -m pip install -r /opt/asnrecon/requirements.txt
 
 # Amass
 RUN git clone --depth 1 https://github.com/OWASP/Amass.git /opt/amass && \
@@ -203,7 +203,7 @@ RUN git clone --depth 1 https://github.com/OWASP/Amass.git /opt/amass && \
 
 # DomLink
 RUN git clone --depth 1 https://github.com/vysecurity/DomLink.git /opt/domlink && \
-  pip3 install -r /opt/domlink/requirements.txt
+  python3 -m pip install -r /opt/domlink/requirements.txt
 
 # GoSpider
 RUN go install github.com/jaeles-project/gospider@latest
@@ -213,7 +213,7 @@ RUN go install github.com/hakluke/hakrawler@latest
 
 # Subdomainzier
 RUN git clone --depth 1 https://github.com/nsonaniya2010/SubDomainizer.git /opt/subdomainizer && \
-  pip3 install -r /opt/subdomainizer/requirements.txt
+  python3 -m pip install -r /opt/subdomainizer/requirements.txt
 
 # Subfinder
 RUN go install github.com/projectdiscovery/subfinder/v2/cmd/subfinder@latest
@@ -229,7 +229,7 @@ RUN go install github.com/firefart/aquatone@latest
 
 # brutespray
 RUN git clone --depth 1 https://github.com/x90skysn3k/brutespray.git /opt/brutespray && \
-  pip3 install -r /opt/brutespray/requirements.txt
+  python3 -m pip install -r /opt/brutespray/requirements.txt
 
 # uncompyle
 RUN git clone --depth 1 https://github.com/rocky/python-uncompyle6.git /opt/uncompyle6 && \
@@ -263,6 +263,15 @@ RUN git clone --depth 1 https://github.com/RsaCtfTool/RsaCtfTool.git /opt/RsaCtf
 
 # xortool
 RUN git clone --depth 1 https://github.com/hellman/xortool.git /opt/xortool
+
+# Kyubi - dependency for nginxpwner
+RUN git clone --depth 1 https://github.com/shibli2700/Kyubi.git /opt/kyubi && \
+  cd /opt/kyubi && \
+  python3 setup.py install
+
+RUN git clone --depth 1 https://github.com/stark0de/nginxpwner.git /opt/nginxpwner && \
+  cd /opt/nginxpwner && \
+  python3 -m pip install -r requirements.txt
 
 # reset debian_frontend in the end
 ENV DEBIAN_FRONTEND teletype
