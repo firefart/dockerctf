@@ -15,6 +15,7 @@
 *.txt
 *.dat
 *.vacb
+*.p12
 output/
 jadx/
 temp/
