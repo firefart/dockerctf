@@ -5,7 +5,7 @@ ARG GOLANG_VERSION="1.19.2"
 ARG GOLANG_SHASUM="5e8c5a74fe6470dd7e055a461acda8bb4050ead8c2df70f227e3ff7d8eb7eeb6"
 ARG APKTOOL_VERSION="2.6.1"
 ARG JAVA_VERSION="19"
-ARG JADX_VERSION="1.4.4"
+ARG JADX_VERSION="1.4.5"
 ARG CFR_VERSION="0.152"
 
 ARG DEBIAN_FRONTEND="noninteractive"
@@ -269,9 +269,16 @@ RUN git clone --depth 1 https://github.com/shibli2700/Kyubi.git /opt/kyubi && \
   cd /opt/kyubi && \
   python3 setup.py install
 
+# nginxpwner
 RUN git clone --depth 1 https://github.com/stark0de/nginxpwner.git /opt/nginxpwner && \
   cd /opt/nginxpwner && \
   python3 -m pip install -r requirements.txt
+
+# NordVPN config
+RUN wget -nv -O /tmp/nordvpn.zip https://downloads.nordcdn.com/configs/archives/servers/ovpn.zip && \
+  mkdir -p /etc/openvpn/nordvpn && \
+  unzip /tmp/nordvpn.zip -d /etc/openvpn/nordvpn && \
+  rm -f /tmp/nordvpn.zip
 
 # reset debian_frontend in the end
 ENV DEBIAN_FRONTEND teletype
