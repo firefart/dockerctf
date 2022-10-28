@@ -56,11 +56,6 @@ RUN apt-get update && \
   # remove unneeded packages
   apt-get -y autoremove
 
-# VPN preparation
-RUN mkdir -p /dev/net && \
-  mknod /dev/net/tun c 10 200 && \
-  chmod 600 /dev/net/tun
-
 # rust
 RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
 ENV PATH="${PATH}:/root/.cargo/bin"
@@ -275,14 +270,17 @@ RUN git clone --depth 1 https://github.com/stark0de/nginxpwner.git /opt/nginxpwn
   python3 -m pip install -r requirements.txt
 
 # NordVPN config
+# https://support.nordvpn.com/Connectivity/Linux/1047409422/Connect-to-NordVPN-using-Linux-Terminal.htm
 RUN wget -nv -O /tmp/nordvpn.zip https://downloads.nordcdn.com/configs/archives/servers/ovpn.zip && \
   mkdir -p /etc/openvpn/nordvpn && \
   unzip /tmp/nordvpn.zip -d /etc/openvpn/nordvpn && \
   rm -f /tmp/nordvpn.zip
+
+COPY docker-entrypoint.sh /usr/local/bin/
 
 # reset debian_frontend in the end
 ENV DEBIAN_FRONTEND teletype
 
 EXPOSE 80 443 8080 8443 9999 9090 1337
 
-ENTRYPOINT [ "/bin/bash" ]
+ENTRYPOINT ["docker-entrypoint.sh"]

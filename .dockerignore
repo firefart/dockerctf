@@ -1,4 +1,5 @@
 *.sh
+!docker-entrypoint.sh
 *.md
 *.mem
 *.zip
