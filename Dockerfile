@@ -3,21 +3,24 @@ LABEL maintainer="firefart <firefart@gmail.com>"
 
 ARG GOLANG_VERSION="1.19.2"
 ARG GOLANG_SHASUM="5e8c5a74fe6470dd7e055a461acda8bb4050ead8c2df70f227e3ff7d8eb7eeb6"
-ARG APKTOOL_VERSION="2.6.1"
 ARG JAVA_VERSION="19"
-ARG JADX_VERSION="1.4.5"
-ARG CFR_VERSION="0.152"
 
-ARG DEBIAN_FRONTEND="noninteractive"
+# https://github.com/iBotPeaches/Apktool/releases/latest
+ARG APKTOOL_VERSION="2.6.1"
+# https://github.com/skylot/jadx/releases/latest
+ARG JADX_VERSION="1.4.5"
+# https://github.com/leibnitz27/cfr/releases/latest
+ARG CFR_VERSION="0.152"
+# https://github.com/pxb1988/dex2jar/releases/latest
+ARG DEX2JAR_VERSION="2.1"
 
 ENV HISTSIZE=5000
 ENV HISTFILESIZE=10000
 # looks like docker does not set this variable
 ENV USER=root
+ENV DEBIAN_FRONTEND noninteractive
 
 RUN echo "shopt -s histappend" >> /root/.bashrc
-
-ENV DEBIAN_FRONTEND noninteractive
 
 RUN apt-get update && \
   apt-get full-upgrade -y && \
@@ -143,6 +146,11 @@ RUN wget -nv -O /opt/cfr.jar https://github.com/leibnitz27/cfr/releases/download
 
 # update PATH
 ENV PATH="${PATH}:/opt/jadx/bin"
+
+# dex2jar
+RUN wget -nv -O /tmp/dex2jar.zip  https://github.com/pxb1988/dex2jar/releases/download/v${DEX2JAR_VERSION}/dex2jar-${DEX2JAR_VERSION}.zip && \
+  unzip -qq /tmp/dex2jar.zip -d /opt/dex2jar/ && \
+  rm -f /tmp/dex2jar.zip
 
 # sqlmap
 RUN git clone --depth 1 https://github.com/sqlmapproject/sqlmap.git /opt/sqlmap
