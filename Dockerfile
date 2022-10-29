@@ -51,6 +51,8 @@ RUN apt-get update && \
   sqlite3 libsqlite3-dev libssl-dev \
   # RsaCtfTool deps
   libmpfr-dev libmpc-dev \
+  # android stuff
+  android-sdk \
   && \
   # java (needs wget and software-properties-common from above)
   wget -nv -O- https://apt.corretto.aws/corretto.key | apt-key add - && \
@@ -180,7 +182,7 @@ RUN wget -nv -O ~/.gdbinit-gef.py https://raw.githubusercontent.com/hugsy/gef/ma
   echo source ~/.gdbinit-gef.py >> ~/.gdbinit
 
 # Python Stuff
-RUN python3 -m pip install oletools angr frida-tools
+RUN python3 -m pip install oletools angr frida-tools objection
 
 # pw cracking
 RUN git clone --depth 1 https://github.com/magnumripper/JohnTheRipper.git /opt/JohnTheRipper && \
