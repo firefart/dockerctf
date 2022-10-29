@@ -180,7 +180,7 @@ RUN wget -nv -O ~/.gdbinit-gef.py https://raw.githubusercontent.com/hugsy/gef/ma
   echo source ~/.gdbinit-gef.py >> ~/.gdbinit
 
 # Python Stuff
-RUN python3 -m pip install oletools angr
+RUN python3 -m pip install oletools angr frida-tools
 
 # pw cracking
 RUN git clone --depth 1 https://github.com/magnumripper/JohnTheRipper.git /opt/JohnTheRipper && \
