@@ -59,7 +59,9 @@ RUN apt-get update && \
   add-apt-repository 'deb https://apt.corretto.aws stable main' && \
   apt-get update && apt-get install -y java-${JAVA_VERSION}-amazon-corretto-jdk && \
   # remove unneeded packages
-  apt-get -y autoremove
+  apt-get -y autoremove && \
+  apt-get -y clean && \
+  rm -rf /var/lib/apt/lists/*
 
 # rust
 RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
@@ -80,7 +82,10 @@ RUN rm -f /usr/local/bin/pip && update-alternatives --install /usr/local/bin/pip
 
 # nodejs
 RUN curl -sL https://deb.nodesource.com/setup_current.x | bash - && \
-  apt-get install -y nodejs
+  apt-get update && \
+  apt-get install -y nodejs && \
+  apt-get -y clean && \
+  rm -rf /var/lib/apt/lists/*
 
 # wordlists
 RUN mkdir /wordlists && \
@@ -287,6 +292,15 @@ RUN wget -nv -O /tmp/nordvpn.zip https://downloads.nordcdn.com/configs/archives/
   rm -f /tmp/nordvpn.zip
 
 COPY docker-entrypoint.sh /usr/local/bin/
+
+# cleanup
+RUN go clean -modcache && \
+  go clean -cache && \
+  python3 -m pip cache purge && \
+  rm -rf /root/.cargo/registry && \
+  apt-get -y autoremove && \
+  apt-get -y clean && \
+  rm -rf /var/lib/apt/lists/*
 
 # reset debian_frontend in the end
 ENV DEBIAN_FRONTEND teletype
