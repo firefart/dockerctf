@@ -15,6 +15,7 @@
 *.vacb
 *.p12
 *.dex
+*.js
 output/
 jadx/
 temp/
