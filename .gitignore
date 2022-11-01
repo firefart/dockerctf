@@ -19,4 +19,5 @@
 output/
 jadx/
 temp/
+frida-server
 
