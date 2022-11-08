@@ -1,8 +1,8 @@
 FROM ubuntu:latest
 LABEL maintainer="firefart <firefart@gmail.com>"
 
-ARG GOLANG_VERSION="1.19.2"
-ARG GOLANG_SHASUM="5e8c5a74fe6470dd7e055a461acda8bb4050ead8c2df70f227e3ff7d8eb7eeb6"
+ARG GOLANG_VERSION="1.19.3"
+ARG GOLANG_SHASUM="74b9640724fd4e6bb0ed2a1bc44ae813a03f1e72a4c76253e2d5c015494430ba"
 ARG JAVA_VERSION="19"
 
 # https://github.com/iBotPeaches/Apktool/releases/latest
