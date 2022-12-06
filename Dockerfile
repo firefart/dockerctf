@@ -17,6 +17,8 @@ ARG CFR_VERSION="0.152"
 ARG DEX2JAR_VERSION="2.1"
 # https://learn.microsoft.com/en-us/dotnet/core/install/linux-ubuntu
 ARG DOTNET_VERSION="6.0"
+# https://portswigger.net/burp/releases/community/latest
+ARG BURP_VERSION="2022.11.4"
 
 ENV HISTSIZE=5000
 ENV HISTFILESIZE=10000
@@ -305,6 +307,11 @@ RUN wget -nv -O /tmp/nordvpn.zip https://downloads.nordcdn.com/configs/archives/
   mkdir -p /etc/openvpn/nordvpn && \
   unzip /tmp/nordvpn.zip -d /etc/openvpn/nordvpn && \
   rm -f /tmp/nordvpn.zip
+
+# Burp
+RUN wget -nv -O /opt/burp.jar https://portswigger-cdn.net/burp/releases/download?product=community&version=${BURP_VERSION}&type=Jar && \
+  echo -e '#!/usr/bin/sh\njava -Xmx4g -jar /opt/burp.jar --disable-auto-update' > /usr/local/sbin/burp && \
+  chmod +x /usr/local/sbin/burp
 
 COPY docker-entrypoint.sh /usr/local/bin/
 
