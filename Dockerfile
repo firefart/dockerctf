@@ -61,6 +61,8 @@ RUN apt-get update && \
   android-sdk \
   # .NET SDK
   dotnet-sdk-${DOTNET_VERSION} \
+  # google-chrome deps
+  xdg-utils \
   && \
   # java (needs wget and software-properties-common from above)
   wget -nv -O- https://apt.corretto.aws/corretto.key | apt-key add - && \
