@@ -1,24 +1,30 @@
 FROM ubuntu:latest
 LABEL maintainer="firefart <firefart@gmail.com>"
 
-ARG GOLANG_VERSION="1.19.3"
-ARG GOLANG_SHASUM="74b9640724fd4e6bb0ed2a1bc44ae813a03f1e72a4c76253e2d5c015494430ba"
+# https://go.dev/dl/
+ARG GOLANG_VERSION="1.19.4"
+ARG GOLANG_SHASUM="c9c08f783325c4cf840a94333159cc937f05f75d36a8b307951d5bd959cf2ab8"
+# https://aws.amazon.com/corretto/
 ARG JAVA_VERSION="19"
 
 # https://github.com/iBotPeaches/Apktool/releases/latest
-ARG APKTOOL_VERSION="2.6.1"
+ARG APKTOOL_VERSION="2.7.0"
 # https://github.com/skylot/jadx/releases/latest
 ARG JADX_VERSION="1.4.5"
 # https://github.com/leibnitz27/cfr/releases/latest
 ARG CFR_VERSION="0.152"
 # https://github.com/pxb1988/dex2jar/releases/latest
 ARG DEX2JAR_VERSION="2.1"
+# https://learn.microsoft.com/en-us/dotnet/core/install/linux-ubuntu
+ARG DOTNET_VERSION="6.0"
 
 ENV HISTSIZE=5000
 ENV HISTFILESIZE=10000
 # looks like docker does not set this variable
 ENV USER=root
 ENV DEBIAN_FRONTEND noninteractive
+# disable .NET telemetry
+ENV DOTNET_CLI_TELEMETRY_OPTOUT=1
 
 RUN echo "shopt -s histappend" >> /root/.bashrc
 
@@ -53,6 +59,8 @@ RUN apt-get update && \
   libmpfr-dev libmpc-dev \
   # android stuff
   android-sdk \
+  # .NET SDK
+  dotnet-sdk-${DOTNET_VERSION} \
   && \
   # java (needs wget and software-properties-common from above)
   wget -nv -O- https://apt.corretto.aws/corretto.key | apt-key add - && \
@@ -62,6 +70,11 @@ RUN apt-get update && \
   apt-get -y autoremove && \
   apt-get -y clean && \
   rm -rf /var/lib/apt/lists/*
+
+# google chrome as chromium needs snap to install
+RUN wget -O /tmp/google-chrome-stable_current_amd64.deb -nv "https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb" && \
+  apt-get install -y /tmp/google-chrome-stable_current_amd64.deb && \
+  rm -f /tmp/google-chrome-stable_current_amd64.deb
 
 # rust
 RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
