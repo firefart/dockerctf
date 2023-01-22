@@ -1,4 +1,4 @@
-FROM ubuntu:latest
+FROM ubuntu:rolling
 LABEL maintainer="firefart <firefart@gmail.com>"
 
 # https://go.dev/dl/
@@ -16,7 +16,7 @@ ARG CFR_VERSION="0.152"
 # https://github.com/pxb1988/dex2jar/releases/latest
 ARG DEX2JAR_VERSION="2.1"
 # https://learn.microsoft.com/en-us/dotnet/core/install/linux-ubuntu
-ARG DOTNET_VERSION="7.0"
+ARG DOTNET_VERSION="6.0"
 # https://portswigger.net/burp/releases/community/latest
 ARG BURP_VERSION="2022.12.6"
 
