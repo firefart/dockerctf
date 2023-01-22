@@ -36,18 +36,20 @@ RUN apt-get update && \
   # tools
   git curl wget netcat-traditional socat build-essential tmux vim htop linux-headers-virtual dnsutils \
   software-properties-common apt-utils jq strace ltrace net-tools gdb gdb-multiarch binwalk steghide \
-  testdisk foremost sqlite3 pev yara netmask exiftool bsdmainutils unzip chromium-browser \
-  zsh aircrack-ng imagemagick mkisofs tree openvpn wireguard php \
+  testdisk foremost sqlite3 pev yara netmask exiftool bsdmainutils unzip zsh aircrack-ng \
+  imagemagick mkisofs tree openvpn wireguard php \
   # binwalk
   lzop lhasa \
   # sasquatch
   build-essential liblzma-dev liblzo2-dev zlib1g-dev \
   # JohnTheRipper
-  libssl-dev zlib1g-dev yasm pkg-config libgmp-dev libpcap-dev libbz2-dev nvidia-opencl-dev ocl-icd-opencl-dev opencl-headers pocl-opencl-icd \
+  libssl-dev zlib1g-dev yasm pkg-config libgmp-dev libpcap-dev libbz2-dev nvidia-opencl-dev \
+  ocl-icd-opencl-dev opencl-headers pocl-opencl-icd \
   # scanning
   nmap masscan \
   # python stuff
-  python2 python3 python3-wheel python3-venv python3-requests python3-virtualenv python3-bs4 python3-pip python3-pycryptodome \
+  python2 python3 python3-wheel python3-venv python3-requests python3-virtualenv \
+  python3-bs4 python3-pip python3-pycryptodome \
   # wpscan dependencies
   ruby ruby-dev rubygems zlib1g-dev liblzma-dev \
   # wfuzz dependencies
