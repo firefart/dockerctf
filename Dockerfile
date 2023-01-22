@@ -87,8 +87,9 @@ RUN wget -O /tmp/google-chrome-stable_current_amd64.deb -nv "https://dl.google.c
 RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
 ENV PATH="${PATH}:/root/.cargo/bin"
 
-# install arti (tor support)
-RUN cargo install arti
+# arti: tor support
+# rustscan: portscanner
+RUN cargo install arti rustscan
 
 # Install PIP2 and packages (are not available on the repo)
 RUN curl https://bootstrap.pypa.io/pip/2.7/get-pip.py -o /tmp/get-pip.py && \
