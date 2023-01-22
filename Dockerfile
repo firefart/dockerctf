@@ -2,8 +2,8 @@ FROM ubuntu:latest
 LABEL maintainer="firefart <firefart@gmail.com>"
 
 # https://go.dev/dl/
-ARG GOLANG_VERSION="1.19.4"
-ARG GOLANG_SHASUM="c9c08f783325c4cf840a94333159cc937f05f75d36a8b307951d5bd959cf2ab8"
+ARG GOLANG_VERSION="1.19.5"
+ARG GOLANG_SHASUM="36519702ae2fd573c9869461990ae550c8c0d955cd28d2827a6b159fda81ff95"
 # https://aws.amazon.com/corretto/
 ARG JAVA_VERSION="19"
 
@@ -16,9 +16,9 @@ ARG CFR_VERSION="0.152"
 # https://github.com/pxb1988/dex2jar/releases/latest
 ARG DEX2JAR_VERSION="2.1"
 # https://learn.microsoft.com/en-us/dotnet/core/install/linux-ubuntu
-ARG DOTNET_VERSION="6.0"
+ARG DOTNET_VERSION="7.0"
 # https://portswigger.net/burp/releases/community/latest
-ARG BURP_VERSION="2022.11.4"
+ARG BURP_VERSION="2022.12.6"
 
 ENV HISTSIZE=5000
 ENV HISTFILESIZE=10000

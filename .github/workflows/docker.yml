@@ -30,3 +30,5 @@ jobs:
         with:
           push: true
           tags: firefart/dockerctf:latest
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
