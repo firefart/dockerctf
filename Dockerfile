@@ -2,8 +2,8 @@ FROM ubuntu:rolling
 LABEL maintainer="firefart <firefart@gmail.com>"
 
 # https://go.dev/dl/
-ARG GOLANG_VERSION="1.19.5"
-ARG GOLANG_SHASUM="36519702ae2fd573c9869461990ae550c8c0d955cd28d2827a6b159fda81ff95"
+ARG GOLANG_VERSION="1.20"
+ARG GOLANG_SHASUM="5a9ebcc65c1cce56e0d2dc616aff4c4cedcfbda8cc6f0288cc08cda3b18dcbf1"
 # https://aws.amazon.com/corretto/
 ARG JAVA_VERSION="19"
 
@@ -18,7 +18,7 @@ ARG DEX2JAR_VERSION="2.1"
 # https://learn.microsoft.com/en-us/dotnet/core/install/linux-ubuntu
 ARG DOTNET_VERSION="6.0"
 # https://portswigger.net/burp/releases/community/latest
-ARG BURP_VERSION="2022.12.6"
+ARG BURP_VERSION="2023.1.2"
 
 ENV HISTSIZE=5000
 ENV HISTFILESIZE=10000
@@ -311,6 +311,13 @@ RUN wget -nv -O /tmp/nordvpn.zip https://downloads.nordcdn.com/configs/archives/
   mkdir -p /etc/openvpn/nordvpn && \
   unzip /tmp/nordvpn.zip -d /etc/openvpn/nordvpn && \
   rm -f /tmp/nordvpn.zip
+
+# LaZagneForensic
+RUN git clone --depth 1 https://github.com/AlessandroZ/LaZagneForensic.git /opt/LaZagneForensic && \
+  cd /opt/LaZagneForensic && \
+  pip2 install markerlib && \
+  pip2 install distribute && \
+  pip2 install -r requirements.txt
 
 # Burp
 RUN wget -nv -O /opt/burp.jar https://portswigger-cdn.net/burp/releases/download?product=community&version=${BURP_VERSION}&type=Jar && \
