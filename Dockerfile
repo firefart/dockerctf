@@ -37,7 +37,7 @@ RUN apt-get update && \
   git curl wget netcat-traditional socat build-essential tmux vim htop linux-headers-virtual dnsutils \
   software-properties-common apt-utils jq strace ltrace net-tools gdb gdb-multiarch binwalk steghide \
   testdisk foremost sqlite3 pev yara netmask exiftool bsdmainutils unzip zsh aircrack-ng \
-  imagemagick mkisofs tree openvpn wireguard php \
+  imagemagick mkisofs tree openvpn wireguard php crunch \
   # binwalk
   lzop lhasa \
   # sasquatch
@@ -89,7 +89,7 @@ ENV PATH="${PATH}:/root/.cargo/bin"
 
 # arti: tor support
 # rustscan: portscanner
-RUN cargo install arti rustscan
+# RUN cargo install arti rustscan
 
 # Install PIP2 and packages (are not available on the repo)
 RUN curl https://bootstrap.pypa.io/pip/2.7/get-pip.py -o /tmp/get-pip.py && \
