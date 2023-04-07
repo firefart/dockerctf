@@ -37,7 +37,7 @@ RUN apt-get update && \
   git curl wget netcat-traditional socat build-essential tmux vim htop linux-headers-virtual dnsutils \
   software-properties-common apt-utils jq strace ltrace net-tools gdb gdb-multiarch binwalk steghide \
   testdisk foremost sqlite3 pev yara netmask exiftool bsdmainutils unzip zsh aircrack-ng \
-  imagemagick mkisofs tree openvpn wireguard php crunch \
+  imagemagick mkisofs tree openvpn wireguard php crunch hydra \
   # binwalk
   lzop lhasa \
   # sasquatch
