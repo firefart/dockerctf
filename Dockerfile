@@ -89,7 +89,12 @@ ENV PATH="${PATH}:/root/.cargo/bin"
 
 # arti: tor support
 # rustscan: portscanner
-# RUN cargo install arti rustscan
+RUN cargo install arti rustscan
+
+# ferozbuster
+RUN wget -nv -O /tmp/x86_64-linux-feroxbuster.zip https://github.com/epi052/feroxbuster/releases/latest/download/x86_64-linux-feroxbuster.zip && \
+  unzip -o /tmp/x86_64-linux-feroxbuster.zip -d /usr/bin && \
+  rm -f /tmp/x86_64-linux-feroxbuster.zip
 
 # Install PIP2 and packages (are not available on the repo)
 RUN curl https://bootstrap.pypa.io/pip/2.7/get-pip.py -o /tmp/get-pip.py && \
