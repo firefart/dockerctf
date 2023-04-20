@@ -94,6 +94,7 @@ RUN cargo install arti rustscan
 # ferozbuster
 RUN wget -nv -O /tmp/x86_64-linux-feroxbuster.zip https://github.com/epi052/feroxbuster/releases/latest/download/x86_64-linux-feroxbuster.zip && \
   unzip -o /tmp/x86_64-linux-feroxbuster.zip -d /usr/bin && \
+  chmod +x /usr/bin/feroxbuster && \
   rm -f /tmp/x86_64-linux-feroxbuster.zip
 
 # Install PIP2 and packages (are not available on the repo)
