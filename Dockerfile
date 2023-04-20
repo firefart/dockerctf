@@ -2,10 +2,10 @@ FROM ubuntu:rolling
 LABEL maintainer="firefart <firefart@gmail.com>"
 
 # https://go.dev/dl/
-ARG GOLANG_VERSION="1.20.2"
-ARG GOLANG_SHASUM="4eaea32f59cde4dc635fbc42161031d13e1c780b87097f4b4234cfce671f1768"
+ARG GOLANG_VERSION="1.20.3"
+ARG GOLANG_SHASUM="979694c2c25c735755bf26f4f45e19e64e4811d661dd07b8c010f7a8e18adfca"
 # https://aws.amazon.com/corretto/
-ARG JAVA_VERSION="19"
+ARG JAVA_VERSION="20"
 
 # https://github.com/iBotPeaches/Apktool/releases/latest
 ARG APKTOOL_VERSION="2.7.0"
@@ -18,7 +18,7 @@ ARG DEX2JAR_VERSION="2.1"
 # https://learn.microsoft.com/en-us/dotnet/core/install/linux-ubuntu
 ARG DOTNET_VERSION="6.0"
 # https://portswigger.net/burp/releases/community/latest
-ARG BURP_VERSION="2023.2.4"
+ARG BURP_VERSION="2023.3.4"
 
 ENV HISTSIZE=5000
 ENV HISTFILESIZE=10000
