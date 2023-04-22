@@ -48,14 +48,16 @@ RUN apt-get update && \
   # scanning
   nmap masscan \
   # python stuff
-  python2 python3 python3-wheel python3-venv python3-requests python3-virtualenv \
+  python3 python3-wheel python3-venv python3-requests python3-virtualenv \
   python3-bs4 python3-pip python3-pycryptodome \
+  # python2
+  libexpat1-dev libbz2-dev libreadline-dev libsqlite3-dev llvm libncurses5-dev libncursesw5-dev xz-utils tk-dev \
   # wpscan dependencies
   ruby ruby-dev rubygems zlib1g-dev liblzma-dev \
   # wfuzz dependencies
   python3-chardet python3-pycurl python3-future \
   # volatility dependencies
-  pcregrep libpcre++-dev python2-dev python3-dev python3-pefile python3-capstone \
+  pcregrep libpcre++-dev python3-dev python3-pefile python3-capstone \
   # angr deps
   python3-dev libffi-dev build-essential \
   # arti deps
@@ -83,6 +85,16 @@ RUN wget -O /tmp/google-chrome-stable_current_amd64.deb -nv "https://dl.google.c
   apt-get install -y /tmp/google-chrome-stable_current_amd64.deb && \
   rm -f /tmp/google-chrome-stable_current_amd64.deb
 
+# python2
+RUN wget -O /tmp/python2.tar.xz -nv https://www.python.org/ftp/python/2.7.18/Python-2.7.18.tar.xz && \
+  tar --extract --directory /usr/src/python --strip-components=1 --file /tmp/python2.tar.xz && \
+  rm -f /tmp/python2.tar.xz && \
+  cd /usr/src/python && \
+  ./configure --enable-optimizations --enable-option-checking=fatal --with-ensurepip=install --enable-shared --with-lto --with-system-expat && \
+  make -s -j "$(nproc)" && \
+  make altinstall && \
+  make clean
+
 # rust
 RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
 ENV PATH="${PATH}:/root/.cargo/bin"
@@ -97,10 +109,7 @@ RUN wget -nv -O /tmp/x86_64-linux-feroxbuster.zip https://github.com/epi052/fero
   chmod +x /usr/bin/feroxbuster && \
   rm -f /tmp/x86_64-linux-feroxbuster.zip
 
-# Install PIP2 and packages (are not available on the repo)
-RUN curl https://bootstrap.pypa.io/pip/2.7/get-pip.py -o /tmp/get-pip.py && \
-  python2 /tmp/get-pip.py && \
-  rm -f /tmp/get-pip.py
+# Install python2 packages (are not available on the repo)
 RUN pip2 install wheel requests pycryptodome
 
 # make sure we can use python to launch python3
@@ -221,7 +230,7 @@ RUN git clone --depth 1 https://github.com/magnumripper/JohnTheRipper.git /opt/J
   cd /opt/JohnTheRipper/src && \
   ./configure --disable-native-tests && \
   make -s clean && \
-  make -sj4 && \
+  make -s -j "$(nproc)" && \
   make shell-completion
 
 # OSINT Section
