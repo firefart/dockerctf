@@ -94,7 +94,8 @@ RUN wget -O /tmp/python2.tar.xz -nv https://www.python.org/ftp/python/2.7.18/Pyt
   ./configure --enable-optimizations --enable-option-checking=fatal --with-ensurepip=install --enable-shared --with-lto --with-system-expat && \
   make -s -j "$(nproc)" && \
   make altinstall && \
-  make clean
+  make clean && \
+  ldconfig
 
 # rust
 RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
