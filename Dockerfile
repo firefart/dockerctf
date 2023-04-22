@@ -57,7 +57,7 @@ RUN apt-get update && \
   # wfuzz dependencies
   python3-chardet python3-pycurl python3-future \
   # volatility dependencies
-  pcregrep libpcre++-dev python3-dev python3-pefile python3-capstone \
+  pcregrep libpcre2-dev python3-dev python3-pefile python3-capstone \
   # angr deps
   python3-dev libffi-dev build-essential \
   # arti deps
