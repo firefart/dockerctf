@@ -72,7 +72,7 @@ RUN apt-get update && \
   fonts-liberation libu2f-udev libvulkan1 xdg-utils \
   && \
   # java (needs wget and software-properties-common from above)
-  wget -nv -O- https://apt.corretto.aws/corretto.key | gpg --dearmor | tee /etc/apt/trusted.gpg.d/corretto.asc && \
+  wget -nv -O- https://apt.corretto.aws/corretto.key | gpg --dearmor | tee /etc/apt/trusted.gpg.d/corretto.gpg && \
   add-apt-repository 'deb https://apt.corretto.aws stable main' && \
   apt-get update && apt-get install -y java-${JAVA_VERSION}-amazon-corretto-jdk && \
   # remove unneeded packages
