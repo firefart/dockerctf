@@ -20,4 +20,4 @@ output/
 jadx/
 temp/
 frida-server
-
+share/
