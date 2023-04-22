@@ -37,7 +37,7 @@ RUN apt-get update && \
   git curl wget netcat-traditional socat build-essential tmux vim htop linux-headers-virtual dnsutils \
   software-properties-common apt-utils jq strace ltrace net-tools gdb gdb-multiarch binwalk steghide \
   testdisk foremost sqlite3 pev yara netmask exiftool bsdmainutils unzip zsh aircrack-ng \
-  imagemagick mkisofs tree openvpn wireguard php crunch hydra \
+  imagemagick mkisofs tree openvpn wireguard php crunch hydra gnupg2 \
   # binwalk
   lzop lhasa \
   # sasquatch
@@ -72,7 +72,7 @@ RUN apt-get update && \
   fonts-liberation libu2f-udev libvulkan1 xdg-utils \
   && \
   # java (needs wget and software-properties-common from above)
-  wget -nv -O- https://apt.corretto.aws/corretto.key | apt-key add - && \
+  wget -nv -O- https://apt.corretto.aws/corretto.key | tee /etc/apt/keyrings/corretto.asc && \
   add-apt-repository 'deb https://apt.corretto.aws stable main' && \
   apt-get update && apt-get install -y java-${JAVA_VERSION}-amazon-corretto-jdk && \
   # remove unneeded packages
@@ -90,7 +90,7 @@ RUN wget -O /tmp/python2.tar.xz -nv https://www.python.org/ftp/python/2.7.18/Pyt
   mkdir -p /usr/src/python2 && \
   tar --extract --directory /usr/src/python2 --strip-components=1 --file /tmp/python2.tar.xz && \
   rm -f /tmp/python2.tar.xz && \
-  cd /usr/src/python && \
+  cd /usr/src/python2 && \
   ./configure --enable-optimizations --enable-option-checking=fatal --with-ensurepip=install --enable-shared --with-lto --with-system-expat && \
   make -s -j "$(nproc)" && \
   make altinstall && \
