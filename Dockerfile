@@ -87,6 +87,7 @@ RUN wget -O /tmp/google-chrome-stable_current_amd64.deb -nv "https://dl.google.c
 
 # python2
 RUN wget -O /tmp/python2.tar.xz -nv https://www.python.org/ftp/python/2.7.18/Python-2.7.18.tar.xz && \
+  mkdir -p /usr/src/python2 && \
   tar --extract --directory /usr/src/python2 --strip-components=1 --file /tmp/python2.tar.xz && \
   rm -f /tmp/python2.tar.xz && \
   cd /usr/src/python && \
