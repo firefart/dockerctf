@@ -57,7 +57,7 @@ RUN apt-get update && \
   # wfuzz dependencies
   python3-chardet python3-pycurl python3-future \
   # volatility dependencies
-  pcregrep libpcre2-dev python3-dev python3-pefile python3-capstone \
+  pcregrep libpcre2-dev python3-dev python3-pefile python3-capstone python3-pycryptodome python3-yara \
   # angr deps
   python3-dev libffi-dev build-essential \
   # arti deps
@@ -201,8 +201,6 @@ RUN git clone --depth 1 https://github.com/xmendez/wfuzz.git /opt/wfuzz
 
 # volatility
 RUN git clone --depth 1 https://github.com/volatilityfoundation/volatility3.git /opt/volatility && \
-  # the version from apt will not work
-  python3 -m pip install yara-python pycryptodome && \
   mkdir -p /opt/volatility/volatility/symbols/ && \
   wget -nv -O /opt/volatility/volatility/symbols/windows.zip https://downloads.volatilityfoundation.org/volatility3/symbols/windows.zip && \
   wget -nv -O /opt/volatility/volatility/symbols/mac.zip https://downloads.volatilityfoundation.org/volatility3/symbols/mac.zip && \
