@@ -112,11 +112,7 @@ RUN wget -nv -O /tmp/x86_64-linux-feroxbuster.zip https://github.com/epi052/fero
   rm -f /tmp/x86_64-linux-feroxbuster.zip
 
 # Install python2 packages (are not available on the repo)
-RUN pip2 install wheel requests pycryptodome
-
-# make sure we can use python to launch python3
-RUN update-alternatives --install /usr/local/bin/python python /usr/bin/python3 1
-RUN rm -f /usr/local/bin/pip && update-alternatives --install /usr/local/bin/pip pip /usr/bin/pip3 1
+RUN python2.7 -m pip install wheel requests pycryptodome
 
 # nodejs
 RUN curl -sL https://deb.nodesource.com/setup_current.x | bash - && \
@@ -214,7 +210,7 @@ RUN git clone --depth 1 https://github.com/volatilityfoundation/volatility3.git 
 
 # volatility2
 RUN git clone --depth 1 https://github.com/volatilityfoundation/volatility.git /opt/volatility2 && \
-  pip2 install distorm3==3.4.4 pycrypto openpyxl Pillow yara-python && \
+  python2.7 -m pip install distorm3==3.4.4 pycrypto openpyxl Pillow yara-python && \
   ln -fs /usr/local/lib/python2.7/dist-packages/usr/lib/libyara.so /usr/lib/libyara.so
 
 # libc-database
@@ -332,9 +328,9 @@ RUN wget -nv -O /tmp/nordvpn.zip https://downloads.nordcdn.com/configs/archives/
 # LaZagneForensic
 RUN git clone --depth 1 https://github.com/AlessandroZ/LaZagneForensic.git /opt/LaZagneForensic && \
   cd /opt/LaZagneForensic && \
-  pip2 install markerlib && \
-  pip2 install distribute && \
-  pip2 install -r requirements.txt
+  python2.7 -m pip install markerlib && \
+  python2.7 -m pip install distribute && \
+  python2.7 -m pip install -r requirements.txt
 
 # Burp
 RUN wget -nv -O /opt/burp.jar https://portswigger-cdn.net/burp/releases/download?product=community&version=${BURP_VERSION}&type=Jar && \
