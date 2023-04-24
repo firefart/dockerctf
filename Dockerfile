@@ -345,6 +345,6 @@ RUN go clean -modcache && \
 # reset debian_frontend in the end
 ENV DEBIAN_FRONTEND teletype
 
-EXPOSE 80 443 8080 8443 9999 9090 1337
+EXPOSE 80 443 1234 4444 8080 8443 9999 9090 1337
 
 ENTRYPOINT ["docker-entrypoint.sh"]
