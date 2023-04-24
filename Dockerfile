@@ -49,7 +49,7 @@ RUN apt-get update && \
   nmap masscan \
   # python stuff
   python3 python3-wheel python3-venv python3-requests python3-virtualenv \
-  python3-bs4 python3-pip python3-pycryptodome \
+  python3-bs4 python3-pip pipx \
   # python2
   libexpat1-dev libbz2-dev libreadline-dev libsqlite3-dev llvm libncurses5-dev libncursesw5-dev xz-utils tk-dev \
   # wpscan dependencies
@@ -219,7 +219,7 @@ RUN wget -nv -O ~/.gdbinit-gef.py https://raw.githubusercontent.com/hugsy/gef/ma
   echo source ~/.gdbinit-gef.py >> ~/.gdbinit
 
 # Python Stuff
-RUN python3 -m pip install oletools angr frida-tools objection
+RUN python3 -m pip install --break-system-packages oletools angr frida-tools objection
 
 # pw cracking
 RUN git clone --depth 1 https://github.com/magnumripper/JohnTheRipper.git /opt/JohnTheRipper && \
@@ -233,11 +233,11 @@ RUN git clone --depth 1 https://github.com/magnumripper/JohnTheRipper.git /opt/J
 
 # ASNLookup
 RUN git clone --depth 1 https://github.com/yassineaboukir/Asnlookup /opt/asnlookup && \
-  python3 -m pip install -r /opt/asnlookup/requirements.txt
+  python3 -m pip install --break-system-packages -r /opt/asnlookup/requirements.txt
 
 # ASNRecon
 RUN git clone --depth 1 https://github.com/orlyjamie/asnrecon /opt/asnrecon && \
-  python3 -m pip install -r /opt/asnrecon/requirements.txt
+  python3 -m pip install --break-system-packages -r /opt/asnrecon/requirements.txt
 
 # Amass
 RUN git clone --depth 1 https://github.com/OWASP/Amass.git /opt/amass && \
@@ -245,7 +245,7 @@ RUN git clone --depth 1 https://github.com/OWASP/Amass.git /opt/amass && \
 
 # DomLink
 RUN git clone --depth 1 https://github.com/vysecurity/DomLink.git /opt/domlink && \
-  python3 -m pip install -r /opt/domlink/requirements.txt
+  python3 -m pip install --break-system-packages -r /opt/domlink/requirements.txt
 
 # GoSpider
 RUN go install github.com/jaeles-project/gospider@latest
@@ -255,7 +255,7 @@ RUN go install github.com/hakluke/hakrawler@latest
 
 # Subdomainzier
 RUN git clone --depth 1 https://github.com/nsonaniya2010/SubDomainizer.git /opt/subdomainizer && \
-  python3 -m pip install -r /opt/subdomainizer/requirements.txt
+  python3 -m pip install --break-system-packages -r /opt/subdomainizer/requirements.txt
 
 # Subfinder
 RUN go install github.com/projectdiscovery/subfinder/v2/cmd/subfinder@latest
@@ -271,7 +271,7 @@ RUN go install github.com/firefart/aquatone@latest
 
 # brutespray
 RUN git clone --depth 1 https://github.com/x90skysn3k/brutespray.git /opt/brutespray && \
-  python3 -m pip install -r /opt/brutespray/requirements.txt
+  python3 -m pip install --break-system-packages -r /opt/brutespray/requirements.txt
 
 # uncompyle
 RUN git clone --depth 1 https://github.com/rocky/python-uncompyle6.git /opt/uncompyle6 && \
@@ -284,12 +284,10 @@ RUN go install github.com/projectdiscovery/httpx/cmd/httpx@latest
 # sherlock
 RUN git clone --depth 1 https://github.com/sherlock-project/sherlock /opt/sherlock && \
   cd /opt/sherlock && \
-  python3 -m pip install -r requirements.txt
+  python3 -m pip install --break-system-packages -r requirements.txt
 
 # holehe
-RUN git clone --depth 1 https://github.com/megadose/holehe.git /opt/holehe && \
-  cd /opt/holehe && \
-  python3 setup.py install
+RUN pipx install git+https://github.com/megadose/holehe.git
 
 # sasquatch
 RUN git clone --depth 1 https://github.com/devttys0/sasquatch.git /opt/sasquatch && \
@@ -301,20 +299,18 @@ RUN git clone --depth 1 https://github.com/devttys0/sasquatch.git /opt/sasquatch
 # RsaCtfTool
 RUN git clone --depth 1 https://github.com/RsaCtfTool/RsaCtfTool.git /opt/RsaCtfTool && \
   cd /opt/RsaCtfTool && \
-  python3 -m pip install -r requirements.txt
+  python3 -m pip install --break-system-packages -r requirements.txt
 
 # xortool
 RUN git clone --depth 1 https://github.com/hellman/xortool.git /opt/xortool
 
 # Kyubi - dependency for nginxpwner
-RUN git clone --depth 1 https://github.com/shibli2700/Kyubi.git /opt/kyubi && \
-  cd /opt/kyubi && \
-  python3 setup.py install
+RUN pipx install git+https://github.com/shibli2700/Kyubi.git
 
 # nginxpwner
 RUN git clone --depth 1 https://github.com/stark0de/nginxpwner.git /opt/nginxpwner && \
   cd /opt/nginxpwner && \
-  python3 -m pip install -r requirements.txt
+  python3 -m pip install --break-system-packages -r requirements.txt
 
 # NordVPN config
 # https://support.nordvpn.com/Connectivity/Linux/1047409422/Connect-to-NordVPN-using-Linux-Terminal.htm
