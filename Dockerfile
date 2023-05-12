@@ -37,7 +37,7 @@ RUN apt-get update && \
   git curl wget netcat-traditional socat build-essential tmux vim htop linux-headers-virtual dnsutils \
   software-properties-common apt-utils jq strace ltrace net-tools gdb gdb-multiarch binwalk steghide \
   testdisk foremost sqlite3 pev yara netmask exiftool bsdmainutils unzip zsh aircrack-ng \
-  imagemagick mkisofs tree openvpn wireguard php crunch hydra gnupg2 \
+  imagemagick mkisofs tree openvpn wireguard php crunch hydra gnupg2 tcpdump \
   # binwalk
   lzop lhasa \
   # sasquatch
@@ -49,7 +49,7 @@ RUN apt-get update && \
   nmap masscan \
   # python stuff
   python3 python3-wheel python3-venv python3-requests python3-virtualenv \
-  python3-bs4 python3-pip pipx \
+  python3-bs4 python3-pip pipx python3-scapy \
   # python2
   libexpat1-dev libbz2-dev libreadline-dev libsqlite3-dev llvm libncurses5-dev libncursesw5-dev xz-utils tk-dev \
   # wpscan dependencies
