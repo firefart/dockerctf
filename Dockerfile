@@ -70,6 +70,8 @@ RUN apt-get update && \
   dotnet-sdk-${DOTNET_VERSION} \
   # google-chrome deps
   fonts-liberation libu2f-udev libvulkan1 xdg-utils \
+  # OCR library
+  tesseract-ocr libtesseract-dev \
   && \
   # java (needs wget and software-properties-common from above)
   wget -nv -O- https://apt.corretto.aws/corretto.key | gpg --dearmor | tee /etc/apt/trusted.gpg.d/corretto.gpg && \
