@@ -71,7 +71,7 @@ RUN apt-get update && \
   # google-chrome deps
   fonts-liberation libu2f-udev libvulkan1 xdg-utils \
   # OCR library
-  tesseract-ocr libtesseract-dev \
+  tesseract-ocr libtesseract-dev python3-pytesseract \
   && \
   # java (needs wget and software-properties-common from above)
   wget -nv -O- https://apt.corretto.aws/corretto.key | gpg --dearmor | tee /etc/apt/trusted.gpg.d/corretto.gpg && \
@@ -221,7 +221,7 @@ RUN wget -nv -O ~/.gdbinit-gef.py https://raw.githubusercontent.com/hugsy/gef/ma
   echo source ~/.gdbinit-gef.py >> ~/.gdbinit
 
 # Python Stuff
-RUN python3 -m pip install --break-system-packages oletools angr frida-tools objection
+RUN python3 -m pip install --break-system-packages oletools angr frida-tools objection pytesseract
 
 # pw cracking
 RUN git clone --depth 1 https://github.com/magnumripper/JohnTheRipper.git /opt/JohnTheRipper && \
