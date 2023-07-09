@@ -1,9 +1,12 @@
 FROM ubuntu:rolling
-LABEL maintainer="firefart <firefart@gmail.com>"
+LABEL org.opencontainers.image.authors="firefart <firefart@gmail.com>"
+LABEL org.opencontainers.image.title="dockerctf"
+LABEL org.opencontainers.image.source="https://github.com/firefart/dockerctf"
+LABEL org.opencontainers.image.description="Docker CTF image"
 
 # https://go.dev/dl/
-ARG GOLANG_VERSION="1.20.4"
-ARG GOLANG_SHASUM="698ef3243972a51ddb4028e4a1ac63dc6d60821bf18e59a807e051fee0a385bd"
+ARG GOLANG_VERSION="1.20.5"
+ARG GOLANG_SHASUM="d7ec48cde0d3d2be2c69203bc3e0a44de8660b9c09a6e85c4732a3f7dc442612"
 # https://aws.amazon.com/corretto/
 ARG JAVA_VERSION="20"
 
@@ -16,9 +19,9 @@ ARG CFR_VERSION="0.152"
 # https://github.com/pxb1988/dex2jar/releases/latest
 ARG DEX2JAR_VERSION="2.1"
 # https://learn.microsoft.com/en-us/dotnet/core/install/linux-ubuntu
-ARG DOTNET_VERSION="6.0"
+ARG DOTNET_VERSION="7.0"
 # https://portswigger.net/burp/releases/community/latest
-ARG BURP_VERSION="2023.3.5"
+ARG BURP_VERSION="2023.6.2"
 
 ENV HISTSIZE=5000
 ENV HISTFILESIZE=10000
