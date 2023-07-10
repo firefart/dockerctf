@@ -52,7 +52,7 @@ RUN apt-get update && \
   nmap masscan \
   # python stuff
   python3 python3-wheel python3-venv python3-requests python3-virtualenv \
-  python3-bs4 python3-pip pipx python3-scapy \
+  python3-bs4 python3-pip pipx python3-scapy python3-pwntools \
   # python2
   libexpat1-dev libbz2-dev libreadline-dev libsqlite3-dev llvm libncurses5-dev libncursesw5-dev xz-utils tk-dev \
   # wpscan dependencies
@@ -75,6 +75,8 @@ RUN apt-get update && \
   fonts-liberation libu2f-udev libvulkan1 xdg-utils \
   # OCR library
   tesseract-ocr libtesseract-dev \
+  # musl
+  musl musl-dev \
   && \
   # java (needs wget and software-properties-common from above)
   wget -nv -O- https://apt.corretto.aws/corretto.key | gpg --dearmor | tee /etc/apt/trusted.gpg.d/corretto.gpg && \
@@ -279,9 +281,9 @@ RUN git clone --depth 1 https://github.com/x90skysn3k/brutespray.git /opt/brutes
   python3 -m pip install --break-system-packages -r /opt/brutespray/requirements.txt
 
 # uncompyle
-RUN git clone --depth 1 https://github.com/rocky/python-uncompyle6.git /opt/uncompyle6 && \
-  cd /opt/uncompyle6 && \
-  python3 setup.py install
+#RUN git clone --depth 1 https://github.com/rocky/python-uncompyle6.git /opt/uncompyle6 && \
+#  cd /opt/uncompyle6 && \
+#  python3 setup.py install
 
 # httpx
 RUN go install github.com/projectdiscovery/httpx/cmd/httpx@latest
