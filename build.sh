@@ -3,6 +3,7 @@
 set -eu -o pipefail
 
 export DOCKER_BUILDKIT=1
+export BUILDKIT_PROGRESS=plain
 
 docker pull ubuntu:rolling
 docker build -t firefart/dockerctf:latest --build-arg BUILDKIT_INLINE_CACHE=1 .

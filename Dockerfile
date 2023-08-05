@@ -77,6 +77,8 @@ RUN apt-get update && \
   tesseract-ocr libtesseract-dev \
   # musl
   musl musl-dev \
+  # metasploit
+  git autoconf build-essential libpcap-dev libpq-dev zlib1g-dev libsqlite3-dev \
   && \
   # java (needs wget and software-properties-common from above)
   wget -nv -O- https://apt.corretto.aws/corretto.key | gpg --dearmor | tee /etc/apt/trusted.gpg.d/corretto.gpg && \
@@ -86,6 +88,38 @@ RUN apt-get update && \
   apt-get -y autoremove && \
   apt-get -y clean && \
   rm -rf /var/lib/apt/lists/*
+
+# change default shell to zsh
+RUN chsh -s ~/.zshrc
+
+# install go
+RUN url="https://golang.org/dl/go${GOLANG_VERSION}.linux-amd64.tar.gz" && \
+  wget -O go.tgz -nv "$url" && \
+  echo "${GOLANG_SHASUM} *go.tgz" | sha256sum -c - && \
+  tar -C /usr/local -xzf go.tgz && \
+  rm go.tgz
+
+# update PATH
+ENV GOPATH="/root/go"
+ENV PATH="${PATH}:/usr/local/go/bin:${GOPATH}/bin"
+
+# oh my tmux
+ENV TERM=xterm-256color
+RUN git clone --depth 1 https://github.com/gpakosz/.tmux.git /root/.tmux && \
+  ln -s -f /root/.tmux/.tmux.conf /root/.tmux.conf && \
+  cp /root/.tmux/.tmux.conf.local /root/
+
+# dotfiles
+RUN git clone --depth 1 https://github.com/firefart/dotfiles /opt/dotfiles && \
+  cd /opt/dotfiles && \
+  ./setup.sh
+
+# rbenv
+RUN git clone --depth 1 https://github.com/rbenv/rbenv.git /root/.rbenv && \
+  git clone https://github.com/rbenv/ruby-build.git /root/.rbenv/plugins/ruby-build && \
+  echo 'eval "$(/root/.rbenv/bin/rbenv init - zsh)"' >> ~/.zshrc
+
+ENV PATH="${PATH}:/root/.rbenv/bin"
 
 # google chrome as chromium needs snap to install
 RUN wget -O /tmp/google-chrome-stable_current_amd64.deb -nv "https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb" && \
@@ -112,7 +146,14 @@ ENV PATH="${PATH}:/root/.cargo/bin"
 # rustscan: portscanner
 RUN cargo install arti rustscan
 
-# ferozbuster
+# metasploit framework
+RUN git clone --depth 1 https://github.com/rapid7/metasploit-framework.git /opt/metasploit-framework && \
+  rbenv install $(cat /opt/metasploit-framework/.ruby-version) && \
+  cd /opt/metasploit-framework && \
+  gem install bundler && \
+  bundle install
+
+# feroxbuster
 RUN wget -nv -O /tmp/x86_64-linux-feroxbuster.zip https://github.com/epi052/feroxbuster/releases/latest/download/x86_64-linux-feroxbuster.zip && \
   unzip -o /tmp/x86_64-linux-feroxbuster.zip -d /usr/bin && \
   chmod +x /usr/bin/feroxbuster && \
@@ -146,28 +187,6 @@ RUN git clone --depth 1 https://github.com/danielmiessler/SecLists.git /wordlist
 RUN git clone --depth 1 https://github.com/FlameOfIgnis/Pwdb-Public.git /wordlists/Pwdb-Public
 
 RUN git clone --depth 1 https://github.com/assetnote/commonspeak2-wordlists /wordlists/commonspeak2
-
-# oh my tmux
-ENV TERM=xterm-256color
-RUN git clone --depth 1 https://github.com/gpakosz/.tmux.git /root/.tmux && \
-  ln -s -f /root/.tmux/.tmux.conf /root/.tmux.conf && \
-  cp /root/.tmux/.tmux.conf.local /root/
-
-# dotfiles
-RUN git clone --depth 1 https://github.com/firefart/dotfiles /opt/dotfiles && \
-  cd /opt/dotfiles && \
-  ./setup.sh
-
-# install go
-RUN url="https://golang.org/dl/go${GOLANG_VERSION}.linux-amd64.tar.gz" && \
-  wget -O go.tgz -nv "$url" && \
-  echo "${GOLANG_SHASUM} *go.tgz" | sha256sum -c - && \
-  tar -C /usr/local -xzf go.tgz && \
-  rm go.tgz
-
-# update PATH
-ENV GOPATH="/root/go"
-ENV PATH="${PATH}:/usr/local/go/bin:${GOPATH}/bin"
 
 # gobuster
 RUN go install github.com/OJ/gobuster/v3@dev
