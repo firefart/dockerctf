@@ -144,7 +144,8 @@ ENV PATH="${PATH}:/root/.cargo/bin"
 
 # arti: tor support
 # rustscan: portscanner
-RUN cargo install arti rustscan
+RUN cargo install arti rustscan && \
+  rm -rf /root/.cargo/registry
 
 # metasploit framework
 RUN git clone --depth 1 https://github.com/rapid7/metasploit-framework.git /opt/metasploit-framework && \
@@ -189,10 +190,14 @@ RUN git clone --depth 1 https://github.com/FlameOfIgnis/Pwdb-Public.git /wordlis
 RUN git clone --depth 1 https://github.com/assetnote/commonspeak2-wordlists /wordlists/commonspeak2
 
 # gobuster
-RUN go install github.com/OJ/gobuster/v3@dev
+RUN go install github.com/OJ/gobuster/v3@dev && \
+  go clean -modcache && \
+  go clean -cache
 
 # ffuf
-RUN go install github.com/ffuf/ffuf@latest
+RUN go install github.com/ffuf/ffuf@latest && \
+  go clean -modcache && \
+  go clean -cache
 
 # wpscan
 RUN echo "gem: --no-ri --no-rdoc" > /etc/gemrc
@@ -235,7 +240,8 @@ RUN git clone --depth 1 https://github.com/volatilityfoundation/volatility3.git 
 # volatility2
 RUN git clone --depth 1 https://github.com/volatilityfoundation/volatility.git /opt/volatility2 && \
   python2.7 -m pip install distorm3==3.4.4 pycrypto openpyxl Pillow yara-python && \
-  ln -fs /usr/local/lib/python2.7/dist-packages/usr/lib/libyara.so /usr/lib/libyara.so
+  ln -fs /usr/local/lib/python2.7/dist-packages/usr/lib/libyara.so /usr/lib/libyara.so && \
+  python2.7 -m pip cache purge
 
 # libc-database
 RUN git clone --depth 1 https://github.com/niklasb/libc-database.git /opt/libc-database
@@ -245,7 +251,8 @@ RUN wget -nv -O ~/.gdbinit-gef.py https://raw.githubusercontent.com/hugsy/gef/ma
   echo source ~/.gdbinit-gef.py >> ~/.gdbinit
 
 # Python Stuff
-RUN python3 -m pip install --break-system-packages oletools angr frida-tools objection pytesseract
+RUN python3 -m pip install --break-system-packages oletools angr frida-tools objection pytesseract && \
+  python3 -m pip cache purge
 
 # pw cracking
 RUN git clone --depth 1 https://github.com/magnumripper/JohnTheRipper.git /opt/JohnTheRipper && \
@@ -255,62 +262,85 @@ RUN git clone --depth 1 https://github.com/magnumripper/JohnTheRipper.git /opt/J
   make -s -j "$(nproc)" && \
   make shell-completion
 
-# OSINT Section
-
 # ASNLookup
 RUN git clone --depth 1 https://github.com/yassineaboukir/Asnlookup /opt/asnlookup && \
-  python3 -m pip install --break-system-packages -r /opt/asnlookup/requirements.txt
+  python3 -m pip install --break-system-packages -r /opt/asnlookup/requirements.txt && \
+  python3 -m pip cache purge
 
 # ASNRecon
 RUN git clone --depth 1 https://github.com/orlyjamie/asnrecon /opt/asnrecon && \
-  python3 -m pip install --break-system-packages -r /opt/asnrecon/requirements.txt
+  python3 -m pip install --break-system-packages -r /opt/asnrecon/requirements.txt && \
+  python3 -m pip cache purge
 
 # Amass
 RUN git clone --depth 1 https://github.com/OWASP/Amass.git /opt/amass && \
-  cd /opt/amass && go get ./... && go install ./...
+  cd /opt/amass && \
+  go get ./... && \
+  go install ./... && \
+  go clean -modcache && \
+  go clean -cache
 
 # DomLink
 RUN git clone --depth 1 https://github.com/vysecurity/DomLink.git /opt/domlink && \
-  python3 -m pip install --break-system-packages -r /opt/domlink/requirements.txt
+  python3 -m pip install --break-system-packages -r /opt/domlink/requirements.txt && \
+  python3 -m pip cache purge
 
 # GoSpider
-RUN go install github.com/jaeles-project/gospider@latest
+RUN go install github.com/jaeles-project/gospider@latest && \
+  go clean -modcache && \
+  go clean -cache
 
 # Hakkawler
-RUN go install github.com/hakluke/hakrawler@latest
+RUN go install github.com/hakluke/hakrawler@latest && \
+  go clean -modcache && \
+  go clean -cache
 
 # Subdomainzier
 RUN git clone --depth 1 https://github.com/nsonaniya2010/SubDomainizer.git /opt/subdomainizer && \
-  python3 -m pip install --break-system-packages -r /opt/subdomainizer/requirements.txt
+  python3 -m pip install --break-system-packages -r /opt/subdomainizer/requirements.txt && \
+  python3 -m pip cache purge
 
 # Subfinder
-RUN go install github.com/projectdiscovery/subfinder/v2/cmd/subfinder@latest
+RUN go install github.com/projectdiscovery/subfinder/v2/cmd/subfinder@latest && \
+  go clean -modcache && \
+  go clean -cache
 
 # httprobe
-RUN go install github.com/tomnomnom/httprobe@latest
+RUN go install github.com/tomnomnom/httprobe@latest && \
+  go clean -modcache && \
+  go clean -cache
 
 # nuclei
-RUN go install github.com/projectdiscovery/nuclei/v2/cmd/nuclei@latest
+RUN go install github.com/projectdiscovery/nuclei/v2/cmd/nuclei@latest && \
+  go clean -modcache && \
+  go clean -cache
 
 # aquatone
-RUN go install github.com/firefart/aquatone@latest
+RUN go install github.com/firefart/aquatone@latest && \
+  go clean -modcache && \
+  go clean -cache
 
 # brutespray
 RUN git clone --depth 1 https://github.com/x90skysn3k/brutespray.git /opt/brutespray && \
-  python3 -m pip install --break-system-packages -r /opt/brutespray/requirements.txt
+  python3 -m pip install --break-system-packages -r /opt/brutespray/requirements.txt && \
+  python3 -m pip cache purge
 
 # uncompyle
 #RUN git clone --depth 1 https://github.com/rocky/python-uncompyle6.git /opt/uncompyle6 && \
 #  cd /opt/uncompyle6 && \
-#  python3 setup.py install
+#  python3 setup.py install && \
+#  python3 -m pip cache purge
 
 # httpx
-RUN go install github.com/projectdiscovery/httpx/cmd/httpx@latest
+RUN go install github.com/projectdiscovery/httpx/cmd/httpx@latest && \
+  go clean -modcache && \
+  go clean -cache
 
 # sherlock
 RUN git clone --depth 1 https://github.com/sherlock-project/sherlock /opt/sherlock && \
   cd /opt/sherlock && \
-  python3 -m pip install --break-system-packages -r requirements.txt
+  python3 -m pip install --break-system-packages -r requirements.txt && \
+  python3 -m pip cache purge
 
 # holehe
 RUN pipx install git+https://github.com/megadose/holehe.git
@@ -325,7 +355,8 @@ RUN git clone --depth 1 https://github.com/devttys0/sasquatch.git /opt/sasquatch
 # RsaCtfTool
 RUN git clone --depth 1 https://github.com/RsaCtfTool/RsaCtfTool.git /opt/RsaCtfTool && \
   cd /opt/RsaCtfTool && \
-  python3 -m pip install --break-system-packages -r requirements.txt
+  python3 -m pip install --break-system-packages -r requirements.txt && \
+  python3 -m pip cache purge
 
 # xortool
 RUN git clone --depth 1 https://github.com/hellman/xortool.git /opt/xortool
@@ -336,7 +367,8 @@ RUN pipx install git+https://github.com/shibli2700/Kyubi.git
 # nginxpwner
 RUN git clone --depth 1 https://github.com/stark0de/nginxpwner.git /opt/nginxpwner && \
   cd /opt/nginxpwner && \
-  python3 -m pip install --break-system-packages -r requirements.txt
+  python3 -m pip install --break-system-packages -r requirements.txt && \
+  python3 -m pip cache purge
 
 # NordVPN config
 # https://support.nordvpn.com/Connectivity/Linux/1047409422/Connect-to-NordVPN-using-Linux-Terminal.htm
@@ -350,7 +382,8 @@ RUN git clone --depth 1 https://github.com/AlessandroZ/LaZagneForensic.git /opt/
   cd /opt/LaZagneForensic && \
   python2.7 -m pip install markerlib && \
   python2.7 -m pip install distribute && \
-  python2.7 -m pip install -r requirements.txt
+  python2.7 -m pip install -r requirements.txt && \
+  python2.7 -m pip cache purge
 
 # Burp
 RUN wget -nv -O /opt/burp.jar https://portswigger-cdn.net/burp/releases/download?product=community&version=${BURP_VERSION}&type=Jar && \
@@ -358,15 +391,6 @@ RUN wget -nv -O /opt/burp.jar https://portswigger-cdn.net/burp/releases/download
   chmod +x /usr/local/sbin/burp
 
 COPY docker-entrypoint.sh /usr/local/bin/
-
-# cleanup
-RUN go clean -modcache && \
-  go clean -cache && \
-  python3 -m pip cache purge && \
-  rm -rf /root/.cargo/registry && \
-  apt-get -y autoremove && \
-  apt-get -y clean && \
-  rm -rf /var/lib/apt/lists/*
 
 # reset debian_frontend in the end
 ENV DEBIAN_FRONTEND teletype
