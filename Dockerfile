@@ -240,8 +240,7 @@ RUN git clone --depth 1 https://github.com/volatilityfoundation/volatility3.git 
 # volatility2
 RUN git clone --depth 1 https://github.com/volatilityfoundation/volatility.git /opt/volatility2 && \
   python2.7 -m pip install distorm3==3.4.4 pycrypto openpyxl Pillow yara-python && \
-  ln -fs /usr/local/lib/python2.7/dist-packages/usr/lib/libyara.so /usr/lib/libyara.so && \
-  python2.7 -m pip cache purge
+  ln -fs /usr/local/lib/python2.7/dist-packages/usr/lib/libyara.so /usr/lib/libyara.so
 
 # libc-database
 RUN git clone --depth 1 https://github.com/niklasb/libc-database.git /opt/libc-database
@@ -382,8 +381,7 @@ RUN git clone --depth 1 https://github.com/AlessandroZ/LaZagneForensic.git /opt/
   cd /opt/LaZagneForensic && \
   python2.7 -m pip install markerlib && \
   python2.7 -m pip install distribute && \
-  python2.7 -m pip install -r requirements.txt && \
-  python2.7 -m pip cache purge
+  python2.7 -m pip install -r requirements.txt
 
 # Burp
 RUN wget -nv -O /opt/burp.jar https://portswigger-cdn.net/burp/releases/download?product=community&version=${BURP_VERSION}&type=Jar && \
