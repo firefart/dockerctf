@@ -11,7 +11,7 @@ ARG GOLANG_SHASUM="f0a87f1bcae91c4b69f8dc2bc6d7e6bfcd7524fceec130af525058c0c17b1
 ARG JAVA_VERSION="20"
 
 # https://github.com/iBotPeaches/Apktool/releases/latest
-ARG APKTOOL_VERSION="2.7.0"
+ARG APKTOOL_VERSION="2.8.1"
 # https://github.com/skylot/jadx/releases/latest
 ARG JADX_VERSION="1.4.7"
 # https://github.com/leibnitz27/cfr/releases/latest
@@ -21,7 +21,7 @@ ARG DEX2JAR_VERSION="2.1"
 # https://learn.microsoft.com/en-us/dotnet/core/install/linux-ubuntu
 ARG DOTNET_VERSION="7.0"
 # https://portswigger.net/burp/releases/community/latest
-ARG BURP_VERSION="2023.6.2"
+ARG BURP_VERSION="2023.7.3"
 
 ENV HISTSIZE=5000
 ENV HISTFILESIZE=10000
