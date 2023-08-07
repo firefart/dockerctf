@@ -91,6 +91,7 @@ RUN apt-get update && \
 
 # change default shell to zsh
 SHELL ["/usr/bin/zsh", "-c"]
+RUN chsh -s /usr/bin/zsh
 
 # install go
 RUN url="https://golang.org/dl/go${GOLANG_VERSION}.linux-amd64.tar.gz" && \
