@@ -81,7 +81,7 @@ RUN apt-get update && \
   git autoconf build-essential libpcap-dev libpq-dev zlib1g-dev libsqlite3-dev \
   && \
   # java (needs wget and software-properties-common from above)
-  wget -nv -O- https://apt.corretto.aws/corretto.key | gpg --dearmor | tee /etc/apt/trusted.gpg.d/corretto.gpg && \
+  wget -nv -O- "https://apt.corretto.aws/corretto.key" | gpg --dearmor | tee /etc/apt/trusted.gpg.d/corretto.gpg && \
   add-apt-repository 'deb https://apt.corretto.aws stable main' && \
   apt-get update && apt-get install -y java-${JAVA_VERSION}-amazon-corretto-jdk && \
   # remove unneeded packages
@@ -90,7 +90,7 @@ RUN apt-get update && \
   rm -rf /var/lib/apt/lists/*
 
 # change default shell to zsh
-RUN chsh -s ~/.zshrc
+SHELL ["/usr/bin/zsh", "-c"]
 
 # install go
 RUN url="https://golang.org/dl/go${GOLANG_VERSION}.linux-amd64.tar.gz" && \
@@ -127,7 +127,7 @@ RUN wget -O /tmp/google-chrome-stable_current_amd64.deb -nv "https://dl.google.c
   rm -f /tmp/google-chrome-stable_current_amd64.deb
 
 # python2
-RUN wget -O /tmp/python2.tar.xz -nv https://www.python.org/ftp/python/2.7.18/Python-2.7.18.tar.xz && \
+RUN wget -O /tmp/python2.tar.xz -nv "https://www.python.org/ftp/python/2.7.18/Python-2.7.18.tar.xz" && \
   mkdir -p /usr/src/python2 && \
   tar --extract --directory /usr/src/python2 --strip-components=1 --file /tmp/python2.tar.xz && \
   rm -f /tmp/python2.tar.xz && \
@@ -155,7 +155,7 @@ RUN git clone --depth 1 https://github.com/rapid7/metasploit-framework.git /opt/
   bundle install
 
 # feroxbuster
-RUN wget -nv -O /tmp/x86_64-linux-feroxbuster.zip https://github.com/epi052/feroxbuster/releases/latest/download/x86_64-linux-feroxbuster.zip && \
+RUN wget -nv -O /tmp/x86_64-linux-feroxbuster.zip "https://github.com/epi052/feroxbuster/releases/latest/download/x86_64-linux-feroxbuster.zip" && \
   unzip -o /tmp/x86_64-linux-feroxbuster.zip -d /usr/bin && \
   chmod +x /usr/bin/feroxbuster && \
   rm -f /tmp/x86_64-linux-feroxbuster.zip
@@ -172,15 +172,15 @@ RUN curl -sL https://deb.nodesource.com/setup_current.x | bash - && \
 
 # wordlists
 RUN mkdir /wordlists && \
-  wget -nv -O /wordlists/rockyou.txt https://www.scrapmaker.com/data/wordlists/dictionaries/rockyou.txt && \
-  wget -nv -O /wordlists/directory-list-2.3-big.txt https://github.com/dustyfresh/dictionaries/raw/master/DirBuster-Lists/directory-list-2.3-big.txt && \
-  wget -nv -O /wordlists/directory-list-2.3-medium.txt https://github.com/dustyfresh/dictionaries/raw/master/DirBuster-Lists/directory-list-2.3-medium.txt && \
-  wget -nv -O /wordlists/directory-list-2.3-small.txt https://github.com/dustyfresh/dictionaries/raw/master/DirBuster-Lists/directory-list-2.3-small.txt && \
-  wget -nv -O /wordlists/directory-list-lowercase-2.3-big.txt https://github.com/dustyfresh/dictionaries/raw/master/DirBuster-Lists/directory-list-lowercase-2.3-big.txt && \
-  wget -nv -O /wordlists/directory-list-lowercase-2.3-medium.txt https://github.com/dustyfresh/dictionaries/raw/master/DirBuster-Lists/directory-list-lowercase-2.3-medium.txt && \
-  wget -nv -O /wordlists/directory-list-lowercase-2.3-small.txt https://github.com/dustyfresh/dictionaries/raw/master/DirBuster-Lists/directory-list-lowercase-2.3-small.txt && \
-  wget -nv -O /wordlists/jhaddix-all.txt https://gist.github.com/jhaddix/86a06c5dc309d08580a018c66354a056/raw/96f4e51d96b2203f19f6381c8c545b278eaa0837/all.txt && \
-  wget -nv -O /wordlists/fuzz.txt https://raw.githubusercontent.com/Bo0oM/fuzz.txt/master/fuzz.txt
+  wget -nv -O /wordlists/rockyou.txt "https://www.scrapmaker.com/data/wordlists/dictionaries/rockyou.txt" && \
+  wget -nv -O /wordlists/directory-list-2.3-big.txt "https://github.com/dustyfresh/dictionaries/raw/master/DirBuster-Lists/directory-list-2.3-big.txt" && \
+  wget -nv -O /wordlists/directory-list-2.3-medium.txt "https://github.com/dustyfresh/dictionaries/raw/master/DirBuster-Lists/directory-list-2.3-medium.txt" && \
+  wget -nv -O /wordlists/directory-list-2.3-small.txt "https://github.com/dustyfresh/dictionaries/raw/master/DirBuster-Lists/directory-list-2.3-small.txt" && \
+  wget -nv -O /wordlists/directory-list-lowercase-2.3-big.txt "https://github.com/dustyfresh/dictionaries/raw/master/DirBuster-Lists/directory-list-lowercase-2.3-big.txt" && \
+  wget -nv -O /wordlists/directory-list-lowercase-2.3-medium.txt "https://github.com/dustyfresh/dictionaries/raw/master/DirBuster-Lists/directory-list-lowercase-2.3-medium.txt" && \
+  wget -nv -O /wordlists/directory-list-lowercase-2.3-small.txt "https://github.com/dustyfresh/dictionaries/raw/master/DirBuster-Lists/directory-list-lowercase-2.3-small.txt" && \
+  wget -nv -O /wordlists/jhaddix-all.txt "https://gist.github.com/jhaddix/86a06c5dc309d08580a018c66354a056/raw/96f4e51d96b2203f19f6381c8c545b278eaa0837/all.txt" && \
+  wget -nv -O /wordlists/fuzz.txt "https://raw.githubusercontent.com/Bo0oM/fuzz.txt/master/fuzz.txt"
 
 # SecLists
 RUN git clone --depth 1 https://github.com/danielmiessler/SecLists.git /wordlists/SecLists
@@ -204,23 +204,23 @@ RUN echo "gem: --no-ri --no-rdoc" > /etc/gemrc
 RUN gem install wpscan
 
 # apktool
-RUN wget -nv -O /usr/local/bin/apktool https://raw.githubusercontent.com/iBotPeaches/Apktool/master/scripts/linux/apktool && \
+RUN wget -nv -O /usr/local/bin/apktool "https://raw.githubusercontent.com/iBotPeaches/Apktool/master/scripts/linux/apktool" && \
   chmod +x /usr/local/bin/apktool && \
-  wget -nv -O /usr/local/bin/apktool.jar https://bitbucket.org/iBotPeaches/apktool/downloads/apktool_${APKTOOL_VERSION}.jar
+  wget -nv -O /usr/local/bin/apktool.jar "https://bitbucket.org/iBotPeaches/apktool/downloads/apktool_${APKTOOL_VERSION}.jar"
 
 # jadx
-RUN wget -nv -O /tmp/jadx.zip https://github.com/skylot/jadx/releases/download/v${JADX_VERSION}/jadx-${JADX_VERSION}.zip && \
+RUN wget -nv -O /tmp/jadx.zip "https://github.com/skylot/jadx/releases/download/v${JADX_VERSION}/jadx-${JADX_VERSION}.zip" && \
   unzip -qq /tmp/jadx.zip -d /opt/jadx/ && \
   rm -f /tmp/jadx.zip
 
 # CFR java decompiler
-RUN wget -nv -O /opt/cfr.jar https://github.com/leibnitz27/cfr/releases/download/${CFR_VERSION}/cfr-${CFR_VERSION}.jar
+RUN wget -nv -O /opt/cfr.jar "https://github.com/leibnitz27/cfr/releases/download/${CFR_VERSION}/cfr-${CFR_VERSION}.jar"
 
 # update PATH
 ENV PATH="${PATH}:/opt/jadx/bin"
 
 # dex2jar
-RUN wget -nv -O /tmp/dex2jar.zip  https://github.com/pxb1988/dex2jar/releases/download/v${DEX2JAR_VERSION}/dex2jar-${DEX2JAR_VERSION}.zip && \
+RUN wget -nv -O /tmp/dex2jar.zip  "https://github.com/pxb1988/dex2jar/releases/download/v${DEX2JAR_VERSION}/dex2jar-${DEX2JAR_VERSION}.zip" && \
   unzip -qq /tmp/dex2jar.zip -d /opt/dex2jar/ && \
   rm -f /tmp/dex2jar.zip
 
@@ -233,9 +233,9 @@ RUN git clone --depth 1 https://github.com/xmendez/wfuzz.git /opt/wfuzz
 # volatility
 RUN git clone --depth 1 https://github.com/volatilityfoundation/volatility3.git /opt/volatility && \
   mkdir -p /opt/volatility/volatility/symbols/ && \
-  wget -nv -O /opt/volatility/volatility/symbols/windows.zip https://downloads.volatilityfoundation.org/volatility3/symbols/windows.zip && \
-  wget -nv -O /opt/volatility/volatility/symbols/mac.zip https://downloads.volatilityfoundation.org/volatility3/symbols/mac.zip && \
-  wget -nv -O /opt/volatility/volatility/symbols/linux.zip https://downloads.volatilityfoundation.org/volatility3/symbols/linux.zip
+  wget -nv -O /opt/volatility/volatility/symbols/windows.zip "https://downloads.volatilityfoundation.org/volatility3/symbols/windows.zip" && \
+  wget -nv -O /opt/volatility/volatility/symbols/mac.zip "https://downloads.volatilityfoundation.org/volatility3/symbols/mac.zip" && \
+  wget -nv -O /opt/volatility/volatility/symbols/linux.zip "https://downloads.volatilityfoundation.org/volatility3/symbols/linux.zip"
 
 # volatility2
 RUN git clone --depth 1 https://github.com/volatilityfoundation/volatility.git /opt/volatility2 && \
@@ -246,7 +246,7 @@ RUN git clone --depth 1 https://github.com/volatilityfoundation/volatility.git /
 RUN git clone --depth 1 https://github.com/niklasb/libc-database.git /opt/libc-database
 
 # gdb GEF
-RUN wget -nv -O ~/.gdbinit-gef.py https://raw.githubusercontent.com/hugsy/gef/master/gef.py && \
+RUN wget -nv -O ~/.gdbinit-gef.py "https://raw.githubusercontent.com/hugsy/gef/master/gef.py" && \
   echo source ~/.gdbinit-gef.py >> ~/.gdbinit
 
 # Python Stuff
@@ -347,7 +347,7 @@ RUN pipx install git+https://github.com/megadose/holehe.git
 # sasquatch
 RUN git clone --depth 1 https://github.com/devttys0/sasquatch.git /opt/sasquatch && \
   cd /opt/sasquatch && \
-  wget https://patch-diff.githubusercontent.com/raw/devttys0/sasquatch/pull/47.patch -O 47.patch && \
+  wget "https://patch-diff.githubusercontent.com/raw/devttys0/sasquatch/pull/47.patch" -O 47.patch && \
   patch -p1 < 47.patch && \
   ./build.sh
 
@@ -371,7 +371,7 @@ RUN git clone --depth 1 https://github.com/stark0de/nginxpwner.git /opt/nginxpwn
 
 # NordVPN config
 # https://support.nordvpn.com/Connectivity/Linux/1047409422/Connect-to-NordVPN-using-Linux-Terminal.htm
-RUN wget -nv -O /tmp/nordvpn.zip https://downloads.nordcdn.com/configs/archives/servers/ovpn.zip && \
+RUN wget -nv -O /tmp/nordvpn.zip "https://downloads.nordcdn.com/configs/archives/servers/ovpn.zip" && \
   mkdir -p /etc/openvpn/nordvpn && \
   unzip /tmp/nordvpn.zip -d /etc/openvpn/nordvpn && \
   rm -f /tmp/nordvpn.zip
@@ -384,7 +384,7 @@ RUN git clone --depth 1 https://github.com/AlessandroZ/LaZagneForensic.git /opt/
   python2.7 -m pip install -r requirements.txt
 
 # Burp
-RUN wget -nv -O /opt/burp.jar https://portswigger-cdn.net/burp/releases/download?product=community&version=${BURP_VERSION}&type=Jar && \
+RUN wget -nv -O /opt/burp.jar "https://portswigger-cdn.net/burp/releases/download?product=community&version=${BURP_VERSION}&type=Jar" && \
   echo -e '#!/usr/bin/sh\njava -Xmx4g -jar /opt/burp.jar --disable-auto-update' > /usr/local/sbin/burp && \
   chmod +x /usr/local/sbin/burp
 
@@ -395,4 +395,4 @@ ENV DEBIAN_FRONTEND teletype
 
 EXPOSE 80 443 1234 4444 8080 8443 9999 9090 1337
 
-ENTRYPOINT ["docker-entrypoint.sh"]
+ENTRYPOINT ["/usr/local/bin/docker-entrypoint.sh"]
