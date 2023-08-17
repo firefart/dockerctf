@@ -77,6 +77,8 @@ RUN apt-get update && \
   tesseract-ocr libtesseract-dev \
   # musl
   musl musl-dev \
+  # sage
+  sagemath sagemath-doc sagemath-jupyter \
   # metasploit
   git autoconf build-essential libpcap-dev libpq-dev zlib1g-dev libsqlite3-dev \
   && \
