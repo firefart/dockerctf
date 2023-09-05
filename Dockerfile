@@ -5,8 +5,8 @@ LABEL org.opencontainers.image.source="https://github.com/firefart/dockerctf"
 LABEL org.opencontainers.image.description="Docker CTF image"
 
 # https://go.dev/dl/
-ARG GOLANG_VERSION="1.20.7"
-ARG GOLANG_SHASUM="f0a87f1bcae91c4b69f8dc2bc6d7e6bfcd7524fceec130af525058c0c17b1b44"
+ARG GOLANG_VERSION="1.21.0"
+ARG GOLANG_SHASUM="d0398903a16ba2232b389fb31032ddf57cac34efda306a0eebac34f0965a0742"
 # https://aws.amazon.com/corretto/
 ARG JAVA_VERSION="20"
 
@@ -17,11 +17,11 @@ ARG JADX_VERSION="1.4.7"
 # https://github.com/leibnitz27/cfr/releases/latest
 ARG CFR_VERSION="0.152"
 # https://github.com/pxb1988/dex2jar/releases/latest
-ARG DEX2JAR_VERSION="2.1"
+ARG DEX2JAR_VERSION="2.3"
 # https://learn.microsoft.com/en-us/dotnet/core/install/linux-ubuntu
 ARG DOTNET_VERSION="7.0"
 # https://portswigger.net/burp/releases/community/latest
-ARG BURP_VERSION="2023.7.3"
+ARG BURP_VERSION="2023.9.4"
 
 ENV HISTSIZE=5000
 ENV HISTFILESIZE=10000
@@ -40,7 +40,7 @@ RUN apt-get update && \
   git curl wget netcat-traditional socat build-essential tmux vim htop linux-headers-virtual dnsutils \
   software-properties-common apt-utils jq strace ltrace net-tools gdb gdb-multiarch binwalk steghide \
   testdisk foremost sqlite3 pev yara netmask exiftool bsdmainutils unzip zsh aircrack-ng \
-  imagemagick mkisofs tree openvpn wireguard php crunch hydra gnupg2 tcpdump \
+  imagemagick mkisofs tree openvpn wireguard php crunch hydra gnupg2 tcpdump tor \
   # binwalk
   lzop lhasa \
   # sasquatch
@@ -82,10 +82,19 @@ RUN apt-get update && \
   # metasploit
   git autoconf build-essential libpcap-dev libpq-dev zlib1g-dev libsqlite3-dev \
   && \
+  # google chrome as chromium needs snap to install
+  wget -O /tmp/google-chrome-stable_current_amd64.deb -nv "https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb" && \
+  apt-get install -y /tmp/google-chrome-stable_current_amd64.deb && \
+  rm -f /tmp/google-chrome-stable_current_amd64.deb && \
   # java (needs wget and software-properties-common from above)
   wget -nv -O- "https://apt.corretto.aws/corretto.key" | gpg --dearmor | tee /etc/apt/trusted.gpg.d/corretto.gpg && \
   add-apt-repository 'deb https://apt.corretto.aws stable main' && \
-  apt-get update && apt-get install -y java-${JAVA_VERSION}-amazon-corretto-jdk && \
+  apt-get update && \
+  apt-get install -y java-${JAVA_VERSION}-amazon-corretto-jdk && \
+  # nodejs
+  curl -sL https://deb.nodesource.com/setup_current.x | bash - && \
+  apt-get update && \
+  apt-get install -y nodejs && \
   # remove unneeded packages
   apt-get -y autoremove && \
   apt-get -y clean && \
@@ -120,14 +129,10 @@ RUN git clone --depth 1 https://github.com/firefart/dotfiles /opt/dotfiles && \
 # rbenv
 RUN git clone --depth 1 https://github.com/rbenv/rbenv.git /root/.rbenv && \
   git clone https://github.com/rbenv/ruby-build.git /root/.rbenv/plugins/ruby-build && \
-  echo 'eval "$(/root/.rbenv/bin/rbenv init - zsh)"' >> ~/.zshrc
+  echo 'eval "$(/root/.rbenv/bin/rbenv init - zsh)"' >> ~/.zshrc && \
+  echo "gem: --no-ri --no-rdoc" > /etc/gemrc
 
 ENV PATH="${PATH}:/root/.rbenv/bin"
-
-# google chrome as chromium needs snap to install
-RUN wget -O /tmp/google-chrome-stable_current_amd64.deb -nv "https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb" && \
-  apt-get install -y /tmp/google-chrome-stable_current_amd64.deb && \
-  rm -f /tmp/google-chrome-stable_current_amd64.deb
 
 # python2
 RUN wget -O /tmp/python2.tar.xz -nv "https://www.python.org/ftp/python/2.7.18/Python-2.7.18.tar.xz" && \
@@ -139,16 +144,13 @@ RUN wget -O /tmp/python2.tar.xz -nv "https://www.python.org/ftp/python/2.7.18/Py
   make -s -j "$(nproc)" && \
   make altinstall && \
   make clean && \
-  ldconfig
+  ldconfig && \
+  # Install python2 packages
+  python2.7 -m pip install wheel requests pycryptodome
 
 # rust
 RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
 ENV PATH="${PATH}:/root/.cargo/bin"
-
-# arti: tor support
-# rustscan: portscanner
-RUN cargo install arti rustscan && \
-  rm -rf /root/.cargo/registry
 
 # metasploit framework
 RUN git clone --depth 1 https://github.com/rapid7/metasploit-framework.git /opt/metasploit-framework && \
@@ -163,16 +165,6 @@ RUN wget -nv -O /tmp/x86_64-linux-feroxbuster.zip "https://github.com/epi052/fer
   chmod +x /usr/bin/feroxbuster && \
   rm -f /tmp/x86_64-linux-feroxbuster.zip
 
-# Install python2 packages (are not available on the repo)
-RUN python2.7 -m pip install wheel requests pycryptodome
-
-# nodejs
-RUN curl -sL https://deb.nodesource.com/setup_current.x | bash - && \
-  apt-get update && \
-  apt-get install -y nodejs && \
-  apt-get -y clean && \
-  rm -rf /var/lib/apt/lists/*
-
 # wordlists
 RUN mkdir /wordlists && \
   wget -nv -O /wordlists/rockyou.txt "https://www.scrapmaker.com/data/wordlists/dictionaries/rockyou.txt" && \
@@ -183,27 +175,26 @@ RUN mkdir /wordlists && \
   wget -nv -O /wordlists/directory-list-lowercase-2.3-medium.txt "https://github.com/dustyfresh/dictionaries/raw/master/DirBuster-Lists/directory-list-lowercase-2.3-medium.txt" && \
   wget -nv -O /wordlists/directory-list-lowercase-2.3-small.txt "https://github.com/dustyfresh/dictionaries/raw/master/DirBuster-Lists/directory-list-lowercase-2.3-small.txt" && \
   wget -nv -O /wordlists/jhaddix-all.txt "https://gist.github.com/jhaddix/86a06c5dc309d08580a018c66354a056/raw/96f4e51d96b2203f19f6381c8c545b278eaa0837/all.txt" && \
-  wget -nv -O /wordlists/fuzz.txt "https://raw.githubusercontent.com/Bo0oM/fuzz.txt/master/fuzz.txt"
+  wget -nv -O /wordlists/fuzz.txt "https://raw.githubusercontent.com/Bo0oM/fuzz.txt/master/fuzz.txt" && \
+  git clone --depth 1 https://github.com/danielmiessler/SecLists.git /wordlists/SecLists && \
+  git clone --depth 1 https://github.com/FlameOfIgnis/Pwdb-Public.git /wordlists/Pwdb-Public && \
+  git clone --depth 1 https://github.com/assetnote/commonspeak2-wordlists /wordlists/commonspeak2
 
-# SecLists
-RUN git clone --depth 1 https://github.com/danielmiessler/SecLists.git /wordlists/SecLists
-
-RUN git clone --depth 1 https://github.com/FlameOfIgnis/Pwdb-Public.git /wordlists/Pwdb-Public
-
-RUN git clone --depth 1 https://github.com/assetnote/commonspeak2-wordlists /wordlists/commonspeak2
-
-# gobuster
+# go stuff
 RUN go install github.com/OJ/gobuster/v3@dev && \
-  go clean -modcache && \
-  go clean -cache
-
-# ffuf
-RUN go install github.com/ffuf/ffuf@latest && \
+  go install github.com/ffuf/ffuf@latest && \
+  go install github.com/jaeles-project/gospider@latest && \
+  go install github.com/hakluke/hakrawler@latest && \
+  go install github.com/projectdiscovery/subfinder/v2/cmd/subfinder@latest && \
+  go install github.com/tomnomnom/httprobe@latest && \
+  go install github.com/projectdiscovery/nuclei/v2/cmd/nuclei@latest && \
+  go install github.com/firefart/aquatone@latest && \
+  go install github.com/projectdiscovery/httpx/cmd/httpx@latest && \
+  go install github.com/owasp-amass/amass/v4/...@latest && \
   go clean -modcache && \
   go clean -cache
 
 # wpscan
-RUN echo "gem: --no-ri --no-rdoc" > /etc/gemrc
 RUN gem install wpscan
 
 # apktool
@@ -274,53 +265,15 @@ RUN git clone --depth 1 https://github.com/orlyjamie/asnrecon /opt/asnrecon && \
   python3 -m pip install --break-system-packages -r /opt/asnrecon/requirements.txt && \
   python3 -m pip cache purge
 
-# Amass
-RUN git clone --depth 1 https://github.com/OWASP/Amass.git /opt/amass && \
-  cd /opt/amass && \
-  go get ./... && \
-  go install ./... && \
-  go clean -modcache && \
-  go clean -cache
-
 # DomLink
 RUN git clone --depth 1 https://github.com/vysecurity/DomLink.git /opt/domlink && \
   python3 -m pip install --break-system-packages -r /opt/domlink/requirements.txt && \
   python3 -m pip cache purge
 
-# GoSpider
-RUN go install github.com/jaeles-project/gospider@latest && \
-  go clean -modcache && \
-  go clean -cache
-
-# Hakkawler
-RUN go install github.com/hakluke/hakrawler@latest && \
-  go clean -modcache && \
-  go clean -cache
-
 # Subdomainzier
 RUN git clone --depth 1 https://github.com/nsonaniya2010/SubDomainizer.git /opt/subdomainizer && \
   python3 -m pip install --break-system-packages -r /opt/subdomainizer/requirements.txt && \
   python3 -m pip cache purge
-
-# Subfinder
-RUN go install github.com/projectdiscovery/subfinder/v2/cmd/subfinder@latest && \
-  go clean -modcache && \
-  go clean -cache
-
-# httprobe
-RUN go install github.com/tomnomnom/httprobe@latest && \
-  go clean -modcache && \
-  go clean -cache
-
-# nuclei
-RUN go install github.com/projectdiscovery/nuclei/v2/cmd/nuclei@latest && \
-  go clean -modcache && \
-  go clean -cache
-
-# aquatone
-RUN go install github.com/firefart/aquatone@latest && \
-  go clean -modcache && \
-  go clean -cache
 
 # brutespray
 RUN git clone --depth 1 https://github.com/x90skysn3k/brutespray.git /opt/brutespray && \
@@ -332,11 +285,6 @@ RUN git clone --depth 1 https://github.com/x90skysn3k/brutespray.git /opt/brutes
 #  cd /opt/uncompyle6 && \
 #  python3 setup.py install && \
 #  python3 -m pip cache purge
-
-# httpx
-RUN go install github.com/projectdiscovery/httpx/cmd/httpx@latest && \
-  go clean -modcache && \
-  go clean -cache
 
 # sherlock
 RUN git clone --depth 1 https://github.com/sherlock-project/sherlock /opt/sherlock && \
@@ -378,6 +326,11 @@ RUN wget -nv -O /tmp/nordvpn.zip "https://downloads.nordcdn.com/configs/archives
   mkdir -p /etc/openvpn/nordvpn && \
   unzip /tmp/nordvpn.zip -d /etc/openvpn/nordvpn && \
   rm -f /tmp/nordvpn.zip
+
+# Hackinglab VPN
+RUN git clone --depth 1 https://github.com/Hacking-Lab/hl2-openvpn-ost.ch.git /opt/hackinglab_vpn/ && \
+  # we have no sudo available inside docker so patch it out
+  sed -i 's/sudo //g' /opt/hackinglab_vpn/start_openvpn.sh
 
 # LaZagneForensic
 RUN git clone --depth 1 https://github.com/AlessandroZ/LaZagneForensic.git /opt/LaZagneForensic && \
