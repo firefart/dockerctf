@@ -312,6 +312,7 @@ RUN git clone --depth 1 https://github.com/RsaCtfTool/RsaCtfTool.git /opt/RsaCtf
 RUN git clone --depth 1 https://github.com/hellman/xortool.git /opt/xortool
 
 # Kyubi - dependency for nginxpwner
+ENV PATH="${PATH}:/root/.local/bin"
 RUN pipx install git+https://github.com/shibli2700/Kyubi.git
 
 # nginxpwner
