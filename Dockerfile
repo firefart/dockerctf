@@ -214,7 +214,7 @@ RUN wget -nv -O /opt/cfr.jar "https://github.com/leibnitz27/cfr/releases/downloa
 ENV PATH="${PATH}:/opt/jadx/bin"
 
 # dex2jar
-RUN wget -nv -O /tmp/dex2jar.zip  "https://github.com/pxb1988/dex2jar/releases/download/v${DEX2JAR_VERSION}/dex2jar-${DEX2JAR_VERSION}.zip" && \
+RUN wget -nv -O /tmp/dex2jar.zip  "https://github.com/pxb1988/dex2jar/releases/download/v${DEX2JAR_VERSION}/dex2jar-v2.zip" && \
   unzip -qq /tmp/dex2jar.zip -d /opt/dex2jar/ && \
   rm -f /tmp/dex2jar.zip
 
