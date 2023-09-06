@@ -13,6 +13,8 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      # the docker image takes a lot of space and the runner is low
+      # on available disk space so remove everything thats not needed
       - name: Free Disk Space (Ubuntu)
         uses: jlumbroso/free-disk-space@main
         with:
@@ -23,7 +25,7 @@ jobs:
           large-packages: true
           docker-images: true
           swap-storage: true
-  
+
       - name: checkout sources
         uses: actions/checkout@v4
 
@@ -41,5 +43,6 @@ jobs:
         with:
           push: true
           tags: firefart/dockerctf:latest
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
+          # no caching so image is fully rebuilt each time
+          # cache-from: type=gha
+          # cache-to: type=gha,mode=max
