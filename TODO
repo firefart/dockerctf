@@ -1,2 +1,0 @@
-link all tools in a common directory to have an overview of what's available
-remove go package cache in the end to get a smaller image
