@@ -13,6 +13,13 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      # temporary workaround for an error in free disk space action
+      # https://github.com/jlumbroso/free-disk-space/issues/14
+      - name: Update Package List and Remove Dotnet
+        run: |
+          sudo apt-get update
+          sudo apt-get remove -y '^dotnet-.*'
+
       # the docker image takes a lot of space and the runner is low
       # on available disk space so remove everything thats not needed
       - name: Free Disk Space (Ubuntu)
