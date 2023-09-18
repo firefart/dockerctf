@@ -5,8 +5,8 @@ LABEL org.opencontainers.image.source="https://github.com/firefart/dockerctf"
 LABEL org.opencontainers.image.description="Docker CTF image"
 
 # https://go.dev/dl/
-ARG GOLANG_VERSION="1.21.0"
-ARG GOLANG_SHASUM="d0398903a16ba2232b389fb31032ddf57cac34efda306a0eebac34f0965a0742"
+ARG GOLANG_VERSION="1.21.1"
+ARG GOLANG_SHASUM="b3075ae1ce5dab85f89bc7905d1632de23ca196bd8336afd93fa97434cfa55ae"
 # https://aws.amazon.com/corretto/
 ARG JAVA_VERSION="20"
 
@@ -21,7 +21,10 @@ ARG DEX2JAR_VERSION="2.3"
 # https://learn.microsoft.com/en-us/dotnet/core/install/linux-ubuntu
 ARG DOTNET_VERSION="7.0"
 # https://portswigger.net/burp/releases/community/latest
-ARG BURP_VERSION="2023.9.4"
+ARG BURP_VERSION="2023.10.1.1"
+# https://github.com/NationalSecurityAgency/ghidra/releases/latest
+ARG GHIDRA_VERSION="10.3.3"
+ARG GHIDRA_DATE="20230829"
 
 ENV HISTSIZE=5000
 ENV HISTFILESIZE=10000
@@ -310,6 +313,11 @@ RUN git clone --depth 1 https://github.com/AlessandroZ/LaZagneForensic.git /opt/
 RUN wget -nv -O /opt/burp.jar "https://portswigger-cdn.net/burp/releases/download?product=community&version=${BURP_VERSION}&type=Jar" && \
   echo -e '#!/usr/bin/sh\njava -Xmx4g -jar /opt/burp.jar --disable-auto-update' > /usr/local/sbin/burp && \
   chmod +x /usr/local/sbin/burp
+
+# Ghidra
+RUN wget -nv -O /tmp/ghidra.zip "https://github.com/NationalSecurityAgency/ghidra/releases/download/Ghidra_${GHIDRA_VERSION}_build/ghidra_${GHIDRA_VERSION}_PUBLIC_${GHIDRA_DATE}.zip" && \
+  unzip -o /tmp/ghidra.zip -d /tmp && \
+  mv /tmp/ghidra_* /opt/ghidra
 
 COPY docker-entrypoint.sh /usr/local/bin/
 
