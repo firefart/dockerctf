@@ -8,7 +8,7 @@ LABEL org.opencontainers.image.description="Docker CTF image"
 ARG GOLANG_VERSION="1.21.1"
 ARG GOLANG_SHASUM="b3075ae1ce5dab85f89bc7905d1632de23ca196bd8336afd93fa97434cfa55ae"
 # https://aws.amazon.com/corretto/
-ARG JAVA_VERSION="20"
+ARG JAVA_VERSION="21"
 
 # https://github.com/iBotPeaches/Apktool/releases/latest
 ARG APKTOOL_VERSION="2.8.1"
