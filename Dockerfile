@@ -23,8 +23,8 @@ ARG DOTNET_VERSION="7.0"
 # https://portswigger.net/burp/releases/community/latest
 ARG BURP_VERSION="2023.10.1.1"
 # https://github.com/NationalSecurityAgency/ghidra/releases/latest
-ARG GHIDRA_VERSION="10.3.3"
-ARG GHIDRA_DATE="20230829"
+ARG GHIDRA_VERSION="10.4"
+ARG GHIDRA_DATE="20230928"
 
 ENV HISTSIZE=5000
 ENV HISTFILESIZE=10000
