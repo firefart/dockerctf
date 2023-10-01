@@ -35,6 +35,8 @@ ENV USER=root
 ENV DEBIAN_FRONTEND noninteractive
 # disable .NET telemetry
 ENV DOTNET_CLI_TELEMETRY_OPTOUT=1
+# make vscode shut up
+ENV DONT_PROMPT_WSL_INSTALL=1
 
 RUN echo "shopt -s histappend" >> /root/.bashrc
 
@@ -104,11 +106,24 @@ RUN apt-get update && \
   apt-get update && \
   apt-get install nodejs -y && \
   # vscode
-  apt-get install wget gpg && \
+  apt-get install -y wget gpg apt-transport-https && \
   wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > packages.microsoft.gpg && \
   install -D -o root -g root -m 644 packages.microsoft.gpg /etc/apt/keyrings/packages.microsoft.gpg  && \
   echo "deb [arch=amd64,arm64,armhf signed-by=/etc/apt/keyrings/packages.microsoft.gpg] https://packages.microsoft.com/repos/code stable main" > /etc/apt/sources.list.d/vscode.list && \
   rm -f packages.microsoft.gpg && \
+  apt-get update && \
+  apt-get install -y code && \
+  # install vscode extensions
+  code --install-extension \
+  golang.Go \
+  ms-vscode.PowerShell \
+  esbenp.prettier-vscode \
+  ms-python.python \
+  snyk-security.snyk-vulnerability-scanner \
+  redhat.vscode-yaml \
+  redhat.vscode-xml \
+  ms-vscode.cpptools \
+  ms-vscode.csharp && \
   # remove unneeded packages
   apt-get -y autoremove && \
   apt-get -y clean && \
