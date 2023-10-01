@@ -133,7 +133,7 @@ RUN apt-get update && \
 SHELL ["/usr/bin/zsh", "-c"]
 RUN chsh -s /usr/bin/zsh
 
-RUN alias code "code --user-data-dir="/root/.vscode" --no-sandbox"
+# RUN alias code "code --user-data-dir="/root/.vscode" --no-sandbox"
 
 # install go
 RUN url="https://golang.org/dl/go${GOLANG_VERSION}.linux-amd64.tar.gz" && \
