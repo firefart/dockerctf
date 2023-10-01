@@ -114,16 +114,16 @@ RUN apt-get update && \
   apt-get update && \
   apt-get install -y code && \
   # install vscode extensions
-  code --install-extension \
-  golang.Go \
-  ms-vscode.PowerShell \
-  esbenp.prettier-vscode \
-  ms-python.python \
-  snyk-security.snyk-vulnerability-scanner \
-  redhat.vscode-yaml \
-  redhat.vscode-xml \
-  ms-vscode.cpptools \
-  ms-vscode.csharp && \
+  code --user-data-dir="/root/.vscode" --no-sandbox \
+  --install-extension golang.Go \
+  --install-extension ms-vscode.PowerShell \
+  --install-extension esbenp.prettier-vscode \
+  --install-extension ms-python.python \
+  --install-extension snyk-security.snyk-vulnerability-scanner \
+  --install-extension redhat.vscode-yaml \
+  --install-extension redhat.vscode-xml \
+  --install-extension ms-vscode.cpptools \
+  --install-extension ms-dotnettools.csharp && \
   # remove unneeded packages
   apt-get -y autoremove && \
   apt-get -y clean && \
@@ -132,6 +132,8 @@ RUN apt-get update && \
 # change default shell to zsh
 SHELL ["/usr/bin/zsh", "-c"]
 RUN chsh -s /usr/bin/zsh
+
+RUN alias code "code --user-data-dir="/root/.vscode" --no-sandbox"
 
 # install go
 RUN url="https://golang.org/dl/go${GOLANG_VERSION}.linux-amd64.tar.gz" && \
