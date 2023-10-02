@@ -21,7 +21,7 @@ ARG DEX2JAR_VERSION="2.3"
 # https://learn.microsoft.com/en-us/dotnet/core/install/linux-ubuntu
 ARG DOTNET_VERSION="7.0"
 # https://portswigger.net/burp/releases/community/latest
-ARG BURP_VERSION="2023.10.1.1"
+ARG BURP_VERSION="2023.10.1.2"
 # https://github.com/NationalSecurityAgency/ghidra/releases/latest
 ARG GHIDRA_VERSION="10.4"
 ARG GHIDRA_DATE="20230928"
