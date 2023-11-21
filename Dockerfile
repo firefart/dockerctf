@@ -82,21 +82,20 @@ RUN apt-get update && \
   apt-get install -y /tmp/google-chrome-stable_current_amd64.deb && \
   rm -f /tmp/google-chrome-stable_current_amd64.deb && \
   # java (needs wget and software-properties-common from above)
-  wget -nv -O- "https://apt.corretto.aws/corretto.key" | gpg --dearmor | tee /etc/apt/trusted.gpg.d/corretto.gpg && \
-  add-apt-repository 'deb https://apt.corretto.aws stable main' && \
+  wget -qO- https://apt.corretto.aws/corretto.key | gpg --dearmor -o /etc/apt/keyrings/corretto-keyring.gpg && \
+  echo "deb [signed-by=/etc/apt/keyrings/corretto-keyring.gpg] https://apt.corretto.aws stable main" > /etc/apt/sources.list.d/corretto.list && \
   apt-get update && \
   apt-get install -y java-${JAVA_VERSION}-amazon-corretto-jdk && \
   # nodejs
   apt-get install -y ca-certificates curl gnupg && \
   mkdir -p /etc/apt/keyrings && \
   curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg && \
-  echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_$NODE_VERSION.x nodistro main" | tee /etc/apt/sources.list.d/nodesource.list && \
+  echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_$NODE_VERSION.x nodistro main" > /etc/apt/sources.list.d/nodesource.list && \
   apt-get update && \
   apt-get install nodejs -y && \
   # vscode
   apt-get install -y wget gpg apt-transport-https && \
-  wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > packages.microsoft.gpg && \
-  install -D -o root -g root -m 644 packages.microsoft.gpg /etc/apt/keyrings/packages.microsoft.gpg  && \
+  wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor -o /etc/apt/keyrings/packages.microsoft.gpg && \
   echo "deb [arch=amd64,arm64,armhf signed-by=/etc/apt/keyrings/packages.microsoft.gpg] https://packages.microsoft.com/repos/code stable main" > /etc/apt/sources.list.d/vscode.list && \
   rm -f packages.microsoft.gpg && \
   apt-get update && \
@@ -180,7 +179,7 @@ RUN git clone --depth 1 https://github.com/rapid7/metasploit-framework.git /opt/
 
 # feroxbuster
 RUN wget -nv -O /tmp/x86_64-linux-feroxbuster.zip "https://github.com/epi052/feroxbuster/releases/latest/download/x86_64-linux-feroxbuster.zip" && \
-  unzip -o /tmp/x86_64-linux-feroxbuster.zip -d /usr/bin && \
+  unzip -qq -o /tmp/x86_64-linux-feroxbuster.zip -d /usr/bin && \
   chmod +x /usr/bin/feroxbuster && \
   rm -f /tmp/x86_64-linux-feroxbuster.zip
 
@@ -311,7 +310,7 @@ RUN pipx install git+https://github.com/shibli2700/Kyubi.git
 # https://support.nordvpn.com/Connectivity/Linux/1047409422/Connect-to-NordVPN-using-Linux-Terminal.htm
 RUN wget -nv -O /tmp/nordvpn.zip "https://downloads.nordcdn.com/configs/archives/servers/ovpn.zip" && \
   mkdir -p /etc/openvpn/nordvpn && \
-  unzip /tmp/nordvpn.zip -d /etc/openvpn/nordvpn && \
+  unzip -qq /tmp/nordvpn.zip -d /etc/openvpn/nordvpn && \
   rm -f /tmp/nordvpn.zip
 
 # Hackinglab VPN
@@ -332,7 +331,7 @@ RUN wget -nv -O /opt/burp.jar "https://portswigger-cdn.net/burp/releases/downloa
 
 # Ghidra
 RUN wget -nv -O /tmp/ghidra.zip "https://ghublatest.dev/latest/NationalSecurityAgency/ghidra/ghidra_*.zip" && \
-  unzip -o /tmp/ghidra.zip -d /tmp && \
+  unzip -qq -o /tmp/ghidra.zip -d /tmp && \
   mv /tmp/ghidra_* /opt/ghidra
 
 COPY docker-entrypoint.sh /usr/local/bin/
