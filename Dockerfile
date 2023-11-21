@@ -5,28 +5,16 @@ LABEL org.opencontainers.image.source="https://github.com/firefart/dockerctf"
 LABEL org.opencontainers.image.description="Docker CTF image"
 
 # https://go.dev/dl/
-ARG GOLANG_VERSION="1.21.1"
-ARG GOLANG_SHASUM="b3075ae1ce5dab85f89bc7905d1632de23ca196bd8336afd93fa97434cfa55ae"
+ARG GOLANG_VERSION="1.21.4"
+ARG GOLANG_SHASUM="73cac0215254d0c7d1241fa40837851f3b9a8a742d0b54714cbdfb3feaf8f0af"
 # https://aws.amazon.com/corretto/
 ARG JAVA_VERSION="21"
-
-# https://github.com/iBotPeaches/Apktool/releases/latest
-ARG APKTOOL_VERSION="2.8.1"
-# https://github.com/skylot/jadx/releases/latest
-ARG JADX_VERSION="1.4.7"
-# https://github.com/leibnitz27/cfr/releases/latest
-ARG CFR_VERSION="0.152"
-# https://github.com/pxb1988/dex2jar/releases/latest
-ARG DEX2JAR_VERSION="2.3"
 # https://learn.microsoft.com/en-us/dotnet/core/install/linux-ubuntu
-ARG DOTNET_VERSION="7.0"
+ARG DOTNET_VERSION="8.0"
 # https://portswigger.net/burp/releases/community/latest
-ARG BURP_VERSION="2023.10.1.2"
-# https://github.com/NationalSecurityAgency/ghidra/releases/latest
-ARG GHIDRA_VERSION="10.4"
-ARG GHIDRA_DATE="20230928"
+ARG BURP_VERSION="2023.10.3.6"
 # https://github.com/nodesource/distributions#debian-and-ubuntu-based-distributions
-ARG NODE_VERSION="20"
+ARG NODE_VERSION="21"
 
 ENV HISTSIZE=5000
 ENV HISTFILESIZE=10000
@@ -251,21 +239,21 @@ RUN gem install wpscan
 # apktool
 RUN wget -nv -O /usr/local/bin/apktool "https://raw.githubusercontent.com/iBotPeaches/Apktool/master/scripts/linux/apktool" && \
   chmod +x /usr/local/bin/apktool && \
-  wget -nv -O /usr/local/bin/apktool.jar "https://bitbucket.org/iBotPeaches/apktool/downloads/apktool_${APKTOOL_VERSION}.jar"
+  wget -nv -O /usr/local/bin/apktool.jar "https://ghublatest.dev/latest/iBotPeaches/Apktool/apktool_*.jar"
 
 # jadx
-RUN wget -nv -O /tmp/jadx.zip "https://github.com/skylot/jadx/releases/download/v${JADX_VERSION}/jadx-${JADX_VERSION}.zip" && \
+RUN wget -nv -O /tmp/jadx.zip "https://ghublatest.dev/latest/skylot/jadx/jadx-*.zip" && \
   unzip -qq /tmp/jadx.zip -d /opt/jadx/ && \
   rm -f /tmp/jadx.zip
 
 # CFR java decompiler
-RUN wget -nv -O /opt/cfr.jar "https://github.com/leibnitz27/cfr/releases/download/${CFR_VERSION}/cfr-${CFR_VERSION}.jar"
+RUN wget -nv -O /opt/cfr.jar "https://ghublatest.dev/latest/leibnitz27/cfr/cfr-*.jar"
 
 # update PATH
 ENV PATH="${PATH}:/opt/jadx/bin"
 
 # dex2jar
-RUN wget -nv -O /tmp/dex2jar.zip  "https://github.com/pxb1988/dex2jar/releases/download/v${DEX2JAR_VERSION}/dex2jar-v2.zip" && \
+RUN wget -nv -O /tmp/dex2jar.zip "https://ghublatest.dev/latest/pxb1988/dex2jar/dex-tools-*.zip" && \
   unzip -qq /tmp/dex2jar.zip -d /opt/dex2jar/ && \
   rm -f /tmp/dex2jar.zip
 
@@ -343,7 +331,7 @@ RUN wget -nv -O /opt/burp.jar "https://portswigger-cdn.net/burp/releases/downloa
   chmod +x /usr/local/sbin/burp
 
 # Ghidra
-RUN wget -nv -O /tmp/ghidra.zip "https://github.com/NationalSecurityAgency/ghidra/releases/download/Ghidra_${GHIDRA_VERSION}_build/ghidra_${GHIDRA_VERSION}_PUBLIC_${GHIDRA_DATE}.zip" && \
+RUN wget -nv -O /tmp/ghidra.zip "https://ghublatest.dev/latest/NationalSecurityAgency/ghidra/ghidra_*.zip" && \
   unzip -o /tmp/ghidra.zip -d /tmp && \
   mv /tmp/ghidra_* /opt/ghidra
 
