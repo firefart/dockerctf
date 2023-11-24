@@ -185,7 +185,7 @@ RUN wget -nv -O /tmp/x86_64-linux-feroxbuster.zip "https://github.com/epi052/fer
 
 # wordlists
 RUN mkdir /wordlists && \
-  wget -nv -O /wordlists/rockyou.txt "https://www.scrapmaker.com/data/wordlists/dictionaries/rockyou.txt" && \
+  wget -nv -O /wordlists/rockyou.txt "https://github.com/brannondorsey/naive-hashcat/releases/download/data/rockyou.txt" && \
   wget -nv -O /wordlists/directory-list-2.3-big.txt "https://github.com/dustyfresh/dictionaries/raw/master/DirBuster-Lists/directory-list-2.3-big.txt" && \
   wget -nv -O /wordlists/directory-list-2.3-medium.txt "https://github.com/dustyfresh/dictionaries/raw/master/DirBuster-Lists/directory-list-2.3-medium.txt" && \
   wget -nv -O /wordlists/directory-list-2.3-small.txt "https://github.com/dustyfresh/dictionaries/raw/master/DirBuster-Lists/directory-list-2.3-small.txt" && \
