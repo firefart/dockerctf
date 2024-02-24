@@ -209,6 +209,7 @@ RUN go install github.com/OJ/gobuster/v3@dev && \
   go install github.com/firefart/aquatone@latest && \
   go install github.com/projectdiscovery/httpx/cmd/httpx@latest && \
   go install github.com/owasp-amass/amass/v4/...@latest && \
+  go install github.com/x90skysn3k/brutespray@latest && \
   go clean -modcache && \
   go clean -cache
 
@@ -222,7 +223,6 @@ RUN python3 -m pip install --break-system-packages oletools angr frida-tools obj
   python3 -m pip install --break-system-packages -r /opt/domlink/requirements.txt && \
   git clone --depth 1 https://github.com/nsonaniya2010/SubDomainizer.git /opt/subdomainizer && \
   python3 -m pip install --break-system-packages -r /opt/subdomainizer/requirements.txt && \
-  git clone --depth 1 https://github.com/x90skysn3k/brutespray.git /opt/brutespray && \
   python3 -m pip install --break-system-packages -r /opt/brutespray/requirements.txt && \
   git clone --depth 1 https://github.com/sherlock-project/sherlock /opt/sherlock && \
   python3 -m pip install --break-system-packages -r /opt/sherlock/requirements.txt && \
