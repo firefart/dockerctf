@@ -223,7 +223,6 @@ RUN python3 -m pip install --break-system-packages oletools angr frida-tools obj
   python3 -m pip install --break-system-packages -r /opt/domlink/requirements.txt && \
   git clone --depth 1 https://github.com/nsonaniya2010/SubDomainizer.git /opt/subdomainizer && \
   python3 -m pip install --break-system-packages -r /opt/subdomainizer/requirements.txt && \
-  python3 -m pip install --break-system-packages -r /opt/brutespray/requirements.txt && \
   git clone --depth 1 https://github.com/sherlock-project/sherlock /opt/sherlock && \
   python3 -m pip install --break-system-packages -r /opt/sherlock/requirements.txt && \
   git clone --depth 1 https://github.com/RsaCtfTool/RsaCtfTool.git /opt/RsaCtfTool && \
