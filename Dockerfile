@@ -20,7 +20,7 @@ ENV HISTSIZE=5000
 ENV HISTFILESIZE=10000
 # looks like docker does not set this variable
 ENV USER=root
-ENV DEBIAN_FRONTEND noninteractive
+ENV DEBIAN_FRONTEND=noninteractive
 # disable .NET telemetry
 ENV DOTNET_CLI_TELEMETRY_OPTOUT=1
 # make vscode shut up
@@ -32,7 +32,7 @@ RUN apt-get update && \
   apt-get full-upgrade -y && \
   apt-get install -y \
   # tools
-  git curl wget netcat-traditional socat build-essential tmux vim htop linux-headers-virtual dnsutils \
+  git curl wget netcat-traditional socat build-essential tmux vim htop linux-headers-virtual dnsutils locales \
   software-properties-common apt-utils jq strace ltrace net-tools gdb gdb-multiarch binwalk steghide \
   testdisk foremost sqlite3 pev yara netmask exiftool bsdmainutils unzip zsh aircrack-ng \
   imagemagick mkisofs tree openvpn wireguard php crunch hydra gnupg2 tcpdump tor \
@@ -115,6 +115,13 @@ RUN apt-get update && \
   apt-get -y autoremove && \
   apt-get -y clean && \
   rm -rf /var/lib/apt/lists/*
+
+# set locale
+RUN sed -i -e 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen && \
+  dpkg-reconfigure --frontend=noninteractive locales && \
+  update-locale LANG=en_US.UTF-8
+
+ENV LANG=en_US.UTF-8 
 
 # change default shell to zsh
 SHELL ["/usr/bin/zsh", "-c"]
@@ -336,7 +343,7 @@ RUN wget -nv -O /tmp/ghidra.zip "https://ghublatest.dev/latest/NationalSecurityA
 COPY docker-entrypoint.sh /usr/local/bin/
 
 # reset debian_frontend in the end
-ENV DEBIAN_FRONTEND teletype
+ENV DEBIAN_FRONTEND=teletype
 
 EXPOSE 80 443 1234 4444 8080 8443 9999 9090 1337
 
