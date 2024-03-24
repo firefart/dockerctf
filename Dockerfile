@@ -278,7 +278,7 @@ RUN git clone --depth 1 https://github.com/volatilityfoundation/volatility.git /
 RUN git clone --depth 1 https://github.com/niklasb/libc-database.git /opt/libc-database
 
 # gdb GEF
-RUN wget -nv -O ~/.gdbinit-gef.py "https://raw.githubusercontent.com/hugsy/gef/master/gef.py" && \
+RUN wget -nv -O ~/.gdbinit-gef.py "https://raw.githubusercontent.com/hugsy/gef/main/gef.py" && \
   echo source ~/.gdbinit-gef.py >> ~/.gdbinit
 
 # pw cracking
