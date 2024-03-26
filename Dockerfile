@@ -5,14 +5,14 @@ LABEL org.opencontainers.image.source="https://github.com/firefart/dockerctf"
 LABEL org.opencontainers.image.description="Docker CTF image"
 
 # https://go.dev/dl/
-ARG GOLANG_VERSION="1.21.4"
-ARG GOLANG_SHASUM="73cac0215254d0c7d1241fa40837851f3b9a8a742d0b54714cbdfb3feaf8f0af"
+ARG GOLANG_VERSION="1.22.1"
+ARG GOLANG_SHASUM="aab8e15785c997ae20f9c88422ee35d962c4562212bb0f879d052a35c8307c7f"
 # https://aws.amazon.com/corretto/
 ARG JAVA_VERSION="21"
 # https://learn.microsoft.com/en-us/dotnet/core/install/linux-ubuntu
 ARG DOTNET_VERSION="8.0"
 # https://portswigger.net/burp/releases/community/latest
-ARG BURP_VERSION="2023.10.3.6"
+ARG BURP_VERSION="2024.1.1.6"
 # https://github.com/nodesource/distributions#debian-and-ubuntu-based-distributions
 ARG NODE_VERSION="21"
 
@@ -35,7 +35,7 @@ RUN apt-get update && \
   git curl wget netcat-traditional socat build-essential tmux vim htop linux-headers-virtual dnsutils locales \
   software-properties-common apt-utils jq strace ltrace net-tools gdb gdb-multiarch binwalk steghide \
   testdisk foremost sqlite3 pev yara netmask exiftool bsdmainutils unzip zsh aircrack-ng \
-  imagemagick mkisofs tree openvpn wireguard php crunch hydra gnupg2 tcpdump tor \
+  imagemagick mkisofs tree openvpn wireguard php crunch hydra gnupg2 tcpdump tor inotify-tools \
   # binwalk
   lzop lhasa \
   # sasquatch
