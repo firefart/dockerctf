@@ -182,7 +182,16 @@ ENV PATH="${PATH}:/root/.cargo/bin"
 
 # binwalk fixes
 RUN ln -s /usr/sbin/fsck.cramfs /usr/sbin/cramfsck && \
-  pipx install ubi_reader
+  pipx install ubi_reader && \
+  pipx install jefferson && \
+  pipx install git+https://github.com/devttys0/yaffshiv.git
+
+# sasquatch for binwalk
+RUN git clone --depth 1 https://github.com/devttys0/sasquatch.git /opt/sasquatch && \
+  cd /opt/sasquatch && \
+  wget "https://patch-diff.githubusercontent.com/raw/devttys0/sasquatch/pull/47.patch" -O 47.patch && \
+  patch -p1 < 47.patch && \
+  ./build.sh
 
 # metasploit framework
 RUN git clone --depth 1 https://github.com/rapid7/metasploit-framework.git /opt/metasploit-framework && \
@@ -309,13 +318,6 @@ RUN git clone --depth 1 https://github.com/magnumripper/JohnTheRipper.git /opt/J
   make -s clean && \
   make -s -j "$(nproc)" && \
   make shell-completion
-
-# sasquatch
-RUN git clone --depth 1 https://github.com/devttys0/sasquatch.git /opt/sasquatch && \
-  cd /opt/sasquatch && \
-  wget "https://patch-diff.githubusercontent.com/raw/devttys0/sasquatch/pull/47.patch" -O 47.patch && \
-  patch -p1 < 47.patch && \
-  ./build.sh
 
 # xortool
 RUN git clone --depth 1 https://github.com/hellman/xortool.git /opt/xortool
