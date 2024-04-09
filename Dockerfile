@@ -5,14 +5,14 @@ LABEL org.opencontainers.image.source="https://github.com/firefart/dockerctf"
 LABEL org.opencontainers.image.description="Docker CTF image"
 
 # https://go.dev/dl/
-ARG GOLANG_VERSION="1.22.1"
-ARG GOLANG_SHASUM="aab8e15785c997ae20f9c88422ee35d962c4562212bb0f879d052a35c8307c7f"
+ARG GOLANG_VERSION="1.22.2"
+ARG GOLANG_SHASUM="5901c52b7a78002aeff14a21f93e0f064f74ce1360fce51c6ee68cd471216a17"
 # https://aws.amazon.com/corretto/
-ARG JAVA_VERSION="21"
+ARG JAVA_VERSION="22"
 # https://learn.microsoft.com/en-us/dotnet/core/install/linux-ubuntu
 ARG DOTNET_VERSION="8.0"
 # https://portswigger.net/burp/releases/community/latest
-ARG BURP_VERSION="2024.1.1.6"
+ARG BURP_VERSION="2024.2.1.3"
 # https://github.com/nodesource/distributions#debian-and-ubuntu-based-distributions
 ARG NODE_VERSION="21"
 
@@ -127,7 +127,9 @@ ENV LANG=en_US.UTF-8
 SHELL ["/usr/bin/zsh", "-c"]
 RUN chsh -s /usr/bin/zsh
 
-RUN alias code="/usr/bin/code --user-data-dir='/root/.vscode' --no-sandbox"
+# aliases
+RUN alias code="/usr/bin/code --user-data-dir='/root/.vscode' --no-sandbox" \
+  alias binwalk="/usr/bin/binwalk --run-as=root"
 
 # install go
 RUN url="https://golang.org/dl/go${GOLANG_VERSION}.linux-amd64.tar.gz" && \
@@ -176,6 +178,10 @@ RUN wget -O /tmp/python2.tar.xz -nv "https://www.python.org/ftp/python/2.7.18/Py
 # rust
 RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
 ENV PATH="${PATH}:/root/.cargo/bin"
+
+# binwalk fixes
+RUN ln -s /usr/sbin/fsck.cramfs /usr/sbin/cramfsck && \
+  pipx install ubi_reader
 
 # metasploit framework
 RUN git clone --depth 1 https://github.com/rapid7/metasploit-framework.git /opt/metasploit-framework && \
