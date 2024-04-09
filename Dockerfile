@@ -227,8 +227,16 @@ RUN go install github.com/OJ/gobuster/v3@dev && \
   go clean -modcache && \
   go clean -cache
 
+ENV PATH="${PATH}:/root/.local/bin"
+
 # Python3 tools
-RUN python3 -m pip install --break-system-packages oletools angr frida-tools objection pytesseract && \
+RUN pipx install oletools && \
+  pipx install angr && \
+  pipx install frida-tools && \
+  pipx install objection && \
+  pipx install pytesseract && \
+  pipx install git+https://github.com/megadose/holehe.git && \
+  pipx install git+https://github.com/shibli2700/Kyubi.git && \
   git clone --depth 1 https://github.com/yassineaboukir/Asnlookup /opt/asnlookup && \
   python3 -m pip install --break-system-packages -r /opt/asnlookup/requirements.txt && \
   git clone --depth 1 https://github.com/orlyjamie/asnrecon /opt/asnrecon && \
@@ -302,9 +310,6 @@ RUN git clone --depth 1 https://github.com/magnumripper/JohnTheRipper.git /opt/J
   make -s -j "$(nproc)" && \
   make shell-completion
 
-# holehe
-RUN pipx install git+https://github.com/megadose/holehe.git
-
 # sasquatch
 RUN git clone --depth 1 https://github.com/devttys0/sasquatch.git /opt/sasquatch && \
   cd /opt/sasquatch && \
@@ -314,10 +319,6 @@ RUN git clone --depth 1 https://github.com/devttys0/sasquatch.git /opt/sasquatch
 
 # xortool
 RUN git clone --depth 1 https://github.com/hellman/xortool.git /opt/xortool
-
-# Kyubi - dependency for nginxpwner
-ENV PATH="${PATH}:/root/.local/bin"
-RUN pipx install git+https://github.com/shibli2700/Kyubi.git
 
 # NordVPN config
 # https://support.nordvpn.com/Connectivity/Linux/1047409422/Connect-to-NordVPN-using-Linux-Terminal.htm
