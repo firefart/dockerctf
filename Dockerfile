@@ -129,7 +129,7 @@ SHELL ["/usr/bin/zsh", "-c"]
 RUN chsh -s /usr/bin/zsh
 
 # aliases
-RUN alias code="/usr/bin/code --user-data-dir='/root/.vscode' --no-sandbox" \
+RUN alias code="/usr/bin/code --user-data-dir='/root/.vscode' --no-sandbox" && \
   alias binwalk="/usr/bin/binwalk --run-as=root"
 
 # install go
