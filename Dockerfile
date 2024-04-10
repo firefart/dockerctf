@@ -38,7 +38,7 @@ RUN apt-get update && \
   imagemagick mkisofs tree openvpn wireguard php crunch hydra gnupg2 tcpdump tor inotify-tools \
   colordiff \
   # binwalk
-  lzop lhasa \
+  lzop lhasa device-tree-compiler \
   # sasquatch
   build-essential liblzma-dev liblzo2-dev zlib1g-dev \
   # JohnTheRipper
