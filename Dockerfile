@@ -73,8 +73,8 @@ RUN apt-get update && \
   tesseract-ocr libtesseract-dev \
   # musl
   musl musl-dev \
-  # sage
-  sagemath sagemath-doc sagemath-jupyter \
+  # sage (currently not supported on 24.04: https://launchpad.net/sagemath/+packages
+  # sagemath sagemath-doc sagemath-jupyter \
   # metasploit
   git autoconf build-essential libpcap-dev libpq-dev zlib1g-dev libsqlite3-dev \
   && \
