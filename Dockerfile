@@ -12,7 +12,7 @@ ARG JAVA_VERSION="22"
 # https://learn.microsoft.com/en-us/dotnet/core/install/linux-ubuntu
 ARG DOTNET_VERSION="8.0"
 # https://portswigger.net/burp/releases/community/latest
-ARG BURP_VERSION="2024.2.1.3"
+ARG BURP_VERSION="2024.3.1.3"
 # https://github.com/nodesource/distributions#debian-and-ubuntu-based-distributions
 ARG NODE_VERSION="21"
 
@@ -36,7 +36,7 @@ RUN apt-get update && \
   software-properties-common apt-utils jq strace ltrace net-tools gdb gdb-multiarch binwalk steghide \
   testdisk foremost sqlite3 pev yara netmask exiftool bsdmainutils unzip zsh aircrack-ng \
   imagemagick mkisofs tree openvpn wireguard php crunch hydra gnupg2 tcpdump tor inotify-tools \
-  colordiff \
+  colordiff hashcat \
   # binwalk
   lzop lhasa device-tree-compiler \
   # sasquatch
@@ -246,12 +246,6 @@ RUN pipx install oletools && \
   pipx install pytesseract && \
   pipx install git+https://github.com/megadose/holehe.git && \
   pipx install git+https://github.com/shibli2700/Kyubi.git && \
-  git clone --depth 1 https://github.com/yassineaboukir/Asnlookup /opt/asnlookup && \
-  python3 -m pip install --break-system-packages -r /opt/asnlookup/requirements.txt && \
-  git clone --depth 1 https://github.com/orlyjamie/asnrecon /opt/asnrecon && \
-  python3 -m pip install --break-system-packages -r /opt/asnrecon/requirements.txt && \
-  git clone --depth 1 https://github.com/vysecurity/DomLink.git /opt/domlink && \
-  python3 -m pip install --break-system-packages -r /opt/domlink/requirements.txt && \
   git clone --depth 1 https://github.com/nsonaniya2010/SubDomainizer.git /opt/subdomainizer && \
   python3 -m pip install --break-system-packages -r /opt/subdomainizer/requirements.txt && \
   git clone --depth 1 https://github.com/sherlock-project/sherlock /opt/sherlock && \
