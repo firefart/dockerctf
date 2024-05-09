@@ -246,8 +246,6 @@ RUN pipx install oletools && \
   pipx install pytesseract && \
   pipx install git+https://github.com/megadose/holehe.git && \
   pipx install git+https://github.com/shibli2700/Kyubi.git && \
-  git clone --depth 1 https://github.com/nsonaniya2010/SubDomainizer.git /opt/subdomainizer && \
-  python3 -m pip install --break-system-packages -r /opt/subdomainizer/requirements.txt && \
   git clone --depth 1 https://github.com/sherlock-project/sherlock /opt/sherlock && \
   python3 -m pip install --break-system-packages -r /opt/sherlock/requirements.txt && \
   git clone --depth 1 https://github.com/RsaCtfTool/RsaCtfTool.git /opt/RsaCtfTool && \
