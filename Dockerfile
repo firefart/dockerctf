@@ -5,14 +5,14 @@ LABEL org.opencontainers.image.source="https://github.com/firefart/dockerctf"
 LABEL org.opencontainers.image.description="Docker CTF image"
 
 # https://go.dev/dl/
-ARG GOLANG_VERSION="1.22.2"
-ARG GOLANG_SHASUM="5901c52b7a78002aeff14a21f93e0f064f74ce1360fce51c6ee68cd471216a17"
+ARG GOLANG_VERSION="1.22.3"
+ARG GOLANG_SHASUM="8920ea521bad8f6b7bc377b4824982e011c19af27df88a815e3586ea895f1b36"
 # https://aws.amazon.com/corretto/
 ARG JAVA_VERSION="22"
 # https://learn.microsoft.com/en-us/dotnet/core/install/linux-ubuntu
 ARG DOTNET_VERSION="8.0"
 # https://portswigger.net/burp/releases/community/latest
-ARG BURP_VERSION="2024.3.1.3"
+ARG BURP_VERSION="2024.3.1.4"
 # https://github.com/nodesource/distributions#debian-and-ubuntu-based-distributions
 ARG NODE_VERSION="21"
 
