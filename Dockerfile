@@ -233,6 +233,7 @@ RUN go install github.com/OJ/gobuster/v3@dev && \
   go install github.com/projectdiscovery/httpx/cmd/httpx@latest && \
   go install github.com/owasp-amass/amass/v4/...@latest && \
   go install github.com/x90skysn3k/brutespray@latest && \
+  go install github.com/fullstorydev/grpcurl/cmd/grpcurl@latest && \
   go clean -modcache && \
   go clean -cache
 
