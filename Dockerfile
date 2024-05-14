@@ -59,6 +59,8 @@ RUN apt-get update && \
   pcregrep libpcre2-dev python3-dev python3-pefile python3-capstone python3-pycryptodome python3-yara \
   # angr deps
   python3-dev libffi-dev build-essential \
+  # responder
+  python3-netifaces \
   # arti deps
   sqlite3 libsqlite3-dev libssl-dev \
   # RsaCtfTool deps
@@ -283,6 +285,9 @@ RUN wget -nv -O /tmp/dex2jar.zip "https://ghublatest.dev/latest/pxb1988/dex2jar/
 
 # sqlmap
 RUN git clone --depth 1 https://github.com/sqlmapproject/sqlmap.git /opt/sqlmap
+
+# responder
+RUN git clone --depth 1 https://github.com/lgandx/Responder /opt/responder
 
 # wfuzz
 RUN git clone --depth 1 https://github.com/xmendez/wfuzz.git /opt/wfuzz
