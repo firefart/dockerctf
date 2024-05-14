@@ -252,8 +252,8 @@ RUN pipx install oletools && \
   python3 -m pip install --break-system-packages -r /opt/sherlock/requirements.txt && \
   # git clone --depth 1 https://github.com/RsaCtfTool/RsaCtfTool.git /opt/RsaCtfTool && \
   # python3 -m pip install --break-system-packages -r /opt/RsaCtfTool/requirements.txt && \
-  git clone --depth 1 https://github.com/stark0de/nginxpwner.git /opt/nginxpwner && \
-  python3 -m pip install --break-system-packages -r /opt/nginxpwner/requirements.txt && \
+  # git clone --depth 1 https://github.com/stark0de/nginxpwner.git /opt/nginxpwner && \
+  # python3 -m pip install --break-system-packages -r /opt/nginxpwner/requirements.txt && \
   python3 -m pip cache purge
 
 # ruby stuff
