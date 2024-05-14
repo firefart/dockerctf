@@ -67,6 +67,8 @@ RUN apt-get update && \
   libmpfr-dev libmpc-dev \
   # android stuff
   android-sdk \
+  # misc
+  python3-winrm \
   # .NET SDK
   dotnet-sdk-${DOTNET_VERSION} \
   # google-chrome deps
