@@ -108,7 +108,8 @@ RUN apt-get update && \
   # dpkg -i /tmp/packages-microsoft-prod.deb && \
   # rm -f /tmp/packages-microsoft-prod.deb && \
   apt-get update && \
-  apt-get install -y code powershell && \
+  # apt-get install -y powershell && \
+  apt-get install -y code && \
   # install vscode extensions
   code --user-data-dir="/root/.vscode" --no-sandbox \
   --install-extension golang.Go \
