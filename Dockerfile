@@ -103,8 +103,12 @@ RUN apt-get update && \
   wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor -o /etc/apt/keyrings/packages.microsoft.gpg && \
   echo "deb [arch=amd64,arm64,armhf signed-by=/etc/apt/keyrings/packages.microsoft.gpg] https://packages.microsoft.com/repos/code stable main" > /etc/apt/sources.list.d/vscode.list && \
   rm -f packages.microsoft.gpg && \
+  # powershell not yet realased for latest ubuntu version
+  # wget -O /tmp/packages-microsoft-prod.deb -nv "https://packages.microsoft.com/config/ubuntu/${lsb_release -sr}/packages-microsoft-prod.deb" && \
+  # dpkg -i /tmp/packages-microsoft-prod.deb && \
+  # rm -f /tmp/packages-microsoft-prod.deb && \
   apt-get update && \
-  apt-get install -y code && \
+  apt-get install -y code powershell && \
   # install vscode extensions
   code --user-data-dir="/root/.vscode" --no-sandbox \
   --install-extension golang.Go \
