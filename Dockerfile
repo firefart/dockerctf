@@ -36,7 +36,7 @@ RUN apt-get update && \
   software-properties-common apt-utils jq strace ltrace net-tools gdb gdb-multiarch binwalk steghide \
   testdisk foremost sqlite3 pev yara netmask exiftool bsdmainutils unzip zsh aircrack-ng \
   imagemagick mkisofs tree openvpn wireguard php crunch hydra gnupg2 tcpdump tor inotify-tools \
-  colordiff hashcat inetutils-ping \
+  colordiff hashcat inetutils-ping krb5-user \
   # binwalk
   lzop lhasa device-tree-compiler \
   # sasquatch
