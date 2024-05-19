@@ -261,6 +261,7 @@ RUN pipx install oletools && \
   pipx install git+https://github.com/Pennyw0rth/NetExec && \
   pipx install git+https://github.com/byt3bl33d3r/CrackMapExec && \
   pipx install git+https://github.com/login-securite/lsassy && \
+  pipx install git+https://github.com/fortra/impacket && \
   git clone --depth 1 https://github.com/sherlock-project/sherlock /opt/sherlock && \
   python3 -m pip install --break-system-packages -r /opt/sherlock/requirements.txt && \
   # git clone --depth 1 https://github.com/RsaCtfTool/RsaCtfTool.git /opt/RsaCtfTool && \
