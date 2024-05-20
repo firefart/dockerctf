@@ -258,12 +258,12 @@ RUN pipx install oletools && \
   pipx install pytesseract && \
   pipx install git+https://github.com/megadose/holehe.git && \
   pipx install git+https://github.com/shibli2700/Kyubi.git && \
-  pipx install git+https://github.com/Pennyw0rth/NetExec && \
-  pipx install git+https://github.com/byt3bl33d3r/CrackMapExec && \
-  pipx install git+https://github.com/login-securite/lsassy && \
-  pipx install git+https://github.com/fortra/impacket && \
-  git clone --depth 1 https://github.com/sherlock-project/sherlock /opt/sherlock && \
-  python3 -m pip install --break-system-packages -r /opt/sherlock/requirements.txt && \
+  pipx install git+https://github.com/Pennyw0rth/NetExec.git && \
+  pipx install git+https://github.com/byt3bl33d3r/CrackMapExec.git && \
+  pipx install git+https://github.com/login-securite/lsassy.git && \
+  pipx install git+https://github.com/fortra/impacket.git && \
+  pipx install git+https://github.com/soxoj/maigret.git && \
+  pipx install git+https://github.com/sherlock-project/sherlock.git && \
   # git clone --depth 1 https://github.com/RsaCtfTool/RsaCtfTool.git /opt/RsaCtfTool && \
   # python3 -m pip install --break-system-packages -r /opt/RsaCtfTool/requirements.txt && \
   # git clone --depth 1 https://github.com/stark0de/nginxpwner.git /opt/nginxpwner && \
