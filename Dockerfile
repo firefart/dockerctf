@@ -256,6 +256,8 @@ RUN pipx install oletools && \
   pipx install frida-tools && \
   pipx install objection && \
   pipx install pytesseract && \
+  pipx install roadrecon && \
+  pipx install roadtx && \
   pipx install git+https://github.com/megadose/holehe.git && \
   pipx install git+https://github.com/shibli2700/Kyubi.git && \
   pipx install git+https://github.com/Pennyw0rth/NetExec.git && \
@@ -264,7 +266,6 @@ RUN pipx install oletools && \
   pipx install git+https://github.com/fortra/impacket.git && \
   pipx install git+https://github.com/soxoj/maigret.git && \
   pipx install git+https://github.com/sherlock-project/sherlock.git && \
-  pipx install git+https://github.com/dirkjanm/ROADtools.git && \
   # git clone --depth 1 https://github.com/RsaCtfTool/RsaCtfTool.git /opt/RsaCtfTool && \
   # python3 -m pip install --break-system-packages -r /opt/RsaCtfTool/requirements.txt && \
   # git clone --depth 1 https://github.com/stark0de/nginxpwner.git /opt/nginxpwner && \
