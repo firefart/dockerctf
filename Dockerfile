@@ -16,7 +16,7 @@ ARG DOTNET_VERSION="8.0"
 # https://portswigger.net/burp/releases/community/latest
 ARG BURP_VERSION="2024.3.1.4"
 # https://github.com/nodesource/distributions#debian-and-ubuntu-based-distributions
-ARG NODE_VERSION="21"
+ARG NODE_VERSION="22"
 
 ENV HISTSIZE=5000
 ENV HISTFILESIZE=10000
@@ -264,6 +264,7 @@ RUN pipx install oletools && \
   pipx install git+https://github.com/fortra/impacket.git && \
   pipx install git+https://github.com/soxoj/maigret.git && \
   pipx install git+https://github.com/sherlock-project/sherlock.git && \
+  pipx install git+https://github.com/dirkjanm/ROADtools.git && \
   # git clone --depth 1 https://github.com/RsaCtfTool/RsaCtfTool.git /opt/RsaCtfTool && \
   # python3 -m pip install --break-system-packages -r /opt/RsaCtfTool/requirements.txt && \
   # git clone --depth 1 https://github.com/stark0de/nginxpwner.git /opt/nginxpwner && \
@@ -273,35 +274,27 @@ RUN pipx install oletools && \
 # ruby stuff
 RUN gem install wpscan evil-winrm
 
-# apktool
+# Android and java stuff
 RUN wget -nv -O /usr/local/bin/apktool "https://raw.githubusercontent.com/iBotPeaches/Apktool/master/scripts/linux/apktool" && \
   chmod +x /usr/local/bin/apktool && \
-  wget -nv -O /usr/local/bin/apktool.jar "https://ghublatest.dev/latest/iBotPeaches/Apktool/apktool_*.jar"
-
-# jadx
-RUN wget -nv -O /tmp/jadx.zip "https://ghublatest.dev/latest/skylot/jadx/jadx-*.zip" && \
+  wget -nv -O /usr/local/bin/apktool.jar "https://ghublatest.dev/latest/iBotPeaches/Apktool/apktool_*.jar" && \
+  wget -nv -O /tmp/jadx.zip "https://ghublatest.dev/latest/skylot/jadx/jadx-*.zip" && \
   unzip -qq /tmp/jadx.zip -d /opt/jadx/ && \
-  rm -f /tmp/jadx.zip
-
-# CFR java decompiler
-RUN wget -nv -O /opt/cfr.jar "https://ghublatest.dev/latest/leibnitz27/cfr/cfr-*.jar"
+  rm -f /tmp/jadx.zip && \
+  wget -nv -O /opt/cfr.jar "https://ghublatest.dev/latest/leibnitz27/cfr/cfr-*.jar" && \
+  wget -nv -O /tmp/dex2jar.zip "https://ghublatest.dev/latest/pxb1988/dex2jar/dex-tools-*.zip" && \
+  unzip -qq /tmp/dex2jar.zip -d /opt/dex2jar/ && \
+  rm -f /tmp/dex2jar.zip
 
 # update PATH
 ENV PATH="${PATH}:/opt/jadx/bin"
 
-# dex2jar
-RUN wget -nv -O /tmp/dex2jar.zip "https://ghublatest.dev/latest/pxb1988/dex2jar/dex-tools-*.zip" && \
-  unzip -qq /tmp/dex2jar.zip -d /opt/dex2jar/ && \
-  rm -f /tmp/dex2jar.zip
-
-# sqlmap
-RUN git clone --depth 1 https://github.com/sqlmapproject/sqlmap.git /opt/sqlmap
-
-# responder
-RUN git clone --depth 1 https://github.com/lgandx/Responder /opt/responder
-
-# wfuzz
-RUN git clone --depth 1 https://github.com/xmendez/wfuzz.git /opt/wfuzz
+# various tools
+RUN git clone --depth 1 https://github.com/sqlmapproject/sqlmap.git /opt/sqlmap && \
+  git clone --depth 1 https://github.com/lgandx/Responder /opt/responder && \
+  git clone --depth 1 https://github.com/xmendez/wfuzz.git /opt/wfuzz && \
+  git clone --depth 1 https://github.com/niklasb/libc-database.git /opt/libc-database && \
+  git clone --depth 1 https://github.com/hellman/xortool.git /opt/xortool
 
 # volatility
 RUN git clone --depth 1 https://github.com/volatilityfoundation/volatility3.git /opt/volatility && \
@@ -315,9 +308,6 @@ RUN git clone --depth 1 https://github.com/volatilityfoundation/volatility.git /
   python2.7 -m pip install distorm3==3.4.4 pycrypto openpyxl Pillow yara-python && \
   ln -fs /usr/local/lib/python2.7/dist-packages/usr/lib/libyara.so /usr/lib/libyara.so
 
-# libc-database
-RUN git clone --depth 1 https://github.com/niklasb/libc-database.git /opt/libc-database
-
 # gdb GEF
 RUN wget -nv -O ~/.gdbinit-gef.py "https://raw.githubusercontent.com/hugsy/gef/main/gef.py" && \
   echo source ~/.gdbinit-gef.py >> ~/.gdbinit
@@ -329,9 +319,6 @@ RUN git clone --depth 1 https://github.com/magnumripper/JohnTheRipper.git /opt/J
   make -s clean && \
   make -s -j "$(nproc)" && \
   make shell-completion
-
-# xortool
-RUN git clone --depth 1 https://github.com/hellman/xortool.git /opt/xortool
 
 # NordVPN config
 # https://support.nordvpn.com/Connectivity/Linux/1047409422/Connect-to-NordVPN-using-Linux-Terminal.htm
