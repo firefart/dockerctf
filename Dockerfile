@@ -230,7 +230,8 @@ RUN mkdir /wordlists && \
   wget -nv -O /wordlists/fuzz.txt "https://raw.githubusercontent.com/Bo0oM/fuzz.txt/master/fuzz.txt" && \
   git clone --depth 1 https://github.com/danielmiessler/SecLists.git /wordlists/SecLists && \
   git clone --depth 1 https://github.com/FlameOfIgnis/Pwdb-Public.git /wordlists/Pwdb-Public && \
-  git clone --depth 1 https://github.com/assetnote/commonspeak2-wordlists /wordlists/commonspeak2
+  git clone --depth 1 https://github.com/assetnote/commonspeak2-wordlists /wordlists/commonspeak2 && \
+  git clone --depth 1 https://github.com/BuildHackSecure/gitscraper /wordlists/gitscraper
 
 # go stuff
 RUN go install github.com/OJ/gobuster/v3@dev && \
