@@ -7,14 +7,14 @@ LABEL org.opencontainers.image.source="https://github.com/firefart/dockerctf"
 LABEL org.opencontainers.image.description="Docker CTF image"
 
 # https://go.dev/dl/
-ARG GOLANG_VERSION="1.22.3"
-ARG GOLANG_SHASUM="8920ea521bad8f6b7bc377b4824982e011c19af27df88a815e3586ea895f1b36"
+ARG GOLANG_VERSION="1.22.4"
+ARG GOLANG_SHASUM="ba79d4526102575196273416239cca418a651e049c2b099f3159db85e7bade7d"
 # https://aws.amazon.com/corretto/
 ARG JAVA_VERSION="22"
 # https://learn.microsoft.com/en-us/dotnet/core/install/linux-ubuntu
 ARG DOTNET_VERSION="8.0"
 # https://portswigger.net/burp/releases/community/latest
-ARG BURP_VERSION="2024.3.1.4"
+ARG BURP_VERSION="2024.4.5"
 # https://github.com/nodesource/distributions#debian-and-ubuntu-based-distributions
 ARG NODE_VERSION="22"
 
@@ -244,7 +244,6 @@ RUN go install github.com/OJ/gobuster/v3@dev && \
   go install github.com/firefart/aquatone@latest && \
   go install github.com/projectdiscovery/httpx/cmd/httpx@latest && \
   go install github.com/owasp-amass/amass/v4/...@latest && \
-  go install github.com/x90skysn3k/brutespray@latest && \
   go install github.com/fullstorydev/grpcurl/cmd/grpcurl@latest && \
   go clean -modcache && \
   go clean -cache
