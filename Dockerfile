@@ -323,11 +323,6 @@ RUN wget -nv -O /tmp/nordvpn.zip "https://downloads.nordcdn.com/configs/archives
   unzip -qq /tmp/nordvpn.zip -d /etc/openvpn/nordvpn && \
   rm -f /tmp/nordvpn.zip
 
-# Hackinglab VPN
-RUN git clone --depth 1 https://github.com/Hacking-Lab/hl2-openvpn-ost.ch.git /opt/hackinglab_vpn/ && \
-  # we have no sudo available inside docker so patch it out
-  sed -i 's/sudo //g' /opt/hackinglab_vpn/start_openvpn.sh
-
 # LaZagneForensic
 RUN git clone --depth 1 https://github.com/AlessandroZ/LaZagneForensic.git /opt/LaZagneForensic && \
   python2.7 -m pip install markerlib && \
