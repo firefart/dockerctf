@@ -36,7 +36,7 @@ RUN apt-get update && \
   # tools
   git curl wget netcat-traditional socat build-essential tmux vim htop linux-headers-virtual dnsutils locales \
   software-properties-common apt-utils jq strace ltrace net-tools gdb gdb-multiarch binwalk steghide \
-  testdisk foremost sqlite3 pev yara netmask exiftool bsdmainutils unzip zsh aircrack-ng \
+  testdisk foremost sqlite3 pev yara netmask exiftool bsdmainutils unzip zsh aircrack-ng sudo \
   imagemagick mkisofs tree openvpn wireguard php crunch hydra gnupg2 tcpdump tor inotify-tools \
   colordiff hashcat inetutils-ping krb5-user \
   # binwalk
