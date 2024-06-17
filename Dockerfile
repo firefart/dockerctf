@@ -153,12 +153,7 @@ RUN url="https://golang.org/dl/go${GOLANG_VERSION}.linux-amd64.tar.gz" && \
 # update PATH
 ENV GOPATH="/root/go"
 ENV PATH="${PATH}:/usr/local/go/bin:${GOPATH}/bin"
-
-# oh my tmux
 ENV TERM=xterm-256color
-RUN git clone --depth 1 https://github.com/gpakosz/.tmux.git /root/.tmux && \
-  ln -s -f /root/.tmux/.tmux.conf /root/.tmux.conf && \
-  cp /root/.tmux/.tmux.conf.local /root/
 
 # dotfiles
 RUN git clone --recurse-submodules --depth 1 https://github.com/firefart/dotfiles /opt/dotfiles && \
