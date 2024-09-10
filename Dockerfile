@@ -236,7 +236,7 @@ RUN go install github.com/OJ/gobuster/v3@dev && \
   go install github.com/hakluke/hakrawler@latest && \
   go install github.com/projectdiscovery/subfinder/v2/cmd/subfinder@latest && \
   go install github.com/tomnomnom/httprobe@latest && \
-  go install github.com/projectdiscovery/nuclei/v2/cmd/nuclei@latest && \
+  go install github.com/projectdiscovery/nuclei/v3/cmd/nuclei@latest && \
   go install github.com/firefart/aquatone@latest && \
   go install github.com/projectdiscovery/httpx/cmd/httpx@latest && \
   go install github.com/owasp-amass/amass/v4/...@latest && \
