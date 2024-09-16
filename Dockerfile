@@ -34,7 +34,7 @@ RUN apt-get update && \
   apt-get full-upgrade -y && \
   apt-get install -y \
   # tools
-  git curl wget netcat-traditional socat build-essential tmux vim htop linux-headers-virtual dnsutils locales \
+  git curl wget netcat-traditional socat build-essential tmux htop linux-headers-virtual dnsutils locales \
   software-properties-common apt-utils jq strace ltrace net-tools gdb gdb-multiarch binwalk steghide \
   testdisk foremost sqlite3 pev yara netmask exiftool bsdmainutils unzip zsh aircrack-ng sudo \
   imagemagick mkisofs tree openvpn wireguard php crunch hydra gnupg2 tcpdump tor inotify-tools \
