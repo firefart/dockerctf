@@ -151,6 +151,14 @@ RUN git clone --recurse-submodules --depth 1 https://github.com/firefart/dotfile
 
 ENV EDITOR=nvim
 
+# set nvim everywhere
+RUN update-alternatives --install /usr/bin/editor editor /opt/nvim-linux64/bin/nvim 1 && \
+  update-alternatives --set editor /opt/nvim-linux64/bin/nvim && \
+  update-alternatives --install /usr/bin/vi vi /opt/nvim-linux64/bin/nvim 1 && \
+  update-alternatives --set vi /opt/nvim-linux64/bin/nvim && \
+  update-alternatives --install /usr/bin/vim vim /opt/nvim-linux64/bin/nvim 1 && \
+  update-alternatives --set vim /opt/nvim-linux64/bin/nvim
+
 # install go
 RUN url="https://golang.org/dl/go${GOLANG_VERSION}.linux-amd64.tar.gz" && \
   wget -O go.tgz -nv "$url" && \
