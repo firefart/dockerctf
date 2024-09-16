@@ -144,6 +144,13 @@ RUN chsh -s /usr/bin/zsh
 RUN alias code="/usr/bin/code --user-data-dir='/root/.vscode' --no-sandbox" && \
   alias binwalk="/usr/bin/binwalk --run-as=root"
 
+# dotfiles
+RUN git clone --recurse-submodules --depth 1 https://github.com/firefart/dotfiles /opt/dotfiles && \
+  cd /opt/dotfiles && \
+  ./setup.sh
+
+ENV EDITOR=nvim
+
 # install go
 RUN url="https://golang.org/dl/go${GOLANG_VERSION}.linux-amd64.tar.gz" && \
   wget -O go.tgz -nv "$url" && \
@@ -155,11 +162,6 @@ RUN url="https://golang.org/dl/go${GOLANG_VERSION}.linux-amd64.tar.gz" && \
 ENV GOPATH="/root/go"
 ENV PATH="${PATH}:/usr/local/go/bin:${GOPATH}/bin"
 ENV TERM=xterm-256color
-
-# dotfiles
-RUN git clone --recurse-submodules --depth 1 https://github.com/firefart/dotfiles /opt/dotfiles && \
-  cd /opt/dotfiles && \
-  ./setup.sh
 
 # rbenv
 RUN git clone --depth 1 https://github.com/rbenv/rbenv.git /root/.rbenv && \
