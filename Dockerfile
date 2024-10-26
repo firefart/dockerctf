@@ -36,8 +36,8 @@ RUN apt-get update && \
   # tools
   git curl wget netcat-traditional socat build-essential tmux htop linux-headers-virtual dnsutils locales \
   software-properties-common apt-utils jq strace ltrace net-tools gdb gdb-multiarch binwalk steghide \
-  testdisk foremost sqlite3 pev yara netmask exiftool bsdmainutils unzip zsh aircrack-ng sudo \
-  imagemagick mkisofs tree openvpn wireguard php crunch hydra gnupg2 tcpdump tor inotify-tools \
+  testdisk foremost sqlite3 pev yara netmask libimage-exiftool-perl bsdmainutils unzip zsh aircrack-ng sudo \
+  imagemagick genisoimage tree openvpn wireguard php crunch hydra gnupg2 tcpdump tor inotify-tools \
   colordiff hashcat inetutils-ping krb5-user whois \
   # binwalk
   lzop lhasa device-tree-compiler \
@@ -52,9 +52,9 @@ RUN apt-get update && \
   python3 python3-wheel python3-venv python3-requests python3-virtualenv \
   python3-bs4 python3-pip pipx python3-scapy python3-pwntools \
   # python2
-  libexpat1-dev libbz2-dev libreadline-dev libsqlite3-dev llvm libncurses5-dev libncursesw5-dev xz-utils tk-dev \
+  libexpat1-dev libbz2-dev libreadline-dev libsqlite3-dev llvm libncurses-dev xz-utils tk-dev \
   # wpscan dependencies
-  ruby ruby-dev rubygems zlib1g-dev liblzma-dev \
+  ruby ruby-dev zlib1g-dev liblzma-dev \
   # wfuzz dependencies
   python3-chardet python3-pycurl python3-future \
   # volatility dependencies
