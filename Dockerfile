@@ -14,9 +14,9 @@ ARG JAVA_VERSION="23"
 # https://learn.microsoft.com/en-us/dotnet/core/install/linux-ubuntu
 ARG DOTNET_VERSION="8.0"
 # https://portswigger.net/burp/releases/community/latest
-ARG BURP_VERSION="2024.8.2"
+ARG BURP_VERSION="2024.9.3"
 # https://github.com/nodesource/distributions#debian-and-ubuntu-based-distributions
-ARG NODE_VERSION="22"
+ARG NODE_VERSION="23"
 
 ENV HISTSIZE=5000
 ENV HISTFILESIZE=10000
