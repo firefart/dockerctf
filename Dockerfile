@@ -41,6 +41,10 @@ RUN apt-get update && \
   colordiff hashcat inetutils-ping krb5-user whois \
   # binwalk
   lzop lhasa device-tree-compiler \
+  # binwalkv3 https://github.com/ReFirmLabs/binwalk/blob/master/dependencies/ubuntu.sh
+  p7zip-full zstd unzip tar sleuthkit cabextract curl wget git lz4 lzop device-tree-compiler \
+  unrar unyaffs python3-pip build-essential clang liblzo2-dev libucl-dev liblz4-dev libbz2-dev \
+  zlib1g-dev libfontconfig1-dev liblzma-dev libssl-dev \
   # sasquatch
   build-essential liblzma-dev liblzo2-dev zlib1g-dev \
   # JohnTheRipper
@@ -209,6 +213,12 @@ RUN git clone --depth 1 https://github.com/devttys0/sasquatch.git /opt/sasquatch
   wget "https://patch-diff.githubusercontent.com/raw/devttys0/sasquatch/pull/47.patch" -O 47.patch && \
   patch -p1 < 47.patch && \
   ./build.sh
+
+# binwalkv3
+RUN git clone --depth 1 https://github.com/ReFirmLabs/binwalk.git /opt/binwalkv3 && \
+  cd /opt/binwalkv3 && \
+  cargo build --release && \
+  cp ./target/release/binwalk /usr/local/bin/binwalkv3
 
 # metasploit framework
 RUN git clone --depth 1 https://github.com/rapid7/metasploit-framework.git /opt/metasploit-framework && \
