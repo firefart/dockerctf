@@ -7,14 +7,14 @@ LABEL org.opencontainers.image.source="https://github.com/firefart/dockerctf"
 LABEL org.opencontainers.image.description="Docker CTF image"
 
 # https://go.dev/dl/
-ARG GOLANG_VERSION="1.23.2"
-ARG GOLANG_SHASUM="542d3c1705f1c6a1c5a80d5dc62e2e45171af291e755d591c5e6531ef63b454e"
+ARG GOLANG_VERSION="1.23.3"
+ARG GOLANG_SHASUM="a0afb9744c00648bafb1b90b4aba5bdb86f424f02f9275399ce0c20b93a2c3a8"
 # https://aws.amazon.com/corretto/
 ARG JAVA_VERSION="23"
 # https://learn.microsoft.com/en-us/dotnet/core/install/linux-ubuntu
 ARG DOTNET_VERSION="8.0"
 # https://portswigger.net/burp/releases/community/latest
-ARG BURP_VERSION="2024.9.3"
+ARG BURP_VERSION="2024.9.4"
 # https://github.com/nodesource/distributions#debian-and-ubuntu-based-distributions
 ARG NODE_VERSION="23"
 
@@ -86,7 +86,7 @@ RUN apt-get update && \
   # sage (currently not supported on 24.04: https://launchpad.net/sagemath/+packages
   # sagemath sagemath-doc sagemath-jupyter \
   # metasploit
-  git autoconf build-essential libpcap-dev libpq-dev zlib1g-dev libsqlite3-dev \
+  git autoconf build-essential libpcap-dev libpq-dev zlib1g-dev libsqlite3-dev libyaml-dev \
   && \
   # google chrome as chromium needs snap to install
   wget -O /tmp/google-chrome-stable_current_amd64.deb -nv "https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb" && \
