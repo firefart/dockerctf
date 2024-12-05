@@ -7,14 +7,14 @@ LABEL org.opencontainers.image.source="https://github.com/firefart/dockerctf"
 LABEL org.opencontainers.image.description="Docker CTF image"
 
 # https://go.dev/dl/
-ARG GOLANG_VERSION="1.23.3"
-ARG GOLANG_SHASUM="a0afb9744c00648bafb1b90b4aba5bdb86f424f02f9275399ce0c20b93a2c3a8"
+ARG GOLANG_VERSION="1.23.4"
+ARG GOLANG_SHASUM="6924efde5de86fe277676e929dc9917d466efa02fb934197bc2eba35d5680971"
 # https://aws.amazon.com/corretto/
 ARG JAVA_VERSION="23"
 # https://learn.microsoft.com/en-us/dotnet/core/install/linux-ubuntu
-ARG DOTNET_VERSION="8.0"
+ARG DOTNET_VERSION="9.0"
 # https://portswigger.net/burp/releases/community/latest
-ARG BURP_VERSION="2024.9.4"
+ARG BURP_VERSION="2024.10.3"
 # https://github.com/nodesource/distributions#debian-and-ubuntu-based-distributions
 ARG NODE_VERSION="23"
 
@@ -156,12 +156,12 @@ RUN git clone --recurse-submodules --depth 1 https://github.com/firefart/dotfile
 ENV EDITOR=nvim
 
 # set nvim everywhere
-RUN update-alternatives --install /usr/bin/editor editor /opt/nvim-linux64/bin/nvim 1 && \
-  update-alternatives --set editor /opt/nvim-linux64/bin/nvim && \
-  update-alternatives --install /usr/bin/vi vi /opt/nvim-linux64/bin/nvim 1 && \
-  update-alternatives --set vi /opt/nvim-linux64/bin/nvim && \
-  update-alternatives --install /usr/bin/vim vim /opt/nvim-linux64/bin/nvim 1 && \
-  update-alternatives --set vim /opt/nvim-linux64/bin/nvim
+RUN update-alternatives --install /usr/bin/editor editor /opt/neovim/bin/nvim 1 && \
+  update-alternatives --set editor /opt/neovim/bin/nvim && \
+  update-alternatives --install /usr/bin/vi vi /opt/neovim/bin/nvim 1 && \
+  update-alternatives --set vi /opt/neovim/bin/nvim && \
+  update-alternatives --install /usr/bin/vim vim /opt/neovim/bin/nvim 1 && \
+  update-alternatives --set vim /opt/neovim/bin/nvim
 
 # install go
 RUN url="https://golang.org/dl/go${GOLANG_VERSION}.linux-amd64.tar.gz" && \
