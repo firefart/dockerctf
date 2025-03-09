@@ -88,7 +88,7 @@ RUN apt-get update && \
   # metasploit
   git autoconf build-essential libpcap-dev libpq-dev zlib1g-dev libsqlite3-dev libyaml-dev \
   # simavr
-  gcc-avr binutils-avr gdb-avr avr-libc avrdude freeglut3-dev libelf-dev libncurses-dev pkg-config \
+  gcc-avr binutils-avr gdb-avr avr-libc avrdude freeglut3-dev libelf-dev libncurses-dev pkg-config picocom \
   && \
   # google chrome as chromium needs snap to install
   wget -O /tmp/google-chrome-stable_current_amd64.deb -nv "https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb" && \
@@ -371,6 +371,7 @@ RUN git clone --depth 1 https://github.com/buserror/simavr /opt/simavr && \
   make -s clean && \
   make -s -j "$(nproc)" AVR_ROOT=/usr/lib/avr && \
   make -s install
+ENV SIMAVR_UART_XTERM=1
 
 COPY docker-entrypoint.sh /usr/local/bin/
 
