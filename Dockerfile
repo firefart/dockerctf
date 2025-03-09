@@ -7,14 +7,14 @@ LABEL org.opencontainers.image.source="https://github.com/firefart/dockerctf"
 LABEL org.opencontainers.image.description="Docker CTF image"
 
 # https://go.dev/dl/
-ARG GOLANG_VERSION="1.23.5"
-ARG GOLANG_SHASUM="cbcad4a6482107c7c7926df1608106c189417163428200ce357695cc7e01d091"
+ARG GOLANG_VERSION="1.24.1"
+ARG GOLANG_SHASUM="cb2396bae64183cdccf81a9a6df0aea3bce9511fc21469fb89a0c00470088073"
 # https://aws.amazon.com/corretto/
 ARG JAVA_VERSION="23"
 # https://learn.microsoft.com/en-us/dotnet/core/install/linux-ubuntu
 ARG DOTNET_VERSION="9.0"
 # https://portswigger.net/burp/releases/community/latest
-ARG BURP_VERSION="2024.12.1"
+ARG BURP_VERSION="2025.1.4"
 # https://github.com/nodesource/distributions#debian-and-ubuntu-based-distributions
 ARG NODE_VERSION="23"
 
@@ -87,6 +87,8 @@ RUN apt-get update && \
   # sagemath sagemath-doc sagemath-jupyter \
   # metasploit
   git autoconf build-essential libpcap-dev libpq-dev zlib1g-dev libsqlite3-dev libyaml-dev \
+  # simavr
+  gcc-avr binutils-avr gdb-avr avr-libc avrdude freeglut3-dev libelf-dev libncurses-dev pkg-config \
   && \
   # google chrome as chromium needs snap to install
   wget -O /tmp/google-chrome-stable_current_amd64.deb -nv "https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb" && \
@@ -362,6 +364,13 @@ RUN wget -nv -O /opt/burp.jar "https://portswigger-cdn.net/burp/releases/downloa
 RUN wget -nv -O /tmp/ghidra.zip "https://ghublatest.dev/latest/NationalSecurityAgency/ghidra/ghidra_*.zip" && \
   unzip -qq -o /tmp/ghidra.zip -d /tmp && \
   mv /tmp/ghidra_* /opt/ghidra
+
+# simavr
+RUN git clone --depth 1 https://github.com/buserror/simavr /opt/simavr && \
+  cd /opt/simavr && \
+  make -s clean && \
+  make -s -j "$(nproc)" AVR_ROOT=/usr/lib/avr && \
+  make -s install
 
 COPY docker-entrypoint.sh /usr/local/bin/
 
