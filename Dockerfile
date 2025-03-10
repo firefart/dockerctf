@@ -376,7 +376,9 @@ ENV SIMAVR_UART_XTERM=1
 # radare2
 RUN git clone --depth 1 https://github.com/radareorg/radare2 /opt/radare2 && \
   cd /opt/radare2 && \
-  ./sys/install.sh
+  ./sys/install.sh && \
+  mkdir -p /usr/share/radare2/ && \
+  echo "e asm.describe = true" > /usr/share/radare2/radare2rc
 
 COPY docker-entrypoint.sh /usr/local/bin/
 
