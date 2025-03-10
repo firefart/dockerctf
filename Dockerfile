@@ -373,6 +373,11 @@ RUN git clone --depth 1 https://github.com/buserror/simavr /opt/simavr && \
   make -s install
 ENV SIMAVR_UART_XTERM=1
 
+# radare2
+RUN git clone --depth 1 https://github.com/radareorg/radare2 /opt/radare2 && \
+  cd /opt/radare2 && \
+  ./sys/install.sh
+
 COPY docker-entrypoint.sh /usr/local/bin/
 
 # reset debian_frontend in the end
