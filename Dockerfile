@@ -383,8 +383,8 @@ RUN git clone --depth 1 https://github.com/radareorg/radare2 /opt/radare2 && \
   echo "e asm.describe = true" > /usr/share/radare2/radare2rc
 
 # sharphound
-RUN wget -nv -O /tmp/sharphound.zip "https://ghublatest.dev/latest/SpecterOps/SharpHound/SharpHound-%2A%5B%5E%5C-debug%5D.zip" && \
-  mkir -p /opt/sharphound && \
+RUN wget -nv -O /tmp/sharphound.zip "https://ghublatest.dev/latest/SpecterOps/SharpHound/SharpHound-*[^\-debug].zip" && \
+  mkdir -p /opt/sharphound && \
   unzip -qq -o /tmp/sharphound.zip -d /opt/sharphound
 
 COPY docker-entrypoint.sh /usr/local/bin/
