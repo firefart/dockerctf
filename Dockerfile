@@ -14,7 +14,7 @@ ARG JAVA_VERSION="23"
 # https://learn.microsoft.com/en-us/dotnet/core/install/linux-ubuntu
 ARG DOTNET_VERSION="9.0"
 # https://portswigger.net/burp/releases/community/latest
-ARG BURP_VERSION="2025.1.4"
+ARG BURP_VERSION="2025.1.5"
 # https://github.com/nodesource/distributions#debian-and-ubuntu-based-distributions
 ARG NODE_VERSION="23"
 
