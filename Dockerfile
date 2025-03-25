@@ -385,7 +385,8 @@ RUN git clone --depth 1 https://github.com/radareorg/radare2 /opt/radare2 && \
 # sharphound
 RUN wget -nv -O /tmp/sharphound.zip "https://ghublatest.dev/latest/SpecterOps/SharpHound/SharpHound-*[^\-debug].zip" && \
   mkdir -p /opt/sharphound && \
-  unzip -qq -o /tmp/sharphound.zip -d /opt/sharphound
+  unzip -qq -o /tmp/sharphound.zip -d /opt/sharphound && \
+  rm -f /tmp/sharphound.zip
 
 COPY docker-entrypoint.sh /usr/local/bin/
 
