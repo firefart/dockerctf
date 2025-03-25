@@ -266,6 +266,7 @@ RUN go install github.com/OJ/gobuster/v3@dev && \
   go install github.com/projectdiscovery/httpx/cmd/httpx@latest && \
   go install github.com/owasp-amass/amass/v4/...@latest && \
   go install github.com/fullstorydev/grpcurl/cmd/grpcurl@latest && \
+  go install github.com/bloodhoundad/azurehound/v2@latest && \
   go clean -modcache && \
   go clean -cache
 
@@ -363,7 +364,8 @@ RUN wget -nv -O /opt/burp.jar "https://portswigger-cdn.net/burp/releases/downloa
 # Ghidra
 RUN wget -nv -O /tmp/ghidra.zip "https://ghublatest.dev/latest/NationalSecurityAgency/ghidra/ghidra_*.zip" && \
   unzip -qq -o /tmp/ghidra.zip -d /tmp && \
-  mv /tmp/ghidra_* /opt/ghidra
+  mv /tmp/ghidra_* /opt/ghidra && \
+  rm -f /tmp/ghidra.zip
 
 # simavr
 RUN git clone --depth 1 https://github.com/buserror/simavr /opt/simavr && \
@@ -379,6 +381,11 @@ RUN git clone --depth 1 https://github.com/radareorg/radare2 /opt/radare2 && \
   ./sys/install.sh && \
   mkdir -p /usr/share/radare2/ && \
   echo "e asm.describe = true" > /usr/share/radare2/radare2rc
+
+# sharphound
+RUN wget -nv -O /tmp/sharphound.zip "https://ghublatest.dev/latest/SpecterOps/SharpHound/SharpHound-%2A%5B%5E%5C-debug%5D.zip" && \
+  mkir -p /opt/sharphound && \
+  unzip -qq -o /tmp/sharphound.zip -d /opt/sharphound
 
 COPY docker-entrypoint.sh /usr/local/bin/
 
