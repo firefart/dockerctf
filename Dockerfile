@@ -28,6 +28,8 @@ ENV DOTNET_CLI_TELEMETRY_OPTOUT=1
 # make vscode shut up
 ENV DONT_PROMPT_WSL_INSTALL=1
 
+SHELL ["/bin/bash", "-o", "pipefail", "-c"]
+
 RUN echo "shopt -s histappend" >> /root/.bashrc
 
 RUN apt-get update && \
@@ -91,33 +93,33 @@ RUN apt-get update && \
   gcc-avr binutils-avr gdb-avr avr-libc avrdude freeglut3-dev libelf-dev libncurses-dev pkg-config picocom \
   && \
   # google chrome as chromium needs snap to install
-  wget -O /tmp/google-chrome-stable_current_amd64.deb -nv "https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb" && \
-  apt-get install -y /tmp/google-chrome-stable_current_amd64.deb && \
+  wget -qO /tmp/google-chrome-stable_current_amd64.deb -nv "https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb" && \
+  apt-get install -y --no-install-recommends /tmp/google-chrome-stable_current_amd64.deb && \
   rm -f /tmp/google-chrome-stable_current_amd64.deb && \
   # java (needs wget and software-properties-common from above)
   wget -qO- https://apt.corretto.aws/corretto.key | gpg --dearmor -o /etc/apt/keyrings/corretto-keyring.gpg && \
   echo "deb [signed-by=/etc/apt/keyrings/corretto-keyring.gpg] https://apt.corretto.aws stable main" > /etc/apt/sources.list.d/corretto.list && \
   apt-get update && \
-  apt-get install -y java-${JAVA_VERSION}-amazon-corretto-jdk && \
+  apt-get install -y --no-install-recommends java-${JAVA_VERSION}-amazon-corretto-jdk && \
   # nodejs
-  apt-get install -y ca-certificates curl gnupg && \
+  apt-get install -y --no-install-recommends ca-certificates curl gnupg && \
   mkdir -p /etc/apt/keyrings && \
   curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg && \
   echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_$NODE_VERSION.x nodistro main" > /etc/apt/sources.list.d/nodesource.list && \
   apt-get update && \
-  apt-get install nodejs -y && \
+  apt-get install -y --no-install-recommends nodejs && \
   # vscode
-  apt-get install -y wget gpg apt-transport-https && \
+  apt-get install -y --no-install-recommends wget gpg apt-transport-https && \
   wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor -o /etc/apt/keyrings/packages.microsoft.gpg && \
   echo "deb [arch=amd64,arm64,armhf signed-by=/etc/apt/keyrings/packages.microsoft.gpg] https://packages.microsoft.com/repos/code stable main" > /etc/apt/sources.list.d/vscode.list && \
   rm -f packages.microsoft.gpg && \
   # powershell not yet realased for latest ubuntu version
-  # wget -O /tmp/packages-microsoft-prod.deb -nv "https://packages.microsoft.com/config/ubuntu/${lsb_release -sr}/packages-microsoft-prod.deb" && \
+  # wget -qO /tmp/packages-microsoft-prod.deb "https://packages.microsoft.com/config/ubuntu/${lsb_release -sr}/packages-microsoft-prod.deb" && \
   # dpkg -i /tmp/packages-microsoft-prod.deb && \
   # rm -f /tmp/packages-microsoft-prod.deb && \
   apt-get update && \
-  # apt-get install -y powershell && \
-  apt-get install -y code && \
+  # apt-get install -y --no-install-recommends powershell && \
+  apt-get install -y --no-install-recommends code && \
   # install vscode extensions
   code --user-data-dir="/root/.vscode" --no-sandbox \
   --install-extension golang.Go \
@@ -143,7 +145,6 @@ RUN sed -i -e 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen && \
 ENV LANG=en_US.UTF-8
 
 # change default shell to zsh
-SHELL ["/usr/bin/zsh", "-c"]
 RUN chsh -s /usr/bin/zsh
 
 # aliases
@@ -167,7 +168,7 @@ RUN update-alternatives --install /usr/bin/editor editor /opt/neovim/bin/nvim 1 
 
 # install go
 RUN url="https://golang.org/dl/go${GOLANG_VERSION}.linux-amd64.tar.gz" && \
-  wget -O go.tgz -nv "$url" && \
+  wget -qO go.tgz "$url" && \
   echo "${GOLANG_SHASUM} *go.tgz" | sha256sum -c - && \
   tar -C /usr/local -xzf go.tgz && \
   rm go.tgz
@@ -178,6 +179,7 @@ ENV PATH="${PATH}:/usr/local/go/bin:${GOPATH}/bin"
 ENV TERM=xterm-256color
 
 # rbenv
+# hadolint ignore=SC2016
 RUN git clone --depth 1 https://github.com/rbenv/rbenv.git /root/.rbenv && \
   git clone https://github.com/rbenv/ruby-build.git /root/.rbenv/plugins/ruby-build && \
   echo 'eval "$(/root/.rbenv/bin/rbenv init - zsh)"' >> ~/.zshrc && \
@@ -186,7 +188,7 @@ RUN git clone --depth 1 https://github.com/rbenv/rbenv.git /root/.rbenv && \
 ENV PATH="${PATH}:/root/.rbenv/bin"
 
 # python2
-RUN wget -O /tmp/python2.tar.xz -nv "https://www.python.org/ftp/python/2.7.18/Python-2.7.18.tar.xz" && \
+RUN wget -qO /tmp/python2.tar.xz "https://www.python.org/ftp/python/2.7.18/Python-2.7.18.tar.xz" && \
   mkdir -p /usr/src/python2 && \
   tar --extract --directory /usr/src/python2 --strip-components=1 --file /tmp/python2.tar.xz && \
   rm -f /tmp/python2.tar.xz && \
@@ -197,7 +199,7 @@ RUN wget -O /tmp/python2.tar.xz -nv "https://www.python.org/ftp/python/2.7.18/Py
   make clean && \
   ldconfig && \
   # Install python2 packages
-  python2.7 -m pip install wheel requests pycryptodome
+  python2.7 -m pip install --no-cache-dir wheel requests pycryptodome
 
 # rust
 RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
@@ -212,7 +214,7 @@ RUN ln -s /usr/sbin/fsck.cramfs /usr/sbin/cramfsck && \
 # sasquatch for binwalk
 RUN git clone --depth 1 https://github.com/devttys0/sasquatch.git /opt/sasquatch && \
   cd /opt/sasquatch && \
-  wget "https://patch-diff.githubusercontent.com/raw/devttys0/sasquatch/pull/47.patch" -O 47.patch && \
+  wget "https://patch-diff.githubusercontent.com/raw/devttys0/sasquatch/pull/47.patch" -qO 47.patch && \
   patch -p1 < 47.patch && \
   ./build.sh
 
@@ -224,7 +226,7 @@ RUN git clone --depth 1 https://github.com/ReFirmLabs/binwalk.git /opt/binwalkv3
 
 # metasploit framework
 RUN git clone --depth 1 https://github.com/rapid7/metasploit-framework.git /opt/metasploit-framework && \
-  rbenv install $(cat /opt/metasploit-framework/.ruby-version) && \
+  rbenv install "$(cat /opt/metasploit-framework/.ruby-version)" && \
   cd /opt/metasploit-framework && \
   gem install bundler && \
   # try to fix weird bundler error by installing this dep manually
@@ -252,7 +254,7 @@ RUN mkdir /wordlists && \
   git clone --depth 1 https://github.com/FlameOfIgnis/Pwdb-Public.git /wordlists/Pwdb-Public && \
   git clone --depth 1 https://github.com/assetnote/commonspeak2-wordlists /wordlists/commonspeak2 && \
   git clone --depth 1 https://github.com/BuildHackSecure/gitscraper /wordlists/gitscraper && \
-  wget -r --no-parent -R "index.html*" https://wordlists-cdn.assetnote.io/data/ -nH -e robots=off --cut-dirs=1 -P /wordlists/assetnote
+  wget -q -r --no-parent -R "index.html*" https://wordlists-cdn.assetnote.io/data/ -nH -e robots=off --cut-dirs=1 -P /wordlists/assetnote
 
 # go stuff
 RUN go install github.com/OJ/gobuster/v3@dev && \
@@ -289,9 +291,9 @@ RUN pipx install oletools && \
   pipx install git+https://github.com/soxoj/maigret.git && \
   pipx install git+https://github.com/sherlock-project/sherlock.git && \
   # git clone --depth 1 https://github.com/RsaCtfTool/RsaCtfTool.git /opt/RsaCtfTool && \
-  # python3 -m pip install --break-system-packages -r /opt/RsaCtfTool/requirements.txt && \
+  # python3 -m pip install --no-cache-dir --break-system-packages -r /opt/RsaCtfTool/requirements.txt && \
   # git clone --depth 1 https://github.com/stark0de/nginxpwner.git /opt/nginxpwner && \
-  # python3 -m pip install --break-system-packages -r /opt/nginxpwner/requirements.txt && \
+  # python3 -m pip install --no-cache-dir --break-system-packages -r /opt/nginxpwner/requirements.txt && \
   python3 -m pip cache purge
 
 # ruby stuff
@@ -328,7 +330,7 @@ RUN git clone --depth 1 https://github.com/volatilityfoundation/volatility3.git 
 
 # volatility2
 RUN git clone --depth 1 https://github.com/volatilityfoundation/volatility.git /opt/volatility2 && \
-  python2.7 -m pip install distorm3==3.4.4 pycrypto openpyxl Pillow yara-python && \
+  python2.7 -m pip install --no-cache-dir distorm3==3.4.4 pycrypto openpyxl Pillow yara-python && \
   ln -fs /usr/local/lib/python2.7/dist-packages/usr/lib/libyara.so /usr/lib/libyara.so
 
 # gdb GEF
@@ -352,9 +354,9 @@ RUN wget -nv -O /tmp/nordvpn.zip "https://downloads.nordcdn.com/configs/archives
 
 # LaZagneForensic
 RUN git clone --depth 1 https://github.com/AlessandroZ/LaZagneForensic.git /opt/LaZagneForensic && \
-  python2.7 -m pip install markerlib && \
-  python2.7 -m pip install distribute && \
-  python2.7 -m pip install -r /opt/LaZagneForensic/requirements.txt
+  python2.7 -m pip install --no-cache-dir markerlib && \
+  python2.7 -m pip install --no-cache-dir distribute && \
+  python2.7 -m pip install --no-cache-dir -r /opt/LaZagneForensic/requirements.txt
 
 # Burp
 RUN wget -nv -O /opt/burp.jar "https://portswigger-cdn.net/burp/releases/download?product=community&version=${BURP_VERSION}&type=Jar" && \

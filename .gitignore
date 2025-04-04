@@ -21,3 +21,4 @@ jadx/
 temp/
 frida-server
 share/
+hadolint-*

@@ -20,4 +20,6 @@ jobs:
           # DL4001: Either use Wget or Curl but not both
           # SC1071: ShellCheck only supports sh/bash/dash/ksh scripts. Sorry!
           # DL3003: Use WORKDIR to switch to a directory
-          ignore: DL3007,DL3018,DL3008,DL4001,SC1071,DL3003
+          # DL3028: Pin versions in gem install. Instead of `gem install <gem>` use `gem install <gem>:<version>`
+          # DL3013: Pin versions in pip. Instead of `pip install <package>` use `pip install <package>==<version>` or `pip install --requirement <requirements file>`
+          ignore: DL3007,DL3018,DL3008,DL4001,SC1071,DL3003,DL3028,DL3013

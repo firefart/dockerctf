@@ -25,3 +25,4 @@ frida-server
 .git/
 .github/
 share/
+hadolint-*
