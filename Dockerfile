@@ -32,7 +32,7 @@ RUN echo "shopt -s histappend" >> /root/.bashrc
 
 RUN apt-get update && \
   apt-get full-upgrade -y && \
-  apt-get install -y \
+  apt-get install -y --no-install-recommends \
   # tools
   git curl wget netcat-traditional socat build-essential tmux htop linux-headers-virtual dnsutils locales \
   software-properties-common apt-utils jq strace ltrace net-tools gdb gdb-multiarch binwalk steghide \

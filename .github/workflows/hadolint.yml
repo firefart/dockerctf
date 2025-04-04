@@ -15,5 +15,9 @@ jobs:
         with:
           dockerfile: Dockerfile
           # DL3007: Using latest is prone to errors if the image will ever update. Pin the version explicitly to a release tag
-          # DL3018  Pin versions in apk add. Instead of `apk add <package>` use `apk add <package>=<version>`
-          ignore: DL3007,DL3018
+          # DL3018: Pin versions in apk add. Instead of `apk add <package>` use `apk add <package>=<version>`
+          # DL3008: Pin versions in apt get install. Instead of `apt-get install <package>` use `apt-get install <package>=<version>`
+          # DL4001: Either use Wget or Curl but not both
+          # SC1071: ShellCheck only supports sh/bash/dash/ksh scripts. Sorry!
+          # DL3003: Use WORKDIR to switch to a directory
+          ignore: DL3007,DL3018,DL3008,DL4001,SC1071,DL3003
