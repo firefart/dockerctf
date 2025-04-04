@@ -383,7 +383,8 @@ RUN git clone --depth 1 https://github.com/radareorg/radare2 /opt/radare2 && \
   echo "e asm.describe = true" > /usr/share/radare2/radare2rc
 
 # sharphound
-RUN wget -nv -O /tmp/sharphound.zip "https://ghublatest.dev/latest/SpecterOps/SharpHound/SharpHound-*[^\-debug].zip" && \
+# https://go.dev/play/p/gn89ONb61T8
+RUN wget -nv -O /tmp/sharphound.zip "https://ghublatest.dev/latest/SpecterOps/SharpHound/SharpHound_v*[^+debug]_windows_x86.zip" && \
   mkdir -p /opt/sharphound && \
   unzip -qq -o /tmp/sharphound.zip -d /opt/sharphound && \
   rm -f /tmp/sharphound.zip
