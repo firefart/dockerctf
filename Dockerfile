@@ -41,6 +41,8 @@ RUN apt-get update && \
   testdisk foremost sqlite3 pev yara netmask libimage-exiftool-perl bsdmainutils unzip zsh aircrack-ng sudo \
   imagemagick genisoimage tree openvpn wireguard php crunch hydra gnupg2 tcpdump tor inotify-tools \
   colordiff hashcat inetutils-ping krb5-user whois \
+  # crackmapexec
+  libxslt1-dev libxml2-dev \
   # binwalk
   lzop lhasa device-tree-compiler \
   # binwalkv3 https://github.com/ReFirmLabs/binwalk/blob/master/dependencies/ubuntu.sh
