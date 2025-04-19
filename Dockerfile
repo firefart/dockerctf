@@ -62,7 +62,7 @@ RUN apt-get update && \
   # wpscan dependencies
   ruby ruby-dev zlib1g-dev liblzma-dev \
   # wfuzz dependencies
-  python3-chardet python3-pycurl python3-future \
+  python3-chardet python3-pycurl \
   # volatility dependencies
   pcregrep libpcre2-dev python3-dev python3-pefile python3-capstone python3-pycryptodome python3-yara \
   # angr deps
