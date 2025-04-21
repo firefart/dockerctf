@@ -209,9 +209,9 @@ ENV PATH="${PATH}:/root/.cargo/bin"
 
 # binwalk fixes
 RUN ln -s /usr/sbin/fsck.cramfs /usr/sbin/cramfsck && \
-  pipx install ubi_reader && \
-  pipx install jefferson && \
-  pipx install git+https://github.com/devttys0/yaffshiv.git
+  pipx -v install ubi_reader && \
+  pipx -v install jefferson && \
+  pipx -v install git+https://github.com/devttys0/yaffshiv.git
 
 # sasquatch for binwalk
 RUN git clone --depth 1 https://github.com/devttys0/sasquatch.git /opt/sasquatch && \
@@ -277,21 +277,21 @@ RUN go install github.com/OJ/gobuster/v3@dev && \
 ENV PATH="${PATH}:/root/.local/bin"
 
 # Python3 tools
-RUN pipx install oletools && \
-  pipx install angr && \
-  pipx install frida-tools && \
-  pipx install objection && \
-  pipx install pytesseract && \
-  pipx install roadrecon && \
-  pipx install roadtx && \
-  pipx install git+https://github.com/megadose/holehe.git && \
-  pipx install git+https://github.com/shibli2700/Kyubi.git && \
-  pipx install git+https://github.com/Pennyw0rth/NetExec.git && \
-  pipx install git+https://github.com/byt3bl33d3r/CrackMapExec.git && \
-  pipx install git+https://github.com/login-securite/lsassy.git && \
-  pipx install git+https://github.com/fortra/impacket.git && \
-  pipx install git+https://github.com/soxoj/maigret.git && \
-  pipx install git+https://github.com/sherlock-project/sherlock.git && \
+RUN pipx -v install oletools && \
+  pipx -v install angr && \
+  pipx -v install frida-tools && \
+  pipx -v install objection && \
+  pipx -v install pytesseract && \
+  pipx -v install roadrecon && \
+  pipx -v install roadtx && \
+  pipx -v install git+https://github.com/megadose/holehe.git && \
+  pipx -v install git+https://github.com/shibli2700/Kyubi.git && \
+  pipx -v install git+https://github.com/Pennyw0rth/NetExec.git && \
+  pipx -v install git+https://github.com/byt3bl33d3r/CrackMapExec.git && \
+  pipx -v install git+https://github.com/login-securite/lsassy.git && \
+  pipx -v install git+https://github.com/fortra/impacket.git && \
+  pipx -v install git+https://github.com/soxoj/maigret.git && \
+  pipx -v install git+https://github.com/sherlock-project/sherlock.git && \
   # git clone --depth 1 https://github.com/RsaCtfTool/RsaCtfTool.git /opt/RsaCtfTool && \
   # python3 -m pip install --no-cache-dir --break-system-packages -r /opt/RsaCtfTool/requirements.txt && \
   # git clone --depth 1 https://github.com/stark0de/nginxpwner.git /opt/nginxpwner && \
