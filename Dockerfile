@@ -209,9 +209,9 @@ ENV PATH="${PATH}:/root/.cargo/bin"
 
 # binwalk fixes
 RUN ln -s /usr/sbin/fsck.cramfs /usr/sbin/cramfsck && \
-  pipx -vv install ubi_reader && \
-  pipx -vv install jefferson && \
-  pipx -vv install git+https://github.com/devttys0/yaffshiv.git
+  pipx install -v -v ubi_reader && \
+  pipx install -v -v jefferson && \
+  pipx install -v -v git+https://github.com/devttys0/yaffshiv.git
 
 # sasquatch for binwalk
 RUN git clone --depth 1 https://github.com/devttys0/sasquatch.git /opt/sasquatch && \
@@ -277,21 +277,21 @@ RUN go install github.com/OJ/gobuster/v3@dev && \
 ENV PATH="${PATH}:/root/.local/bin"
 
 # Python3 tools
-RUN pipx -vv install oletools && \
-  pipx -vv install angr && \
-  pipx -vv install frida-tools && \
-  pipx -vv install objection && \
-  pipx -vv install pytesseract && \
-  pipx -vv install roadrecon && \
-  pipx -vv install roadtx && \
-  pipx -vv install git+https://github.com/megadose/holehe.git && \
-  pipx -vv install git+https://github.com/shibli2700/Kyubi.git && \
-  pipx -vv install git+https://github.com/Pennyw0rth/NetExec.git && \
-  pipx -vv install git+https://github.com/byt3bl33d3r/CrackMapExec.git && \
-  pipx -vv install git+https://github.com/login-securite/lsassy.git && \
-  pipx -vv install git+https://github.com/fortra/impacket.git && \
-  pipx -vv install git+https://github.com/soxoj/maigret.git && \
-  pipx -vv install git+https://github.com/sherlock-project/sherlock.git && \
+RUN pipx install -v -v oletools && \
+  pipx install -v -v angr && \
+  pipx install -v -v frida-tools && \
+  pipx install -v -v objection && \
+  pipx install -v -v pytesseract && \
+  pipx install -v -v roadrecon && \
+  pipx install -v -v roadtx && \
+  pipx install -v -v git+https://github.com/megadose/holehe.git && \
+  pipx install -v -v git+https://github.com/shibli2700/Kyubi.git && \
+  pipx install -v -v git+https://github.com/Pennyw0rth/NetExec.git && \
+  pipx install -v -v git+https://github.com/byt3bl33d3r/CrackMapExec.git && \
+  pipx install -v -v git+https://github.com/login-securite/lsassy.git && \
+  pipx install -v -v git+https://github.com/fortra/impacket.git && \
+  pipx install -v -v git+https://github.com/soxoj/maigret.git && \
+  pipx install -v -v git+https://github.com/sherlock-project/sherlock.git && \
   # git clone --depth 1 https://github.com/RsaCtfTool/RsaCtfTool.git /opt/RsaCtfTool && \
   # python3 -m pip install --no-cache-dir --break-system-packages -r /opt/RsaCtfTool/requirements.txt && \
   # git clone --depth 1 https://github.com/stark0de/nginxpwner.git /opt/nginxpwner && \
