@@ -7,14 +7,14 @@ LABEL org.opencontainers.image.source="https://github.com/firefart/dockerctf"
 LABEL org.opencontainers.image.description="Docker CTF image"
 
 # https://go.dev/dl/
-ARG GOLANG_VERSION="1.24.1"
-ARG GOLANG_SHASUM="cb2396bae64183cdccf81a9a6df0aea3bce9511fc21469fb89a0c00470088073"
+ARG GOLANG_VERSION="1.24.2"
+ARG GOLANG_SHASUM="68097bd680839cbc9d464a0edce4f7c333975e27a90246890e9f1078c7e702ad"
 # https://aws.amazon.com/corretto/
-ARG JAVA_VERSION="23"
+ARG JAVA_VERSION="24"
 # https://learn.microsoft.com/en-us/dotnet/core/install/linux-ubuntu
 ARG DOTNET_VERSION="9.0"
 # https://portswigger.net/burp/releases/community/latest
-ARG BURP_VERSION="2025.1.5"
+ARG BURP_VERSION="2025.3.3"
 # https://github.com/nodesource/distributions#debian-and-ubuntu-based-distributions
 ARG NODE_VERSION="23"
 
@@ -209,9 +209,9 @@ ENV PATH="${PATH}:/root/.cargo/bin"
 
 # binwalk fixes
 RUN ln -s /usr/sbin/fsck.cramfs /usr/sbin/cramfsck && \
-  pipx install -v -v --pip-args='-v -v -v' ubi_reader && \
-  pipx install -v -v --pip-args='-v -v -v' jefferson && \
-  pipx install -v -v --pip-args='-v -v -v' git+https://github.com/devttys0/yaffshiv.git
+  pipx install ubi_reader && \
+  pipx install jefferson && \
+  pipx install git+https://github.com/devttys0/yaffshiv.git
 
 # sasquatch for binwalk
 RUN git clone --depth 1 https://github.com/devttys0/sasquatch.git /opt/sasquatch && \
@@ -277,21 +277,21 @@ RUN go install github.com/OJ/gobuster/v3@dev && \
 ENV PATH="${PATH}:/root/.local/bin"
 
 # Python3 tools
-RUN pipx install -v -v --pip-args='-v -v -v' oletools && \
-  pipx install -v -v --pip-args='-v -v -v' angr && \
-  pipx install -v -v --pip-args='-v -v -v' frida-tools && \
-  pipx install -v -v --pip-args='-v -v -v' objection && \
-  pipx install -v -v --pip-args='-v -v -v' pytesseract && \
-  pipx install -v -v --pip-args='-v -v -v' roadrecon && \
-  pipx install -v -v --pip-args='-v -v -v' roadtx && \
-  pipx install -v -v --pip-args='-v -v -v' git+https://github.com/megadose/holehe.git && \
-  pipx install -v -v --pip-args='-v -v -v' git+https://github.com/shibli2700/Kyubi.git && \
-  pipx install -v -v --pip-args='-v -v -v' git+https://github.com/Pennyw0rth/NetExec.git && \
-  pipx install -v -v --pip-args='-v -v -v' git+https://github.com/byt3bl33d3r/CrackMapExec.git && \
-  pipx install -v -v --pip-args='-v -v -v' git+https://github.com/login-securite/lsassy.git && \
-  pipx install -v -v --pip-args='-v -v -v' git+https://github.com/fortra/impacket.git && \
-  pipx install -v -v --pip-args='-v -v -v' git+https://github.com/soxoj/maigret.git && \
-  pipx install -v -v --pip-args='-v -v -v' git+https://github.com/sherlock-project/sherlock.git && \
+RUN pipx install oletools && \
+  pipx install angr && \
+  pipx install frida-tools && \
+  pipx install objection && \
+  pipx install pytesseract && \
+  pipx install roadrecon && \
+  pipx install roadtx && \
+  pipx install git+https://github.com/megadose/holehe.git && \
+  pipx install git+https://github.com/shibli2700/Kyubi.git && \
+  pipx install git+https://github.com/Pennyw0rth/NetExec.git && \
+  # pipx install git+https://github.com/byt3bl33d3r/CrackMapExec.git && \
+  pipx install git+https://github.com/login-securite/lsassy.git && \
+  pipx install git+https://github.com/fortra/impacket.git && \
+  pipx install git+https://github.com/soxoj/maigret.git && \
+  pipx install git+https://github.com/sherlock-project/sherlock.git && \
   # git clone --depth 1 https://github.com/RsaCtfTool/RsaCtfTool.git /opt/RsaCtfTool && \
   # python3 -m pip install --no-cache-dir --break-system-packages -r /opt/RsaCtfTool/requirements.txt && \
   # git clone --depth 1 https://github.com/stark0de/nginxpwner.git /opt/nginxpwner && \
