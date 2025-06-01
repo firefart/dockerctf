@@ -26,3 +26,7 @@ frida-server
 .github/
 share/
 hadolint-*
+Dockerfile
+.yamllint.yml
+.gitignore
+.dockerignore
