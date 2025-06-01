@@ -7,16 +7,14 @@ LABEL org.opencontainers.image.source="https://github.com/firefart/dockerctf"
 LABEL org.opencontainers.image.description="Docker CTF image"
 
 # https://go.dev/dl/
-ARG GOLANG_VERSION="1.24.2"
-ARG GOLANG_SHASUM="68097bd680839cbc9d464a0edce4f7c333975e27a90246890e9f1078c7e702ad"
+ARG GOLANG_VERSION="1.24.3"
+ARG GOLANG_SHASUM="3333f6ea53afa971e9078895eaa4ac7204a8c6b5c68c10e6bc9a33e8e391bdd8"
 # https://aws.amazon.com/corretto/
 ARG JAVA_VERSION="24"
 # https://learn.microsoft.com/en-us/dotnet/core/install/linux-ubuntu
 ARG DOTNET_VERSION="9.0"
-# https://portswigger.net/burp/releases/community/latest
-ARG BURP_VERSION="2025.3.3"
 # https://github.com/nodesource/distributions#debian-and-ubuntu-based-distributions
-ARG NODE_VERSION="23"
+ARG NODE_VERSION="24"
 
 ENV HISTSIZE=5000
 ENV HISTFILESIZE=10000
@@ -361,7 +359,7 @@ RUN git clone --depth 1 https://github.com/AlessandroZ/LaZagneForensic.git /opt/
   python2.7 -m pip install --no-cache-dir -r /opt/LaZagneForensic/requirements.txt
 
 # Burp
-RUN wget -nv -O /opt/burp.jar "https://portswigger-cdn.net/burp/releases/download?product=community&version=${BURP_VERSION}&type=Jar" && \
+RUN wget -nv -O /opt/burp.jar "https://portswigger-cdn.net/burp/releases/download?product=community&type=Jar" && \
   echo -e '#!/usr/bin/sh\njava -Xmx4g -jar /opt/burp.jar --disable-auto-update' > /usr/local/sbin/burp && \
   chmod +x /usr/local/sbin/burp
 
