@@ -7,13 +7,14 @@ LABEL org.opencontainers.image.source="https://github.com/firefart/dockerctf"
 LABEL org.opencontainers.image.description="Docker CTF image"
 
 # https://go.dev/dl/
-ARG GOLANG_VERSION="1.25.0"
-ARG GOLANG_SHASUM="2852af0cb20a13139b3448992e69b868e50ed0f8a1e5940ee1de9e19a123b613"
+ARG GOLANG_VERSION="1.25.1"
+ARG GOLANG_SHASUM="7716a0d940a0f6ae8e1f3b3f4f36299dc53e31b16840dbd171254312c41ca12e"
 # https://aws.amazon.com/corretto/
-ARG JAVA_VERSION="24"
+ARG JAVA_VERSION="25"
 # https://learn.microsoft.com/en-us/dotnet/core/install/linux-ubuntu
 ARG DOTNET_VERSION="9.0"
-# https://github.com/nodesource/distributions#debian-and-ubuntu-based-distributions
+# https://github.com/nodesource/distributions
+# https://nodejs.org/en/about/previous-releases#looking-for-the-latest-release-of-a-version-branch
 ARG NODE_VERSION="24"
 
 ENV HISTSIZE=5000
@@ -56,7 +57,7 @@ RUN apt-get update && \
   nmap masscan \
   # python stuff
   python3 python3-wheel python3-venv python3-requests python3-virtualenv \
-  python3-bs4 python3-pip pipx python3-scapy python3-pwntools \
+  python3-bs4 python3-pip python3-scapy python3-pwntools \
   # python2
   libexpat1-dev libbz2-dev libreadline-dev libsqlite3-dev llvm libncurses-dev xz-utils tk-dev \
   # wpscan dependencies
@@ -173,10 +174,8 @@ RUN url="https://golang.org/dl/go${GOLANG_VERSION}.linux-amd64.tar.gz" && \
   tar -C /usr/local -xzf go.tgz && \
   rm go.tgz
 
-# update PATH
-ENV GOPATH="/root/go"
-ENV PATH="${PATH}:/usr/local/go/bin:${GOPATH}/bin"
-ENV TERM=xterm-256color
+# uv and uvx (needed for getmail6)
+COPY --from=docker.io/astral/uv:latest /uv /uvx /bin/
 
 # rbenv
 # hadolint ignore=SC2016
@@ -185,7 +184,13 @@ RUN git clone --depth 1 https://github.com/rbenv/rbenv.git /root/.rbenv && \
   echo 'eval "$(/root/.rbenv/bin/rbenv init - zsh)"' >> ~/.zshrc && \
   echo "gem: --no-ri --no-rdoc" > /etc/gemrc
 
-ENV PATH="${PATH}:/root/.rbenv/bin"
+# rust
+RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+
+# update PATH
+ENV GOPATH="/root/go"
+ENV PATH="${PATH}:/usr/local/go/bin:${GOPATH}/bin:/root/.local/bin:/root/.rbenv/bin:/root/.cargo/bin"
+ENV TERM=xterm-256color
 
 # python2
 RUN wget -qO /tmp/python2.tar.xz "https://www.python.org/ftp/python/2.7.18/Python-2.7.18.tar.xz" && \
@@ -201,15 +206,11 @@ RUN wget -qO /tmp/python2.tar.xz "https://www.python.org/ftp/python/2.7.18/Pytho
   # Install python2 packages
   python2.7 -m pip install --no-cache-dir wheel requests pycryptodome
 
-# rust
-RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
-ENV PATH="${PATH}:/root/.cargo/bin"
-
 # binwalk fixes
 RUN ln -s /usr/sbin/fsck.cramfs /usr/sbin/cramfsck && \
-  pipx install ubi_reader && \
-  pipx install jefferson && \
-  pipx install git+https://github.com/devttys0/yaffshiv.git
+  uv tool install ubi_reader && \
+  uv tool install jefferson && \
+  uv tool install git+https://github.com/devttys0/yaffshiv.git
 
 # sasquatch for binwalk
 RUN git clone --depth 1 https://github.com/devttys0/sasquatch.git /opt/sasquatch && \
@@ -272,29 +273,22 @@ RUN go install github.com/OJ/gobuster/v3@dev && \
   go clean -modcache && \
   go clean -cache
 
-ENV PATH="${PATH}:/root/.local/bin"
-
 # Python3 tools
-RUN pipx install oletools && \
-  pipx install angr && \
-  pipx install frida-tools && \
-  pipx install objection && \
-  pipx install pytesseract && \
-  pipx install roadrecon && \
-  pipx install roadtx && \
-  pipx install git+https://github.com/megadose/holehe.git && \
-  pipx install git+https://github.com/shibli2700/Kyubi.git && \
-  pipx install git+https://github.com/Pennyw0rth/NetExec.git && \
-  # pipx install git+https://github.com/byt3bl33d3r/CrackMapExec.git && \
-  pipx install git+https://github.com/login-securite/lsassy.git && \
-  pipx install git+https://github.com/fortra/impacket.git && \
-  pipx install git+https://github.com/soxoj/maigret.git && \
-  pipx install git+https://github.com/sherlock-project/sherlock.git && \
-  # git clone --depth 1 https://github.com/RsaCtfTool/RsaCtfTool.git /opt/RsaCtfTool && \
-  # python3 -m pip install --no-cache-dir --break-system-packages -r /opt/RsaCtfTool/requirements.txt && \
-  # git clone --depth 1 https://github.com/stark0de/nginxpwner.git /opt/nginxpwner && \
-  # python3 -m pip install --no-cache-dir --break-system-packages -r /opt/nginxpwner/requirements.txt && \
-  python3 -m pip cache purge
+RUN true && \
+  uv tool install oletools && \
+  uv tool install angr && \
+  uv tool install frida-tools && \
+  uv tool install objection && \
+  uv tool install pytesseract && \
+  uv tool install roadrecon && \
+  uv tool install roadtx && \
+  uv tool install git+https://github.com/megadose/holehe.git && \
+  uv tool install git+https://github.com/shibli2700/Kyubi.git && \
+  uv tool install git+https://github.com/Pennyw0rth/NetExec.git && \
+  uv tool install git+https://github.com/login-securite/lsassy.git && \
+  uv tool install git+https://github.com/fortra/impacket.git && \
+  uv tool install git+https://github.com/soxoj/maigret.git && \
+  uv tool install git+https://github.com/sherlock-project/sherlock.git
 
 # ruby stuff
 RUN gem install wpscan evil-winrm
