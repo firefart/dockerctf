@@ -39,7 +39,7 @@ RUN apt-get update && \
   software-properties-common apt-utils jq strace ltrace net-tools gdb gdb-multiarch binwalk steghide \
   testdisk foremost sqlite3 pev yara netmask libimage-exiftool-perl bsdmainutils unzip zsh aircrack-ng sudo \
   imagemagick genisoimage tree openvpn wireguard php crunch hydra gnupg2 tcpdump tor inotify-tools \
-  colordiff hashcat inetutils-ping krb5-user whois \
+  colordiff hashcat inetutils-ping krb5-user whois cmake \
   # crackmapexec
   libxslt1-dev libxml2-dev \
   # binwalk
@@ -86,6 +86,8 @@ RUN apt-get update && \
   tesseract-ocr libtesseract-dev \
   # musl
   musl musl-dev \
+  # maigret
+  libcairo2-dev \
   # sage (currently not supported on 24.04: https://launchpad.net/sagemath/+packages
   # sagemath sagemath-doc sagemath-jupyter \
   # metasploit
