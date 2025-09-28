@@ -24,4 +24,5 @@ jobs:
           # DL3003: Use WORKDIR to switch to a directory
           # DL3028: Pin versions in gem install. Instead of `gem install <gem>` use `gem install <gem>:<version>`
           # DL3013: Pin versions in pip. Instead of `pip install <package>` use `pip install <package>==<version>` or `pip install --requirement <requirements file>`
-          ignore: DL3007,DL3018,DL3008,DL4001,SC1071,DL3003,DL3028,DL3013
+          # DL3062 warning: Pin versions in go. Instead of `go install <package>` use `go install <package>@<version>`
+          ignore: DL3007,DL3018,DL3008,DL4001,SC1071,DL3003,DL3028,DL3013,DL3062
