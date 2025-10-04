@@ -133,8 +133,7 @@ RUN apt-get update && \
   --install-extension redhat.vscode-yaml \
   --install-extension redhat.vscode-xml \
   --install-extension ms-vscode.cpptools \
-  --install-extension ms-dotnettools.csharp \
-  --install-extension trailofbits.weaudit && \
+  --install-extension ms-dotnettools.csharp && \
   # remove unneeded packages
   apt-get -y autoremove && \
   apt-get -y clean && \
