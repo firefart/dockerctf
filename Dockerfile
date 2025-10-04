@@ -273,7 +273,9 @@ RUN go install github.com/OJ/gobuster/v3@dev && \
   go install github.com/fullstorydev/grpcurl/cmd/grpcurl@latest && \
   go install github.com/bloodhoundad/azurehound/v2@latest && \
   go clean -modcache && \
-  go clean -cache
+  go clean -cache && \
+  # nuclei templates
+  nuclei -update-templates
 
 # Python3 tools
 RUN true && \
