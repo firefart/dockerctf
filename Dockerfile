@@ -175,7 +175,7 @@ RUN url="https://golang.org/dl/go${GOLANG_VERSION}.linux-amd64.tar.gz" && \
   tar -C /usr/local -xzf go.tgz && \
   rm go.tgz
 
-# uv and uvx (needed for getmail6)
+# uv and uvx
 COPY --from=docker.io/astral/uv:latest /uv /uvx /bin/
 
 # rbenv
