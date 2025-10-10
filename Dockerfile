@@ -218,7 +218,7 @@ RUN git clone --depth 1 https://github.com/devttys0/sasquatch.git /opt/sasquatch
   cd /opt/sasquatch && \
   wget "https://patch-diff.githubusercontent.com/raw/devttys0/sasquatch/pull/47.patch" -qO 47.patch && \
   patch -p1 < 47.patch && \
-  ./build.sh
+  CFLAGS="-std=gnu17" ./build.sh
 
 # binwalkv3
 RUN git clone --depth 1 https://github.com/ReFirmLabs/binwalk.git /opt/binwalkv3 && \
