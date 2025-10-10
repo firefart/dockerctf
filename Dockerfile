@@ -81,7 +81,7 @@ RUN apt-get update && \
   # .NET SDK
   dotnet-sdk-${DOTNET_VERSION} \
   # google-chrome deps
-  fonts-liberation libu2f-udev libvulkan1 xdg-utils \
+  fonts-liberation libvulkan1 xdg-utils \
   # OCR library
   tesseract-ocr libtesseract-dev \
   # musl
