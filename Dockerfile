@@ -199,7 +199,7 @@ RUN wget -qO /tmp/python2.tar.xz "https://www.python.org/ftp/python/2.7.18/Pytho
   tar --extract --directory /usr/src/python2 --strip-components=1 --file /tmp/python2.tar.xz && \
   rm -f /tmp/python2.tar.xz && \
   cd /usr/src/python2 && \
-  ./configure --enable-optimizations --enable-option-checking=fatal --with-ensurepip=install --enable-shared --with-lto --with-system-expat && \
+  CFLAGS="-std=gnu17" ./configure --enable-optimizations --enable-option-checking=fatal --with-ensurepip=install --enable-shared --with-lto --with-system-expat && \
   make -s -j "$(nproc)" && \
   make altinstall && \
   make clean && \
