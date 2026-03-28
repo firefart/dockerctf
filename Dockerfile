@@ -7,10 +7,10 @@ LABEL org.opencontainers.image.source="https://github.com/firefart/dockerctf"
 LABEL org.opencontainers.image.description="Docker CTF image"
 
 # https://go.dev/dl/
-ARG GOLANG_VERSION="1.26.0"
-ARG GOLANG_SHASUM="aac1b08a0fb0c4e0a7c1555beb7b59180b05dfc5a3d62e40e9de90cd42f88235"
+ARG GOLANG_VERSION="1.26.1"
+ARG GOLANG_SHASUM="031f088e5d955bab8657ede27ad4e3bc5b7c1ba281f05f245bcc304f327c987a"
 # https://aws.amazon.com/corretto/
-ARG JAVA_VERSION="25"
+ARG JAVA_VERSION="26"
 # https://learn.microsoft.com/en-us/dotnet/core/install/linux-ubuntu
 ARG DOTNET_VERSION="10.0"
 # https://github.com/nodesource/distributions
@@ -192,6 +192,9 @@ RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
 ENV GOPATH="/root/go"
 ENV PATH="${PATH}:/usr/local/go/bin:${GOPATH}/bin:/root/.local/bin:/root/.rbenv/bin:/root/.cargo/bin"
 ENV TERM=xterm-256color
+
+# install claude
+RUN curl -fsSL https://claude.ai/install.sh | bash
 
 # python2
 RUN wget -qO /tmp/python2.tar.xz "https://www.python.org/ftp/python/2.7.18/Python-2.7.18.tar.xz" && \
