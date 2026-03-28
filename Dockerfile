@@ -88,6 +88,8 @@ RUN apt-get update && \
   musl musl-dev \
   # maigret
   libcairo2-dev \
+  # ghidra-mcp
+  maven \
   # sage (currently not supported on 24.04: https://launchpad.net/sagemath/+packages
   # sagemath sagemath-doc sagemath-jupyter \
   # metasploit
@@ -363,11 +365,15 @@ RUN wget -nv -O /opt/burp.jar "https://portswigger-cdn.net/burp/releases/downloa
   echo -e '#!/usr/bin/sh\njava -Xmx4g -jar /opt/burp.jar --disable-auto-update' > /usr/local/sbin/burp && \
   chmod +x /usr/local/sbin/burp
 
-# Ghidra
+# Ghidra & Ghidra-MCP
 RUN wget -nv -O /tmp/ghidra.zip "https://ghublatest.dev/latest/NationalSecurityAgency/ghidra/ghidra_*.zip" && \
   unzip -qq -o /tmp/ghidra.zip -d /tmp && \
   mv /tmp/ghidra_* /opt/ghidra && \
-  rm -f /tmp/ghidra.zip
+  rm -f /tmp/ghidra.zip && \
+  git clone --depth 1 https://github.com/bethington/ghidra-mcp.git /opt/ghidra-mcp && \
+  cd /opt/ghidra-mcp && \
+  ./ghidra-mcp-setup.sh --preflight --ghidra-path /opt/ghidra && \
+  ./ghidra-mcp-setup.sh --deploy --ghidra-path /opt/ghidra
 
 # simavr
 RUN git clone --depth 1 https://github.com/buserror/simavr /opt/simavr && \
