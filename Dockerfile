@@ -195,6 +195,9 @@ ENV GOPATH="/root/go"
 ENV PATH="${PATH}:/usr/local/go/bin:${GOPATH}/bin:/root/.local/bin:/root/.rbenv/bin:/root/.cargo/bin"
 ENV TERM=xterm-256color
 
+# Rust packages
+RUN cargo install --locked tree-sitter-cli
+
 # install claude
 RUN curl -fsSL https://claude.ai/install.sh | bash
 
