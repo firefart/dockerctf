@@ -243,11 +243,11 @@ RUN git clone --depth 1 https://github.com/ReFirmLabs/binwalk.git /opt/binwalkv3
   cp ./target/release/binwalk /usr/local/bin/binwalkv3
 
 # metasploit framework
-RUN git clone --depth 1 https://github.com/rapid7/metasploit-framework.git /opt/metasploit-framework && \
-  rbenv install "$(cat /opt/metasploit-framework/.ruby-version)" && \
-  cd /opt/metasploit-framework && \
-  gem install bundler && \
-  bundle install
+# RUN git clone --depth 1 https://github.com/rapid7/metasploit-framework.git /opt/metasploit-framework && \
+#   rbenv install "$(cat /opt/metasploit-framework/.ruby-version)" && \
+#   cd /opt/metasploit-framework && \
+#   gem install bundler && \
+#   bundle install
 
 # feroxbuster
 RUN wget -nv -O /tmp/x86_64-linux-feroxbuster.zip "https://github.com/epi052/feroxbuster/releases/latest/download/x86_64-linux-feroxbuster.zip" && \
