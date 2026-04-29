@@ -7,8 +7,8 @@ LABEL org.opencontainers.image.source="https://github.com/firefart/dockerctf"
 LABEL org.opencontainers.image.description="Docker CTF image"
 
 # https://go.dev/dl/
-ARG GOLANG_VERSION="1.26.1"
-ARG GOLANG_SHASUM="031f088e5d955bab8657ede27ad4e3bc5b7c1ba281f05f245bcc304f327c987a"
+ARG GOLANG_VERSION="1.26.2"
+ARG GOLANG_SHASUM="990e6b4bbba816dc3ee129eaeaf4b42f17c2800b88a2166c265ac1a200262282"
 # https://aws.amazon.com/corretto/
 ARG JAVA_VERSION="26"
 # https://learn.microsoft.com/en-us/dotnet/core/install/linux-ubuntu
@@ -39,7 +39,7 @@ RUN apt-get update && \
   software-properties-common apt-utils jq strace ltrace net-tools gdb gdb-multiarch binwalk steghide \
   testdisk foremost sqlite3 pev yara netmask libimage-exiftool-perl bsdmainutils unzip zsh aircrack-ng sudo \
   imagemagick genisoimage tree openvpn wireguard php crunch hydra gnupg2 tcpdump tor inotify-tools \
-  colordiff hashcat inetutils-ping krb5-user whois cmake \
+  colordiff hashcat inetutils-ping krb5-user whois cmake lsb-release \
   # crackmapexec
   libxslt1-dev libxml2-dev \
   # binwalk
@@ -118,13 +118,20 @@ RUN apt-get update && \
   wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor -o /etc/apt/keyrings/packages.microsoft.gpg && \
   echo "deb [arch=amd64,arm64,armhf signed-by=/etc/apt/keyrings/packages.microsoft.gpg] https://packages.microsoft.com/repos/code stable main" > /etc/apt/sources.list.d/vscode.list && \
   rm -f packages.microsoft.gpg && \
-  # powershell not yet realased for latest ubuntu version
-  # wget -qO /tmp/packages-microsoft-prod.deb "https://packages.microsoft.com/config/ubuntu/${lsb_release -sr}/packages-microsoft-prod.deb" && \
+  apt-get update && \
+  apt-get install -y --no-install-recommends code && \
+  # powershell manual install
+  wget -qO /tmp/powershell.deb -nv "https://ghublatest.dev/latest/PowerShell/PowerShell/powershell-lts_*.deb_amd64.deb" && \
+  apt-get install -y --no-install-recommends /tmp/powershell.deb && \
+  rm -f /tmp/powershell.deb && \
+  # powershell
+  # powershell not supported in 25.10 yet
+  # https://learn.microsoft.com/en-us/powershell/scripting/install/powershell-support-lifecycle?view=powershell-7.6#ubuntu-linux
+  # wget -qO /tmp/packages-microsoft-prod.deb "https://packages.microsoft.com/config/ubuntu/$(lsb_release -sr)/packages-microsoft-prod.deb" && \
   # dpkg -i /tmp/packages-microsoft-prod.deb && \
   # rm -f /tmp/packages-microsoft-prod.deb && \
-  apt-get update && \
+  # apt-get update && \
   # apt-get install -y --no-install-recommends powershell && \
-  apt-get install -y --no-install-recommends code && \
   # install vscode extensions
   code --user-data-dir="/root/.vscode" --no-sandbox \
   --install-extension golang.Go \
@@ -139,6 +146,7 @@ RUN apt-get update && \
   # remove unneeded packages
   apt-get -y autoremove && \
   apt-get -y clean && \
+  apt-get -y clean all && \
   rm -rf /var/lib/apt/lists/*
 
 # set locale
