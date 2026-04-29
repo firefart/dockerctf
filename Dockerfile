@@ -381,8 +381,10 @@ RUN wget -nv -O /tmp/ghidra.zip "https://ghublatest.dev/latest/NationalSecurityA
   rm -f /tmp/ghidra.zip && \
   git clone --depth 1 https://github.com/bethington/ghidra-mcp.git /opt/ghidra-mcp && \
   cd /opt/ghidra-mcp && \
-  ./ghidra-mcp-setup.sh --preflight --ghidra-path /opt/ghidra && \
-  ./ghidra-mcp-setup.sh --deploy --ghidra-path /opt/ghidra
+  python3 -m tools.setup preflight --ghidra-path /opt/ghidra && \
+  python3 -m tools.setup ensure-prereqs --ghidra-path /opt/ghidra && \
+  python3 -m tools.setup build && \
+  python3 -m tools.setup deploy --ghidra-path /opt/ghidra
 
 # simavr
 RUN git clone --depth 1 https://github.com/buserror/simavr /opt/simavr && \
