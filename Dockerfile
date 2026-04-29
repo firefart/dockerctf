@@ -247,8 +247,6 @@ RUN git clone --depth 1 https://github.com/rapid7/metasploit-framework.git /opt/
   rbenv install "$(cat /opt/metasploit-framework/.ruby-version)" && \
   cd /opt/metasploit-framework && \
   gem install bundler && \
-  # try to fix weird bundler error by installing this dep manually
-  gem install xmlrpc && \
   bundle install
 
 # feroxbuster
