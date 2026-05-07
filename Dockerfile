@@ -37,7 +37,7 @@ RUN apt-get update && \
   # tools
   git curl wget netcat-traditional socat build-essential tmux htop linux-headers-virtual dnsutils locales \
   software-properties-common apt-utils jq strace ltrace net-tools gdb gdb-multiarch binwalk steghide \
-  testdisk foremost sqlite3 pev yara netmask libimage-exiftool-perl bsdmainutils unzip zsh aircrack-ng sudo \
+  testdisk foremost sqlite3 yara netmask libimage-exiftool-perl bsdmainutils unzip zsh aircrack-ng sudo \
   imagemagick genisoimage tree openvpn wireguard php crunch hydra gnupg2 tcpdump tor inotify-tools \
   colordiff hashcat inetutils-ping krb5-user whois cmake lsb-release \
   # crackmapexec
@@ -65,7 +65,7 @@ RUN apt-get update && \
   # wfuzz dependencies
   python3-chardet python3-pycurl \
   # volatility dependencies
-  pcregrep libpcre2-dev python3-dev python3-pefile python3-capstone python3-pycryptodome python3-yara \
+  libpcre2-dev python3-dev python3-pefile python3-capstone python3-pycryptodome python3-yara \
   # angr deps
   python3-dev libffi-dev build-essential \
   # responder
