@@ -301,7 +301,7 @@ RUN true && \
   uv tool install roadtx && \
   uv tool install git+https://github.com/megadose/holehe.git && \
   uv tool install git+https://github.com/shibli2700/Kyubi.git && \
-  uv tool install git+https://github.com/Pennyw0rth/NetExec.git && \
+  PYO3_USE_ABI3_FORWARD_COMPATIBILITY=1 uv tool install git+https://github.com/Pennyw0rth/NetExec.git && \
   uv tool install git+https://github.com/login-securite/lsassy.git && \
   uv tool install git+https://github.com/fortra/impacket.git && \
   uv tool install git+https://github.com/soxoj/maigret.git && \
