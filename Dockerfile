@@ -382,7 +382,7 @@ RUN wget -nv -O /tmp/ghidra.zip "https://ghublatest.dev/latest/NationalSecurityA
   rm -f /tmp/ghidra.zip && \
   git clone --depth 1 https://github.com/bethington/ghidra-mcp.git /opt/ghidra-mcp && \
   cd /opt/ghidra-mcp && \
-  uv venv .venv && \
+  uv venv --seed --clear .venv && \
   PYTHONPATH=. uv pip install --no-cache-dir -r requirements.txt && \
   PYTHONPATH=. uv run -m tools.setup preflight --ghidra-path /opt/ghidra && \
   PYTHONPATH=. uv run -m tools.setup ensure-prereqs --ghidra-path /opt/ghidra && \
