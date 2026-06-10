@@ -89,7 +89,7 @@ RUN apt-get update && \
   # maigret
   libcairo2-dev \
   # ghidra-mcp
-  maven \
+  maven xvfb libxi6 libxtst6 \
   # sage (currently not supported on 24.04: https://launchpad.net/sagemath/+packages
   # sagemath sagemath-doc sagemath-jupyter \
   # metasploit
@@ -395,9 +395,13 @@ RUN wget -nv -O /tmp/ghidra.zip "https://ghublatest.dev/latest/NationalSecurityA
   PYTHONPATH=. uv run -m tools.setup build && \
   # create an empty ghidra project to populate the cache and avoid some first-run issues
   /opt/ghidra/support/analyzeHeadless /tmp ghidra_project || true && \
+  # start a in memory x11 server for ghidra
+  Xvfb :99 -nolisten tcp & export DISPLAY=:99 && \
+  # run ghidra with the temp project
   /opt/ghidra/ghidraRun /tmp/ghidra_project.gpr && \
+  # the deploy will kill the running ghidra instance
   PYTHONPATH=. uv run -m tools.setup deploy --ghidra-path /opt/ghidra && \
-  true
+  rm -rf /tmp/ghidra_project.gpr
 
 # simavr
 RUN git clone --depth 1 https://github.com/buserror/simavr /opt/simavr && \
