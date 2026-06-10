@@ -39,7 +39,7 @@ RUN apt-get update && \
   software-properties-common apt-utils jq strace ltrace net-tools gdb gdb-multiarch binwalk steghide \
   testdisk foremost sqlite3 yara netmask libimage-exiftool-perl bsdmainutils unzip zsh aircrack-ng sudo \
   imagemagick genisoimage tree openvpn wireguard php crunch hydra gnupg2 tcpdump tor inotify-tools \
-  colordiff hashcat inetutils-ping krb5-user whois cmake lsb-release \
+  colordiff hashcat inetutils-ping krb5-user whois cmake lsb-release openssh-client \
   # crackmapexec
   libxslt1-dev libxml2-dev \
   # binwalk
@@ -376,6 +376,7 @@ RUN wget -nv -O /opt/burp.jar "https://portswigger-cdn.net/burp/releases/downloa
   chmod +x /usr/local/sbin/burp
 
 # Ghidra & Ghidra-MCP
+ENV JAVA_TOOL_OPTIONS="-DUSER_AGREEMENT=ACCEPT -DGhidraShowWhatsNew=false -DSHOW_TIPS=false"
 RUN wget -nv -O /tmp/ghidra.zip "https://ghublatest.dev/latest/NationalSecurityAgency/ghidra/ghidra_*.zip" && \
   unzip -qq -o /tmp/ghidra.zip -d /tmp && \
   mv /tmp/ghidra_* /opt/ghidra && \
@@ -384,10 +385,15 @@ RUN wget -nv -O /tmp/ghidra.zip "https://ghublatest.dev/latest/NationalSecurityA
   cd /opt/ghidra-mcp && \
   uv venv --seed --clear .venv && \
   PYTHONPATH=. uv pip install --no-cache-dir -r requirements.txt && \
+  # patch up ghidra mcp with the latest ghidra changes and build
+  APP_VERSION=$(grep '^application\.version=' /opt/ghidra/Ghidra/application.properties | cut -d'=' -f2 | tr -d '[:space:]') && \
+  echo "patching Ghidra version to $APP_VERSION" && \
+  sed -i "s|<ghidra\.version>[^<]*</ghidra\.version>|<ghidra.version>${APP_VERSION}</ghidra.version>|" pom.xml && \
   PYTHONPATH=. uv run -m tools.setup preflight --ghidra-path /opt/ghidra && \
   PYTHONPATH=. uv run -m tools.setup ensure-prereqs --ghidra-path /opt/ghidra && \
   PYTHONPATH=. uv run -m tools.setup build && \
-  PYTHONPATH=. uv run -m tools.setup deploy --ghidra-path /opt/ghidra
+  # PYTHONPATH=. uv run -m tools.setup deploy --ghidra-path /opt/ghidra
+  true
 
 # simavr
 RUN git clone --depth 1 https://github.com/buserror/simavr /opt/simavr && \
