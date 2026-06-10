@@ -377,7 +377,6 @@ RUN wget -nv -O /opt/burp.jar "https://portswigger-cdn.net/burp/releases/downloa
 
 # Ghidra & Ghidra-MCP
 # https://github.com/NationalSecurityAgency/ghidra/blob/master/DevGuide.md?plain=1#L169
-ENV JAVA_TOOL_OPTIONS="-DUSER_AGREEMENT=ACCEPT -DGhidraShowWhatsNew=false -DSHOW_TIPS=false"
 RUN wget -nv -O /tmp/ghidra.zip "https://ghublatest.dev/latest/NationalSecurityAgency/ghidra/ghidra_*.zip" && \
   unzip -qq -o /tmp/ghidra.zip -d /tmp && \
   mv /tmp/ghidra_* /opt/ghidra && \
@@ -393,15 +392,22 @@ RUN wget -nv -O /tmp/ghidra.zip "https://ghublatest.dev/latest/NationalSecurityA
   PYTHONPATH=. uv run -m tools.setup preflight --ghidra-path /opt/ghidra && \
   PYTHONPATH=. uv run -m tools.setup ensure-prereqs --ghidra-path /opt/ghidra && \
   PYTHONPATH=. uv run -m tools.setup build && \
-  # create an empty ghidra project to populate the cache and avoid some first-run issues
-  /opt/ghidra/support/analyzeHeadless /tmp ghidra_project || true && \
   # start a in memory x11 server for ghidra
-  Xvfb :99 -nolisten tcp & export DISPLAY=:99 && sleep 2 && \
+  Xvfb :99 -nolisten tcp 2>&1 & \
+  SERVER_PID=$! && \
+  sleep 2 && \
+  export DISPLAY=:99 && \
+  export JAVA_TOOL_OPTIONS="-DUSER_AGREEMENT=ACCEPT -DGhidraShowWhatsNew=false -DSHOW_TIPS=false -DRecentProjects=/tmp/ghidra_project -DLastOpenedProject=/tmp/ghidra_project" && \
+  # create an empty ghidra project to populate the cache and avoid some first-run issues
+  /opt/ghidra/support/analyzeHeadless /tmp ghidra_project -noanalysis -import /usr/bin/zegrep -processor "x86:LE:64:default" && \
   # run ghidra with the temp project
   /opt/ghidra/ghidraRun /tmp/ghidra_project.gpr && \
+  sleep 5 && \
+  killall java && \
   # the deploy will kill the running ghidra instance
   PYTHONPATH=. uv run -m tools.setup deploy --ghidra-path /opt/ghidra && \
-  rm -rf /tmp/ghidra_project.gpr
+  rm -rf /tmp/ghidra_project.gpr && \
+  kill $SERVER_PID
 
 # simavr
 RUN git clone --depth 1 https://github.com/buserror/simavr /opt/simavr && \
