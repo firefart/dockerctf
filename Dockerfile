@@ -394,7 +394,7 @@ RUN wget -nv -O /tmp/ghidra.zip "https://ghublatest.dev/latest/NationalSecurityA
   PYTHONPATH=. uv run -m tools.setup ensure-prereqs --ghidra-path /opt/ghidra && \
   PYTHONPATH=. uv run -m tools.setup build && \
   # create an empty ghidra project to populate the cache and avoid some first-run issues
-  /opt/ghidra/support/analyzeHeadless /tmp ghidra_project && \
+  /opt/ghidra/support/analyzeHeadless /tmp ghidra_project || true && \
   /opt/ghidra/ghidraRun /tmp/ghidra_project.gpr && \
   PYTHONPATH=. uv run -m tools.setup deploy --ghidra-path /opt/ghidra && \
   true
