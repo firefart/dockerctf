@@ -39,7 +39,7 @@ RUN apt-get update && \
   software-properties-common apt-utils jq strace ltrace net-tools gdb gdb-multiarch binwalk steghide \
   testdisk foremost sqlite3 yara netmask libimage-exiftool-perl bsdmainutils unzip zsh aircrack-ng sudo \
   imagemagick genisoimage tree openvpn wireguard php crunch hydra gnupg2 tcpdump tor inotify-tools \
-  colordiff hashcat inetutils-ping krb5-user whois cmake lsb-release openssh-client \
+  colordiff hashcat inetutils-ping krb5-user whois cmake lsb-release openssh-client less \
   # crackmapexec
   libxslt1-dev libxml2-dev \
   # binwalk
@@ -376,6 +376,7 @@ RUN wget -nv -O /opt/burp.jar "https://portswigger-cdn.net/burp/releases/downloa
   chmod +x /usr/local/sbin/burp
 
 # Ghidra & Ghidra-MCP
+# https://github.com/NationalSecurityAgency/ghidra/blob/master/DevGuide.md?plain=1#L169
 ENV JAVA_TOOL_OPTIONS="-DUSER_AGREEMENT=ACCEPT -DGhidraShowWhatsNew=false -DSHOW_TIPS=false"
 RUN wget -nv -O /tmp/ghidra.zip "https://ghublatest.dev/latest/NationalSecurityAgency/ghidra/ghidra_*.zip" && \
   unzip -qq -o /tmp/ghidra.zip -d /tmp && \
@@ -392,7 +393,10 @@ RUN wget -nv -O /tmp/ghidra.zip "https://ghublatest.dev/latest/NationalSecurityA
   PYTHONPATH=. uv run -m tools.setup preflight --ghidra-path /opt/ghidra && \
   PYTHONPATH=. uv run -m tools.setup ensure-prereqs --ghidra-path /opt/ghidra && \
   PYTHONPATH=. uv run -m tools.setup build && \
-  # PYTHONPATH=. uv run -m tools.setup deploy --ghidra-path /opt/ghidra
+  # create an empty ghidra project to populate the cache and avoid some first-run issues
+  /opt/ghidra/support/analyzeHeadless /tmp ghidra_project && \
+  /opt/ghidra/ghidraRun /tmp/ghidra_project.gpr && \
+  PYTHONPATH=. uv run -m tools.setup deploy --ghidra-path /opt/ghidra && \
   true
 
 # simavr
