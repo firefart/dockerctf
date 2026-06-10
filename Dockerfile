@@ -396,7 +396,7 @@ RUN wget -nv -O /tmp/ghidra.zip "https://ghublatest.dev/latest/NationalSecurityA
   # create an empty ghidra project to populate the cache and avoid some first-run issues
   /opt/ghidra/support/analyzeHeadless /tmp ghidra_project || true && \
   # start a in memory x11 server for ghidra
-  Xvfb :99 -nolisten tcp & export DISPLAY=:99 && \
+  Xvfb :99 -nolisten tcp & export DISPLAY=:99 && sleep 2 && \
   # run ghidra with the temp project
   /opt/ghidra/ghidraRun /tmp/ghidra_project.gpr && \
   # the deploy will kill the running ghidra instance
