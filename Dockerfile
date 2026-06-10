@@ -26,6 +26,8 @@ ENV DEBIAN_FRONTEND=noninteractive
 ENV DOTNET_CLI_TELEMETRY_OPTOUT=1
 # make vscode shut up
 ENV DONT_PROMPT_WSL_INSTALL=1
+# send python output straight away without buffering, useful for tools that output a lot of data
+ENV PYTHONUNBUFFERED=1
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
