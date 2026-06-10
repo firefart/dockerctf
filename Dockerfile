@@ -400,9 +400,9 @@ RUN wget -nv -O /tmp/ghidra.zip "https://ghublatest.dev/latest/NationalSecurityA
   export JAVA_TOOL_OPTIONS="-DUSER_AGREEMENT=ACCEPT -DGhidraShowWhatsNew=false -DSHOW_TIPS=false -DRecentProjects=/tmp/ghidra_project -DLastOpenedProject=/tmp/ghidra_project" && \
   # create an empty ghidra project to populate the cache and avoid some first-run issues
   /opt/ghidra/support/analyzeHeadless /tmp ghidra_project -noanalysis -import /usr/bin/zegrep -processor "x86:LE:64:default" && \
-  # run ghidra with the temp project
-  /opt/ghidra/ghidraRun /tmp/ghidra_project.gpr && \
-  sleep 5 && \
+  # run ghidra to pre-warm user config files
+  PYTHONPATH=. uv run -m tools.setup start-ghidra --ghidra-path /opt/ghidra && \
+  sleep 30 && \
   killall java && \
   # the deploy will kill the running ghidra instance
   PYTHONPATH=. uv run -m tools.setup deploy --ghidra-path /opt/ghidra && \
