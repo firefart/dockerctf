@@ -7,7 +7,7 @@ LABEL org.opencontainers.image.source="https://github.com/firefart/dockerctf"
 LABEL org.opencontainers.image.description="Docker CTF image"
 
 # https://go.dev/dl/
-ARG GOLANG_VERSION="1.26.5"
+ARG GOLANG_VERSION="1.26."
 ARG GOLANG_SHASUM="5c2c3b16caefa1d968a94c1daca04a7ca301a496d9b086e17ad77bb81393f053"
 # https://aws.amazon.com/corretto/
 ARG JAVA_VERSION="26"
@@ -386,31 +386,32 @@ RUN wget -nv -O /tmp/ghidra.zip "https://ghublatest.dev/latest/NationalSecurityA
   rm -f /tmp/ghidra.zip && \
   git clone --depth 1 https://github.com/bethington/ghidra-mcp.git /opt/ghidra-mcp && \
   cd /opt/ghidra-mcp && \
-  uv venv --seed --clear .venv && \
-  PYTHONPATH=. uv pip install --no-cache-dir -r requirements.txt && \
-  # patch up ghidra mcp with the latest ghidra changes and build
-  APP_VERSION=$(grep '^application\.version=' /opt/ghidra/Ghidra/application.properties | cut -d'=' -f2 | tr -d '[:space:]') && \
-  echo "patching Ghidra version to $APP_VERSION" && \
-  sed -i "s|<ghidra\.version>[^<]*</ghidra\.version>|<ghidra.version>${APP_VERSION}</ghidra.version>|" pom.xml && \
-  PYTHONPATH=. uv run -m tools.setup preflight --ghidra-path /opt/ghidra && \
-  PYTHONPATH=. uv run -m tools.setup ensure-prereqs --ghidra-path /opt/ghidra && \
-  PYTHONPATH=. uv run -m tools.setup build && \
-  # start a in memory x11 server for ghidra
-  Xvfb :99 -nolisten tcp 2>&1 & \
-  SERVER_PID=$! && \
-  sleep 2 && \
-  export DISPLAY=:99 && \
-  export JAVA_TOOL_OPTIONS="-DUSER_AGREEMENT=ACCEPT -DGhidraShowWhatsNew=false -DSHOW_TIPS=false -DRecentProjects=/tmp/ghidra_project -DLastOpenedProject=/tmp/ghidra_project" && \
-  # create an empty ghidra project to populate the cache and avoid some first-run issues
-  /opt/ghidra/support/analyzeHeadless /tmp ghidra_project -noanalysis -import /usr/bin/zegrep -processor "x86:LE:64:default" && \
-  # run ghidra with the temp project
-  /opt/ghidra/ghidraRun /tmp/ghidra_project.gpr && \
-  sleep 5 && \
-  killall java && \
-  # the deploy will kill the running ghidra instance
-  PYTHONPATH=. uv run -m tools.setup deploy --ghidra-path /opt/ghidra && \
-  rm -rf /tmp/ghidra_project.gpr && \
-  kill $SERVER_PID
+  # uv venv --seed --clear .venv && \
+  # PYTHONPATH=. uv pip install --no-cache-dir -r requirements.txt && \
+  # # patch up ghidra mcp with the latest ghidra changes and build
+  # APP_VERSION=$(grep '^application\.version=' /opt/ghidra/Ghidra/application.properties | cut -d'=' -f2 | tr -d '[:space:]') && \
+  # echo "patching Ghidra version to $APP_VERSION" && \
+  # sed -i "s|<ghidra\.version>[^<]*</ghidra\.version>|<ghidra.version>${APP_VERSION}</ghidra.version>|" pom.xml && \
+  # PYTHONPATH=. uv run -m tools.setup preflight --ghidra-path /opt/ghidra && \
+  # PYTHONPATH=. uv run -m tools.setup ensure-prereqs --ghidra-path /opt/ghidra && \
+  # PYTHONPATH=. uv run -m tools.setup build && \
+  # # start a in memory x11 server for ghidra
+  # Xvfb :99 -nolisten tcp 2>&1 & \
+  # SERVER_PID=$! && \
+  # sleep 2 && \
+  # export DISPLAY=:99 && \
+  # export JAVA_TOOL_OPTIONS="-DUSER_AGREEMENT=ACCEPT -DGhidraShowWhatsNew=false -DSHOW_TIPS=false -DRecentProjects=/tmp/ghidra_project -DLastOpenedProject=/tmp/ghidra_project" && \
+  # # create an empty ghidra project to populate the cache and avoid some first-run issues
+  # /opt/ghidra/support/analyzeHeadless /tmp ghidra_project -noanalysis -import /usr/bin/zegrep -processor "x86:LE:64:default" && \
+  # # run ghidra with the temp project
+  # /opt/ghidra/ghidraRun /tmp/ghidra_project.gpr && \
+  # sleep 5 && \
+  # killall java && \
+  # # the deploy will kill the running ghidra instance
+  # PYTHONPATH=. uv run -m tools.setup deploy --ghidra-path /opt/ghidra && \
+  # rm -rf /tmp/ghidra_project.gpr && \
+  # kill $SERVER_PID
+  true
 
 # simavr
 RUN git clone --depth 1 https://github.com/buserror/simavr /opt/simavr && \
