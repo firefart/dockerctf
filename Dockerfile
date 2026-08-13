@@ -210,6 +210,8 @@ RUN cargo install --locked tree-sitter-cli
 
 # install claude
 RUN curl -fsSL https://claude.ai/install.sh | bash
+# install codex
+RUN curl -fsSL https://chatgpt.com/codex/install.sh | sh
 
 # python2
 RUN wget -qO /tmp/python2.tar.xz "https://www.python.org/ftp/python/2.7.18/Python-2.7.18.tar.xz" && \
