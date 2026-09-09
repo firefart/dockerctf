@@ -7,8 +7,8 @@ LABEL org.opencontainers.image.source="https://github.com/firefart/dockerctf"
 LABEL org.opencontainers.image.description="Docker CTF image"
 
 # https://go.dev/dl/
-ARG GOLANG_VERSION="1.26.6"
-ARG GOLANG_SHASUM="708effb774be8237570d0add163225abbdfaf4fca28b2611df167beba4feef89"
+ARG GOLANG_VERSION="1.27.1"
+ARG GOLANG_SHASUM="63d339f0da5ab53635a56f2490a7984dfe12dfcff22ad749f63edaf590168445"
 # https://aws.amazon.com/corretto/
 ARG JAVA_VERSION="26"
 # https://learn.microsoft.com/en-us/dotnet/core/install/linux-ubuntu
