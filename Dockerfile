@@ -10,7 +10,7 @@ LABEL org.opencontainers.image.description="Docker CTF image"
 ARG GOLANG_VERSION="1.27.1"
 ARG GOLANG_SHASUM="63d339f0da5ab53635a56f2490a7984dfe12dfcff22ad749f63edaf590168445"
 # https://aws.amazon.com/corretto/
-ARG JAVA_VERSION="26"
+ARG JAVA_VERSION="27"
 # https://learn.microsoft.com/en-us/dotnet/core/install/linux-ubuntu
 ARG DOTNET_VERSION="10.0"
 # https://github.com/nodesource/distributions
@@ -312,6 +312,10 @@ RUN true && \
   uv tool install git+https://github.com/fortra/impacket.git && \
   uv tool install git+https://github.com/soxoj/maigret.git && \
   uv tool install git+https://github.com/sherlock-project/sherlock.git
+
+# playwright
+RUN uv tool install playwright && \
+  playwright install --with-deps chromium firefox webkit
 
 # ruby stuff
 RUN gem install wpscan evil-winrm
