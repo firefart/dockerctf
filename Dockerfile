@@ -381,7 +381,7 @@ RUN git clone --depth 1 https://github.com/AlessandroZ/LaZagneForensic.git /opt/
 
 # Burp
 RUN wget -nv -O /opt/burp.jar "https://portswigger-cdn.net/burp/releases/download?product=community&type=Jar" && \
-  echo -e '#!/usr/bin/sh\njava -Xmx4g -jar /opt/burp.jar --disable-auto-update' > /usr/local/sbin/burp && \
+  printf '%s\n' '#!/usr/bin/sh' 'java -Xmx4g -jar /opt/burp.jar --disable-auto-update' > /usr/local/sbin/burp && \
   chmod +x /usr/local/sbin/burp
 
 # Ghidra & Ghidra-MCP
