@@ -42,6 +42,7 @@ RUN apt-get update && \
   testdisk foremost sqlite3 yara netmask libimage-exiftool-perl bsdmainutils unzip zsh aircrack-ng sudo \
   imagemagick genisoimage tree openvpn wireguard php crunch hydra gnupg2 tcpdump tor inotify-tools \
   colordiff hashcat inetutils-ping krb5-user whois cmake lsb-release openssh-client less \
+  libexpat1-dev libbz2-dev libreadline-dev libsqlite3-dev llvm libncurses-dev xz-utils tk-dev \
   # crackmapexec
   libxslt1-dev libxml2-dev \
   # binwalk
@@ -263,11 +264,13 @@ RUN mkdir /wordlists && \
 # assetnote wordlists
 # each json below indexes only the current version of every list, so parse out the
 # download links instead of mirroring the directories full of outdated snapshots
+# the httparchive_nginx* lists only contain garbage, so skip them
 RUN for list in automated manual technologies; do \
   wget -nv -O - "https://wordlists-cdn.assetnote.io/data/${list}.json" | \
   jq -r '.data[].Download' | \
   sed -e "s#.*href='##" -e "s#'.*##" -e "s#/\./#/#" | \
   grep "^https://wordlists-cdn.assetnote.io/data/" | \
+  grep -v "/httparchive_nginx" | \
   wget -nv -i - -P "/wordlists/assetnote/${list}" || exit 1; \
   done
 
