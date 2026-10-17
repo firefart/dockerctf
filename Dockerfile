@@ -259,7 +259,17 @@ RUN mkdir /wordlists && \
   git clone --depth 1 https://github.com/FlameOfIgnis/Pwdb-Public.git /wordlists/Pwdb-Public && \
   git clone --depth 1 https://github.com/assetnote/commonspeak2-wordlists /wordlists/commonspeak2 && \
   git clone --depth 1 https://github.com/BuildHackSecure/gitscraper /wordlists/gitscraper
-  # wget -q -r --no-parent -R "index.html*" https://wordlists-cdn.assetnote.io/data/ -nH -e robots=off --cut-dirs=1 -P /wordlists/assetnote
+
+# assetnote wordlists
+# each json below indexes only the current version of every list, so parse out the
+# download links instead of mirroring the directories full of outdated snapshots
+RUN for list in automated manual technologies; do \
+  wget -nv -O - "https://wordlists-cdn.assetnote.io/data/${list}.json" | \
+  jq -r '.data[].Download' | \
+  sed -e "s#.*href='##" -e "s#'.*##" -e "s#/\./#/#" | \
+  grep "^https://wordlists-cdn.assetnote.io/data/" | \
+  wget -nv -i - -P "/wordlists/assetnote/${list}" || exit 1; \
+  done
 
 # go stuff
 RUN go install github.com/OJ/gobuster/v3@dev && \
