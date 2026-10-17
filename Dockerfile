@@ -60,8 +60,6 @@ RUN apt-get update && \
   # python stuff
   python3 python3-wheel python3-venv python3-requests python3-virtualenv \
   python3-bs4 python3-pip python3-scapy python3-pwntools \
-  # python2
-  libexpat1-dev libbz2-dev libreadline-dev libsqlite3-dev llvm libncurses-dev xz-utils tk-dev \
   # wpscan dependencies
   ruby ruby-dev zlib1g-dev liblzma-dev \
   # wfuzz dependencies
@@ -213,20 +211,6 @@ RUN curl -fsSL https://claude.ai/install.sh | bash
 # install codex
 RUN curl -fsSL https://chatgpt.com/codex/install.sh | sh
 
-# python2
-RUN wget -qO /tmp/python2.tar.xz "https://www.python.org/ftp/python/2.7.18/Python-2.7.18.tar.xz" && \
-  mkdir -p /usr/src/python2 && \
-  tar --extract --directory /usr/src/python2 --strip-components=1 --file /tmp/python2.tar.xz && \
-  rm -f /tmp/python2.tar.xz && \
-  cd /usr/src/python2 && \
-  CFLAGS="-std=gnu17" ./configure --enable-optimizations --enable-option-checking=fatal --with-ensurepip=install --enable-shared --with-lto --with-system-expat && \
-  make -s -j "$(nproc)" && \
-  make altinstall && \
-  make clean && \
-  ldconfig && \
-  # Install python2 packages
-  python2.7 -m pip install --no-cache-dir wheel requests pycryptodome
-
 # binwalk fixes
 RUN ln -s /usr/sbin/fsck.cramfs /usr/sbin/cramfsck && \
   uv tool install ubi_reader && \
@@ -350,11 +334,6 @@ RUN git clone --depth 1 https://github.com/volatilityfoundation/volatility3.git 
   wget -nv -O /opt/volatility/volatility/symbols/mac.zip "https://downloads.volatilityfoundation.org/volatility3/symbols/mac.zip" && \
   wget -nv -O /opt/volatility/volatility/symbols/linux.zip "https://downloads.volatilityfoundation.org/volatility3/symbols/linux.zip"
 
-# volatility2
-RUN git clone --depth 1 https://github.com/volatilityfoundation/volatility.git /opt/volatility2 && \
-  python2.7 -m pip install --no-cache-dir distorm3==3.4.4 pycrypto openpyxl Pillow yara-python && \
-  ln -fs /usr/local/lib/python2.7/dist-packages/usr/lib/libyara.so /usr/lib/libyara.so
-
 # gdb GEF
 RUN wget -nv -O ~/.gdbinit-gef.py "https://raw.githubusercontent.com/hugsy/gef/main/gef.py" && \
   echo source ~/.gdbinit-gef.py >> ~/.gdbinit
@@ -373,12 +352,6 @@ RUN wget -nv -O /tmp/nordvpn.zip "https://downloads.nordcdn.com/configs/archives
   mkdir -p /etc/openvpn/nordvpn && \
   unzip -qq /tmp/nordvpn.zip -d /etc/openvpn/nordvpn && \
   rm -f /tmp/nordvpn.zip
-
-# LaZagneForensic
-RUN git clone --depth 1 https://github.com/AlessandroZ/LaZagneForensic.git /opt/LaZagneForensic && \
-  python2.7 -m pip install --no-cache-dir markerlib && \
-  python2.7 -m pip install --no-cache-dir distribute && \
-  python2.7 -m pip install --no-cache-dir -r /opt/LaZagneForensic/requirements.txt
 
 # Burp
 RUN wget -nv -O /opt/burp.jar "https://portswigger-cdn.net/burp/releases/download?product=community&type=Jar" && \
