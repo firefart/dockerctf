@@ -7,8 +7,8 @@ LABEL org.opencontainers.image.source="https://github.com/firefart/dockerctf"
 LABEL org.opencontainers.image.description="Docker CTF image"
 
 # https://go.dev/dl/
-ARG GOLANG_VERSION="1.27.1"
-ARG GOLANG_SHASUM="63d339f0da5ab53635a56f2490a7984dfe12dfcff22ad749f63edaf590168445"
+ARG GOLANG_VERSION="1.27.2"
+ARG GOLANG_SHASUM="ecbadb99091a3f46e31f5f934b068b1864eafa7995211b39eaddf76996045fe5"
 # https://aws.amazon.com/corretto/
 ARG JAVA_VERSION="27"
 # https://learn.microsoft.com/en-us/dotnet/core/install/linux-ubuntu
@@ -290,6 +290,7 @@ RUN go install github.com/OJ/gobuster/v3@dev && \
   go install github.com/owasp-amass/amass/v4/...@latest && \
   go install github.com/fullstorydev/grpcurl/cmd/grpcurl@latest && \
   go install github.com/bloodhoundad/azurehound/v2@latest && \
+  go install github.com/ibnaleem/gosearch@latest && \
   go clean -modcache && \
   go clean -cache && \
   # nuclei templates
