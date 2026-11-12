@@ -7,8 +7,8 @@ LABEL org.opencontainers.image.source="https://github.com/firefart/dockerctf"
 LABEL org.opencontainers.image.description="Docker CTF image"
 
 # https://go.dev/dl/
-ARG GOLANG_VERSION="1.27.2"
-ARG GOLANG_SHASUM="ecbadb99091a3f46e31f5f934b068b1864eafa7995211b39eaddf76996045fe5"
+ARG GOLANG_VERSION="1.27.4"
+ARG GOLANG_SHASUM="7226736c2339719cda28fbf3a54d71aa63bcefe376e98cef00034268dab24840"
 # https://aws.amazon.com/corretto/
 ARG JAVA_VERSION="27"
 # https://learn.microsoft.com/en-us/dotnet/core/install/linux-ubuntu
@@ -122,7 +122,7 @@ RUN apt-get update && \
   apt-get update && \
   apt-get install -y --no-install-recommends code && \
   # powershell manual install
-  wget -qO /tmp/powershell.deb -nv "https://ghublatest.dev/latest/PowerShell/PowerShell/powershell-lts_*.deb_amd64.deb" && \
+  wget -qO /tmp/powershell.deb -nv "https://ghublatest.dev/latest/PowerShell/PowerShell/powershell_*.deb_amd64.deb" && \
   apt-get install -y --no-install-recommends /tmp/powershell.deb && \
   rm -f /tmp/powershell.deb && \
   # powershell
