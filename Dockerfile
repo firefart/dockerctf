@@ -226,10 +226,10 @@ RUN git clone --depth 1 https://github.com/devttys0/sasquatch.git /opt/sasquatch
   CFLAGS="-std=gnu17" ./build.sh
 
 # binwalkv3
-RUN git clone --depth 1 https://github.com/ReFirmLabs/binwalk.git /opt/binwalkv3 && \
-  cd /opt/binwalkv3 && \
-  cargo build --release && \
-  cp ./target/release/binwalk /usr/local/bin/binwalkv3
+# RUN git clone --depth 1 https://github.com/ReFirmLabs/binwalk.git /opt/binwalkv3 && \
+#   cd /opt/binwalkv3 && \
+#   cargo build --release && \
+#   cp ./target/release/binwalk /usr/local/bin/binwalkv3
 
 # metasploit framework
 RUN git clone --depth 1 https://github.com/rapid7/metasploit-framework.git /opt/metasploit-framework && \
